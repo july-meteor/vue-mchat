@@ -7,7 +7,7 @@
       </li>
     </ul>
     <div v-else>
-      <img class="im-notice-img" src="/static/images/unnotic.png" />
+      <img class="im-notice-img" src="/images/unnotic.png" />
       <p class="unnoticed">暂时没有新通知</p>
     </div>
   </div>

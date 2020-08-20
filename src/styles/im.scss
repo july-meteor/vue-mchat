@@ -41,7 +41,6 @@ body {
         background-color: $chat;
         color: #333;
         font-family: \5FAE\8F6F\96C5\9ED1;
-
         .im-layer-content {
             overflow: visible;
             background: 0 0,
@@ -243,8 +242,8 @@ body {
 
     // pane 页面收缩后tabx才会有阴影
     &.tabs-shadow {
-        -webkit-box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.3);
-        box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.3);
+        -webkit-box-shadow: 1px 1px 14px rgba(0, 0, 0, 0.3);
+        box-shadow: 1px 1px 14px rgba(0, 0, 0, 0.3);
     }
 
 
@@ -382,6 +381,7 @@ body {
             &.close {
                 border-radius: 0 18px 18px 0;
                 right: $rightBoxCloseOffset;
+
                 .im-icon {
                     right: -1px;
                 }
@@ -477,6 +477,7 @@ body {
                 margin-top: 6px;
                 font-size: 14px;
                 color: #FF5722;
+                text-align: left;
             }
 
             .im-chat-status {
@@ -1089,7 +1090,8 @@ body {
     .im-notice-img {
         width: 100%;
     }
-    .unnoticed{
+
+    .unnoticed {
         position: absolute;
         bottom: 0;
         width: 100%;

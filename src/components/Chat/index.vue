@@ -9,10 +9,7 @@ import chatList from "./chatList";
 import enterBox from "./enterBox";
 import tools from "./tools";
 
-
-
 // 空方法
-
 
 export default {
   name: "MChat",
@@ -150,8 +147,9 @@ export default {
       handleEnter,
       handleUnread,
       loadHistory,
+      handleRighActive,
     } = this;
-    let { name,  avatar } = chat;
+    let { name, avatar } = chat;
 
     let el_chat, el_chat_titel, data_chat_list, el_chat_footer;
     // 标题栏
@@ -166,10 +164,12 @@ export default {
         </div>
       </div>
     );
+
     // chat list  的数据
     data_chat_list = {
       props: {
         list: taleList,
+        config,
       },
       ref: "chatList",
       on: {
@@ -219,50 +219,47 @@ export default {
       </div>
     );
 
-
-  
-  const el_right_box_slot = h('div', rootChat.$slots.default)
+    const el_right_box_slot = h("div", rootChat.$slots.default);
 
     // 挂载到该目标上
     const el_chat_right_box = (
-       <div
+      <div
         class={{
           "im-chat-right-box": true,
           display: rightActive,
         }}
       >
-      {el_right_box_slot}
-
-         </div>
+        {el_right_box_slot}
+      </div>
     );
-       let el_right_active = '';
+    let el_right_active = "";
     // 判断用户是否启用右边框
-    if(rootChat.config.rightBox){
-     el_right_active =(<span
+    if (rootChat.config.rightBox) {
+      el_right_active = (
+        <span
+          class={{
+            "im-chat-btn-expand": true,
+            close: rightActive,
+          }}
+          on-click={() => handleRighActive()}
+        >
+          <i
             class={{
-              "im-chat-btn-expand": true,
-              close: rightActive,
+              "im-icon": true,
+              "el-icon-arrow-left": !rightActive,
+              "el-icon-arrow-right": rightActive,
             }}
-            on-click={() => handleRighActive()}
-          >
-            <i
-              class={{
-                "im-icon": true,
-                "el-icon-arrow-left": !rightActive,
-                "el-icon-arrow-right": rightActive,
-              }}
-            ></i>
-          </span>)
+          ></i>
+        </span>
+      );
     }
-
-
 
     el_chat = (
       <div class="im-chat-main" id={`chat-${name}`} key={`chat-${name}`}>
         <div
           class={{
             "im-pane-item": true,
-            display: active,
+            display: active && rootChat.chatDisplay,
           }}
         >
           {el_chat_right_box}

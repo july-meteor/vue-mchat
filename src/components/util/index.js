@@ -1,5 +1,13 @@
+// 提示音文件
+const tipSound = '/media/tip.wav'
 
-export function playMedia(src) {
+export function playTipSound(url = tipSound) {
+    playMedia(url)
+}
+
+
+
+function playMedia(src) {
     var borswer = window.navigator.userAgent.toLowerCase();
     if (borswer.indexOf("ie") >= 0) {
         //IE内核浏览器不支持 audion，则使用 embed 播放

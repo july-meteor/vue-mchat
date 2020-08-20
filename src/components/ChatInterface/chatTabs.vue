@@ -1,7 +1,4 @@
 <script>
-
-
-
 export default {
   name: "MChatTabs",
   //注入父级属性
@@ -34,26 +31,21 @@ export default {
     handleUnread() {},
   },
   render() {
-    let { panes, stickyTop,  handleScroll, bindClick } = this;
-    // 标签组件生成
+    let { rootChat, panes, stickyTop, handleScroll, bindClick } = this;
+    // 如果只有一个chat的情况
+    const { config, chatDisplay } = rootChat;
+
     const el_chat_tabs = this._l(panes, (pane, index) => {
       const { active, chat, unread } = pane;
-      const { name, id,  avatar } = chat;
-
+      const { name, id, avatar } = chat;
       let tabName = name + id + index;
       pane.index = `${index}`;
-      // 未读
 
       //对话是否激活
       let label = name;
-      // let recordImg = pane.recording
-      //   ? constant.btnRecording
-      //   : constant.btnRecord;
-
-      
-
       const el_tab_lable = <span class="im-label"> {label}</span>;
-      const el_unread_badge = unread > 0? (<span class="badge">{unread}</span>):'';
+      const el_unread_badge =
+        unread > 0 ? <span class="badge">{unread}</span> : "";
       // if (unread > 0) {
       //   el_tab_lable = (
       //     <el-badge value={unread}>
@@ -91,29 +83,25 @@ export default {
       );
     });
     //render对icon css的方式不支持只能
-    const el_icon = (
-      <i
-        class={{
-          "im-icon": true,
-          "btn-pane-show": true,
-          "el-icon-arrow-right": true,
-          "el-icon-arrow-down": false,
-        }}
-        on-click={() => {}}
-      ></i>
-    );
 
-    return (
-      <ul
-        class={{
-          " im-chat-tabs": true,
-          "tabs-shadow": false,
-        }}
-        on-mousedown={() => {}}
-        on-scroll={(ev) => {
-          handleScroll(ev);
-        }}
-      >
+    let el_tabs_bar = "";
+
+    if (config.minRight) {
+      const el_icon = (
+        <i
+          class={{
+            "im-icon": true,
+            "btn-pane-show": true,
+            "el-icon-arrow-right": !chatDisplay,
+            "el-icon-arrow-down": chatDisplay,
+          }}
+          on-click={() => {
+            bindClick("minRight");
+          }}
+        ></i>
+      );
+
+      el_tabs_bar = (
         <li
           class={{
             "im-tabs-title": true,
@@ -130,6 +118,23 @@ export default {
           </span>
           {el_icon}
         </li>
+      );
+    }
+
+    return (
+      <ul
+        class={{
+          " im-chat-tabs": true,
+          "tabs-shadow": !chatDisplay,
+        }}
+        on-mousedown={(ev) => {
+          rootChat.handPanesDrag(ev);
+        }}
+        on-scroll={(ev) => {
+          handleScroll(ev);
+        }}
+      >
+        {el_tabs_bar}
         {el_chat_tabs}
       </ul>
     );

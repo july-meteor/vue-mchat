@@ -1,5 +1,6 @@
 <script>
 import MChatTabs from "./chatTabs";
+import { playTipSound } from "../util";
 
 export default {
   name: "MChat-index",
@@ -15,17 +16,35 @@ export default {
     config: {
       type: Object,
       default: () => ({
-        img: "image/cover.png",
-        name: "MChat",
-        dept: "Meteor chat",
-        callback: () => {},
+        rightBox: false,
+        minRight: false,
+        voice: false,
+        notice: false,
       }),
+    },
+    mine: {
+      type: Object,
+      default: () => ({
+        id: "10001",
+        username: "jule-meteor",
+        status: "online",
+        sign: "与其感慨路难行,不如马上出发！",
+        avatar: "/avatar/avatar_meteor.png",
+      }),
+    },
+    chats: {
+      type: Array,
+      default: () => [],
     },
   },
   data() {
     return {
       panes: [],
       selected: "0",
+      // 主体是否隐藏
+      display: true,
+      //chats是否隐藏
+      chatDisplay: true,
     };
   },
 
@@ -34,7 +53,13 @@ export default {
       this.$emit("loadHistory", callBack);
     },
     // 收到消息
-    handleMessage(message) {
+    getMessage(message) {
+      let voice = this.config.voice;
+      // 提示音
+      if (voice) {
+          playTipSound();
+      }
+
       this.panes.forEach((item) => {
         let { chat } = item;
         if (chat.id != message.id || chat.type != message.type) return;
@@ -42,7 +67,7 @@ export default {
       });
     },
     handleEnter(chat, content) {
-      const { mine } = this.config;
+      const mine = this.mine;
       let message = {
         //自己的信息
         mine: {
@@ -70,6 +95,9 @@ export default {
     },
     handleEvent({ event, data }) {
       switch (event) {
+        case "minRight":
+          this.chatDisplay = !this.chatDisplay;
+          break;
         case "tabClick":
           this.handleTabClick(data);
           break;
@@ -141,18 +169,20 @@ export default {
     let {
       handPanesDrag,
       config,
+      chats,
       panes,
       handleEvent,
       handleEnter,
       loadHistory,
+      chatDisplay,
     } = this;
-    const { chats } = config;
 
     // 窗口页面
     const el_chat_panes = this._l(chats, (chat) => {
       let data_chat = {
         props: {
           chat,
+          config,
         },
         ref: "MChat",
         on: {
@@ -184,7 +214,7 @@ export default {
         <div
           class={{
             "im-layer  layer-anim im-box im-chat": true,
-            "chat-show": true,
+            "chat-show": chatDisplay,
           }}
           ref="chat"
           style={{
@@ -219,7 +249,7 @@ export default {
   created() {
     // 设定一些监听的事件
     this.$im.on("getMessage", (msg) => {
-      this.handleMessage(msg);
+      this.getMessage(msg);
     });
   },
   mounted() {
@@ -233,15 +263,10 @@ export default {
 
 <style scoped>
 .chat-show {
-  -webkit-box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.3);
-  box-shadow: 1px 1px 50px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
   min-width: 500px;
   width: 800px;
-}
-.hidden-right-box {
-  visibility: hidden;
-  position: absolute;
-  z-index: -1;
 }
 </style>
 

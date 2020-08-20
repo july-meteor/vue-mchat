@@ -2,11 +2,6 @@
 import Utils from "./utils";
 import Scroll from "@/utils/scroll";
 
-
-
-
-
-
 export default {
   name: "MCaht-list",
   componentName: "MChatList",
@@ -19,15 +14,13 @@ export default {
     config: {
       type: Object,
       default: () => ({
-        width: "525px",
-        height: "382px",
+        notice: false,
+        downBtn: false,
       }),
     },
-
   },
   data() {
     return {
-
       load: false,
       scroll: null,
       scrollTimer: null,
@@ -87,7 +80,9 @@ export default {
         this.beforeTitle && this.resetTitle(this.beforeTitle);
         this.saveTitle();
         this.changeTitle();
-        // this.showBrowser();
+        if (this.config.notice) {
+          this.showBrowser();
+        }
       } else {
         this.resetTitle(this.beforeTitle);
       }
@@ -111,7 +106,6 @@ export default {
     },
   },
   methods: {
-
     // 拉取历史记录
     handleHistory() {
       this.$emit("loadHistory");
@@ -236,8 +230,6 @@ export default {
       }
     },
     /****标签标题 结束 ***/
-
- 
   },
   mounted() {
     this.createScroll();
@@ -246,13 +238,12 @@ export default {
   render(h) {
     let {
       list,
-      
+
       historyLoding,
       scrollUp,
       scrollBottom,
-    
-      handleHistory,
 
+      handleHistory,
     } = this;
 
     const el_record_list = this._l(list, (item) => {

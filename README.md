@@ -392,13 +392,17 @@ MChat-Air</h1>
   <tr>
     <th>事件名称</th>
     <th>说明</th>
-    <th>回调参数</th>
+    <th>回调参数/使用方法</th>
   </tr>
   <tr >
     <td> getMessage </td>
     <td> 监听接受的消息  </td>
-    <td> 
-        <pre>
+    <td> 参考下方示例1 </td>
+  </tr>
+</table>
+<div>
+<p stype="color:red"> 示例1 </p>
+       <pre>
             let message = {
                     //消息来源用户名
                     username: '七月'
@@ -424,10 +428,7 @@ MChat-Air</h1>
                   // 方法二、
                   this.$refs[MChatname].getMessage(message)
         </pre>
-    </td>
-  </tr>
-</table>
-
+</div>
 
 
 **如有问题请先看上述使用文档和文章，若不能满足，欢迎 issue 和 pr**
