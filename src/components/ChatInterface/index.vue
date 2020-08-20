@@ -1,9 +1,9 @@
 <script>
 import MChatTabs from "./chatTabs";
-import { playTipSound } from "../util";
+import { playTipSound } from "../util/play";
 
 export default {
-  name: "MChat-index",
+  name: "mchat",
   components: {
     MChatTabs,
   },
@@ -57,7 +57,7 @@ export default {
       let voice = this.config.voice;
       // 提示音
       if (voice) {
-          playTipSound();
+        playTipSound();
       }
 
       this.panes.forEach((item) => {
@@ -148,7 +148,7 @@ export default {
           (item) =>
             item.$vnode.tag &&
             item.$vnode.componentOptions &&
-            item.$vnode.componentOptions.Ctor.options.name === "MChat"
+            item.$vnode.componentOptions.Ctor.options.name === "mchat-index"
         );
         // update indeed
         const panes = childPanes.map((item) => item.$vnode.componentInstance);
@@ -184,7 +184,7 @@ export default {
           chat,
           config,
         },
-        ref: "MChat",
+        ref: "MChatIndex",
         on: {
           enter: function (content) {
             handleEnter(chat, content);
@@ -194,8 +194,10 @@ export default {
           },
         },
       };
-      return <m-chat {...data_chat}></m-chat>;
+
+      return <mchat-index {...data_chat}></mchat-index>;
     });
+
     // 标签页面
     const el_chat_tabs = {
       props: {

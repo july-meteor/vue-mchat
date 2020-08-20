@@ -1,6 +1,6 @@
 <p align="center">
  <h1> <img width="45px" src="https://img-blog.csdnimg.cn/20181109170115221.jpg">
-MChat-Air</h1>
+MChat</h1>
 
 </p>
 
@@ -25,14 +25,13 @@ MChat-Air</h1>
 
 ## 简介
 ![演示图](/doc/img/demo_gif.gif)
-
 ![](/doc/img/demo_1.png)
 这是一款基于vue与elementu-ui开发的聊天室组件库，在UI上模仿了TIM及微信。在提供基础封装的同时，最大程度的增加扩展性。
 
 ## v1.0.0内容
 - 基础聊天室功能 
     - 文字媒体
-    -  
+    - 未读提醒
 - 右边框自定义扩展
 - 工具栏自定义扩展
 
@@ -59,188 +58,8 @@ MChat-Air</h1>
 ## 组件说明
 #### MChat-index 
 ![MChat-index演示图](/doc/img/mchatIndexDemo.png)
-```bash
-<template>
-  <div id="app" class="wrapper">
-    <MChat-index
-      ref="chat"
-      :config="config"
-      @talkEvent="talkEvent"
-      @sendMessage="sendMessage"
-      @loadHistory="handleHistory"
-    >
-    </MChat-index>
-  </div>
-</template>
-<script>
-  // 历史记录
-  const history = [
-    {
-      username: "初音",
-      avatar: "/static/avatar/初音.png",
-      id: 1,
-      type: "group",
-      content: "audio[https://www.w3school.com.cn/i/horse.mp3]",
-      cid: 0,
-      mine: false,
-      fromid: 3,
-      timestamp: new Date(),
-    },
-  ];
-  const user_list = [
-    {
-      id: 1,
-      name: "七月",
-      type: "",
-      avatar: "/static/avatar/avatar_meteor.png",
-    },
-    {
-      id: 1,
-      name: "初音",
-      type: "",
-      avatar: "/static/avatar/初音.png",
-    },
-    {
-      id: 2,
-      name: "雪",
-      type: "",
-      avatar: "/static/avatar/雪.png",
-    },
-    {
-      id: 3,
-      name: "可可罗",
-      type: "",
-      avatar: "/static/avatar/可可罗.png",
-    },
-    {
-      id: 4,
-      name: "栞",
-      type: "",
-      avatar: "/static/avatar/栞.png",
-    },
-  ];
-  // 公告列表
-  const notice_list = [
-    {
-      id: 1,
-      type: "文件",
-      title: "RocketMQ原理.dock",
-    },
-    {
-      id: 2,
-      type: "公告",
-      title: "公主连接Rank推荐",
-    },
-  ]
-  export default {
-    name: "app",
-    data() {
-      return {
-        config: {
-          //获取主面板列表信息，下文会做进一步介绍
-          config: {
-            // 是否有下拉按钮
-            downBtn: true,
-          },
-          //我的信息
-          mine: {
-            // 昵称
-            username: "七月",
-            // 用户id
-            id: "10001",
-            //状态
-            status: "online",
-            //签名
-            sign: "与其感慨路难行,不如马上出发！",
-            avatar: "/static/avatar/avatar_meteor.png",
-          },
-          //会话
-          chats: [
-            {
-              id: 1,
-              name: "海喵突基队",
-              type: "group",
-              avatar: "/static/images/group_1.jpg",
-              userList: user_list,
-              notices: notice_list,
-            },
-            {
-              id: 2,
-              name: "初音",
-              type: "friend",
-              avatar: "/static/avatar/初音.png",
-            },
-          ],
-        },
-      };
-    },
-    methods: {
-      handleHistory(callBack) {
-        let list = history;
-        callBack(list);
-      },
-      talkEvent({event, data}) {
-        switch (event) {
-          case "removeChat":
-            let channels = this.config.chats;
-            let len = channels.length;
-            if (len < 1) return;
-            let ary = [];
-            for (let i = 0; i < len; i++) {
-              let model = channels[i];
-              if (model.id != data.id) {
-                ary.push(model);
-              }
-            }
-            this.config.chats = ary;
-            break;
-        }
-      },
-      sendMessage(data) {
-        const {mine, to, content, timestamp} = data;
-        let message = {
-          //消息来源用户名
-          username: mine.username,
-          //消息来源用户头像
-          avatar: mine.avatar,
-          //消息的来源ID（如果是私聊，则是用户id，如果是群聊，则是群组id）
-          id: to.id,
-          //聊天窗口来源类型，从发送消息传递的to里面获取
-          type: to.type,
-          //消息内容
-          content,
-          //消息id，可不传。除非你要对消息进行一些操作（如撤回）
-          cid: 0,
-          //是否我发送的消息，如果为true，则会显示在右方
-          mine: true,
-          //消息的发送者id（比如群组中的某个消息发送者），可用于自动解决浏览器多窗口时的一些问题
-          fromid: mine.id,
-          //服务端时间戳毫秒数。注意：如果你返回的是标准的 unix 时间戳，记得要 *1000
-          timestamp,
-        };
-        this.$im.emit("getMessage", message);
-      },
-    },
-    mounted() {
-      let message = CONST.test_send_msg;
-      message.forEach((mes) => {
-        this.$im.emit("getMessage", mes);
-      });
-    },
-  };
-</script>
+[Sample](/src/App.vue) 
 
-<style lang="scss">
-  #app {
-    font-family: "Avenir", Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-  }
-</style>
-
-```
 ### MChat Attributes
 #### config  `MChat配置信息`
 <table  style="text-align: center;">
@@ -253,8 +72,26 @@ MChat-Air</h1>
   <tr >
     <td> rightBox </td>
     <td> false </td>
-    <td>boolean</td>
+    <td> boolean </td>
     <td> 是否有右侧抽屉,如果为true,则右侧面板显示，可以加入自定义组件</td>
+  </tr>
+  <tr >
+    <td> minRight </td>
+    <td> true </td>
+    <td>boolean</td>
+    <td> 是否开启简约模式,Chat可以被缩小</td>
+  </tr>
+  <tr >
+    <td> notice </td>
+    <td> false </td>
+    <td>boolean</td>
+    <td> 是否开启桌面消息提醒，即在浏览器之外的提醒</td>
+  </tr>
+  <tr >
+    <td> voice </td>
+    <td> false </td>
+    <td>boolean</td>
+    <td> 是否开启消息提醒</td>
   </tr>
 </table>
 
@@ -350,6 +187,47 @@ MChat-Air</h1>
    </tr>
 </table>
 
+#### Content  talk content format 
+<table  style="text-align: center;">
+  <tr>
+    <th> 类型 </th>
+    <th>格式</th>
+    <th>说明</th>
+    <th>参考值</th>
+  </tr>
+  <tr >
+    <td> Text </td>
+    <td> ---- </td>
+    <td> 普通文字信息 </td>
+    <td> hello july meteor  </td>
+  </tr>
+  <tr >
+     <td> emoji </td>
+     <td> emoji[url] </td>
+     <td> 表情 </td>
+     <td> emoji[汗] </td>
+  </tr>
+  <tr >
+    <td> Audio </td>
+    <td> audio[url] </td>
+    <td> 视频消息 </td>
+    <td> audio[https://www.w3school.com.cn/i/horse.mp3] </td>
+  </tr>
+  <tr >
+     <td> Video </td>
+     <td> video[url] </td>
+     <td> 音频 </td>
+     <td> video[https://www.w3school.com.cn/i/movie.mp4]  </td>
+  </tr>
+  <tr >
+     <td> Image </td>
+     <td> img[url] </td>
+     <td> 图片类型 </td>
+     <td> img[/emoticon/emoticon_1.jpg] </td>
+  </tr>
+</table>
+
+
 ### MChat Methods
 
 <table  style="text-align: center;">
@@ -431,7 +309,8 @@ MChat-Air</h1>
 </div>
 
 
-**如有问题请先看上述使用文档和文章，若不能满足，欢迎 issue 和 pr**
+
+**如有问题请先看上述使用文档和文章，若不能满足，欢迎 issue 或者 发邮件给我
 
 
 ## Browsers support

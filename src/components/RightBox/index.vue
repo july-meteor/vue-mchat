@@ -7,8 +7,8 @@
 import { mergeOptions } from "./util";
 
 export default {
-  name: "chat-right-box",
-  componentName: "ChatRightBox",
+  name: "mchat-right-box",
+  componentName: "MChatRightBox",
   props: {
     display: {
       type: Boolean,

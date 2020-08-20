@@ -12,8 +12,8 @@ import tools from "./tools";
 // 空方法
 
 export default {
-  name: "MChat",
-  componentName: "MChat",
+  name: "mchat-index",
+  componentName: "MChatIndex",
   components: {
     chatList,
     enterBox,
@@ -142,7 +142,6 @@ export default {
       active,
       taleList,
       rightActive,
-      handleRighBox,
       bindEmoji,
       handleEnter,
       handleUnread,

@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="wrapper">
-    <MChat-index
+    <mchat
       ref="chat"
       :config="config"
       :chats="chats"
@@ -9,18 +9,21 @@
       @sendMessage="sendMessage"
       @loadHistory="handleHistory"
     >
-      <chat-right-box>
+      <mchat-right-box>
         <template slot-scope="props">
-          <chat-right-list
+          <mchat-group-list
             v-if="props.chat.type == 'group'"
             :notices="props.chat.notices"
             :userList="props.chat.userList"
             :filter-user-method="filterUser"
             @click="handleRightEvent"
-          ></chat-right-list>
+          ></mchat-group-list>
+          <div>
+            发挥你的想象
+          </div>
         </template>
-      </chat-right-box>
-    </MChat-index>
+      </mchat-right-box>
+    </mchat>
   </div>
 </template>
 <script>
@@ -35,10 +38,11 @@ export default {
         // 是否有下拉按钮
         downBtn: true,
         rightBox: true,
+
         minRight: true,
         // 是否开启桌面消息提醒，即在浏览器之外的提醒
         notice: true,
-        // 设定消息提醒的声音文件
+        // 设定
         voice: true,
       },
       //我的信息
@@ -56,10 +60,7 @@ export default {
       let list = CONST.notice_list;
       return list;
     },
-    fetchUserList(config) {
-      let list = CONST.user_list;
-      return list;
-    },
+
     handleRightEvent(event) {
       console.log("右边框事件", event);
     },
@@ -68,12 +69,12 @@ export default {
       callBack(list);
     },
     talkEvent({ event, data }) {
+      let channels = this.config.chats;
+      let len = channels.length;
+      if (len < 1) return;
+      let ary = [];
       switch (event) {
         case "removeChat":
-          let channels = this.config.chats;
-          let len = channels.length;
-          if (len < 1) return;
-          let ary = [];
           for (let i = 0; i < len; i++) {
             let model = channels[i];
             if (model.id != data.id) {
@@ -113,11 +114,10 @@ export default {
   },
   mounted() {
     let message = CONST.test_send_msg;
-    message.forEach((mes) => {
-      this.$im.emit("getMessage", mes);
-    });
+    // message.forEach((mes) => {
+    //   this.$im.emit("getMessage", mes);
+    // });
   },
-  mounted() {},
 };
 </script>
 

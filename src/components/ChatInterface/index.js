@@ -4,11 +4,11 @@
  */
 
 // 导入组件，组件必须声明 name
-import Chat_cover from './index.vue'
+import MChat from './index.vue'
 
 
-Chat_cover.install = function (Vue) {
-  Vue.component(Chat_cover.name, Chat_cover)
+MChat.install = function (Vue) {
+  Vue.component(MChat.name, MChat)
 }
 
-export default Chat_cover
+export default MChat

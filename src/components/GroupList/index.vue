@@ -20,8 +20,8 @@ function noop() {
 }
 
 export default {
-  name: "chat-right-list",
-  componentName: "chatRightList",
+  name: "mchat-group-list",
+  componentName: "MChatGroupList",
   components: {
     NoticeBox,
     UserList,

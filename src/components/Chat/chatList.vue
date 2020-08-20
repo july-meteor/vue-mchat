@@ -1,10 +1,10 @@
 <script>
-import Utils from "./utils";
-import Scroll from "@/utils/scroll";
+import { ConvertContext, ConvertRecord, dateFormat} from "../util/convertContext";
+import Scroll from "../util/scroll";
 
 export default {
-  name: "MCaht-list",
-  componentName: "MChatList",
+  name: "chat-list",
+  componentName: "ChatList",
   props: {
     //聊天记录
     list: {
@@ -106,6 +106,10 @@ export default {
     },
   },
   methods: {
+    bindTalkEvent(event,data){
+      this.$emit("talkEvent",{event,data})
+
+    },
     // 拉取历史记录
     handleHistory() {
       this.$emit("loadHistory");
@@ -242,19 +246,19 @@ export default {
       historyLoding,
       scrollUp,
       scrollBottom,
-
+      bindTalkEvent,
       handleHistory,
     } = this;
 
     const el_record_list = this._l(list, (item) => {
       let contentHtml = h("div", {
         domProps: {
-          innerHTML: Utils.ConvertContext(item.content),
+          innerHTML: ConvertContext(item.content),
         },
       });
       let leftName = item.mine ? "" : item.username;
       let rightName = item.mine ? item.username : "";
-      let tiem = Utils.dateFormat(item.timestamp);
+      let tiem = dateFormat(item.timestamp);
       return (
         <li class={{ "content-mine": item.mine }}>
           <div class="content-user">
@@ -264,7 +268,7 @@ export default {
               <i>{tiem}</i> {rightName}
             </cite>
           </div>
-          <div class="content-text"> {contentHtml}</div>
+          <div class="content-text" on-click={()=>bindTalkEvent('talkContent')}> {contentHtml}</div>
         </li>
       );
     });

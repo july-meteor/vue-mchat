@@ -1,9 +1,8 @@
 // 导入组件，组件必须声明 name
-import MChat from './index.vue'
+import MChatIndex from './index.vue'
 
-
-MChat.install = function (Vue) {
-  Vue.component(MChat.name, MChat)
+MChatIndex.install = function (Vue) {
+  Vue.component(MChatIndex.name, MChatIndex)
 }
 
-export default MChat
+export default MChatIndex

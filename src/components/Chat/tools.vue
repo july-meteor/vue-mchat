@@ -18,11 +18,11 @@
 </template>
 
 <script>
-import emojis from "@/utils/emoji";
+import emojis from '../util/emoji';
 
 export default {
-  name: "chatTools",
-  componentName: "chat-tools",
+  name: "chat-tools",
+  componentName: "chatTools",
   props: {
     config: {
       type: Object,

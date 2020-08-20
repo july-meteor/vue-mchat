@@ -1,6 +1,4 @@
 import 'element-ui/lib/theme-chalk/index.css';
-import './styles/im.scss'
-import './styles/index.scss'
 
 import Vue from 'vue'
 import App from './App.vue'

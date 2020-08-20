@@ -1,11 +1,11 @@
 /**
  * 用得到的工具类
  */
-import emojis from "@/utils/emoji";
+import emojis from "./emoji";
 
 
 //转换 聊天内容
-function ConvertContext(content) {
+export function ConvertContext(content) {
     //支持的html标签
     var html = function (end) {
         return new RegExp('\\n*\\[' + (end || '') + '(pre|div|p|table|thead|th|tbody|tr|td|ul|li|ol|li|dl|dt|dd|h2|h3|h4|h5)([\\s\\S]*?)\\]\\n*', 'g');
@@ -47,7 +47,7 @@ function ConvertContext(content) {
 
 
 
-function ConvertRecord(data) {
+export function ConvertRecord(data) {
     let contenxt = ConvertContext(data.content);
     let tiem = dateFormat(data.timestamp)
     let leftName = data.mine ? "" : data.username;
@@ -67,21 +67,9 @@ var digit = function (num) {
     return num < 10 ? '0' + (num | 0) : num;
 };
 
-function dateFormat(timestamp) {
+export function dateFormat(timestamp) {
     var d = new Date(timestamp || new Date());
     return d.getFullYear() + '-' + digit(d.getMonth() + 1) + '-' + digit(d.getDate())
         + ' ' + digit(d.getHours()) + ':' + digit(d.getMinutes()) + ':' + digit(d.getSeconds());
 }
 
-
-const Utils = {
-    ConvertRecord,
-    ConvertContext,
-    dateFormat
-}
-
-
-
-
-
-export default Utils

@@ -1,17 +1,14 @@
-
-
-
-import MChat from './Chat'
-import MChatPage from './ChatInterface'
-import EventHub from '../utils/eventHub'
+import MChatIndex from './Chat'
+import MChat from './ChatInterface'
+import EventHub from './util/eventHub'
 import MChatRightBox from './RightBox'
-import MChatRightList from './RightList'
+import MChatRightList from './GroupList'
 import SvgIcon from './SvgIcon'
+import '../styles/im.scss'
+import '../styles/index.scss'
 
 
-const components = [MChat, MChatPage, MChatRightBox, MChatRightList, SvgIcon]
-
-
+const components = [MChat, MChatIndex, MChatRightBox, MChatRightList, SvgIcon]
 
 const req = require.context('./SvgIcon/svg/', false, /\.svg$/)
 const requireAll = requireContext => requireContext.keys().map(requireContext)
@@ -23,7 +20,7 @@ const install = function (Vue) {
     if (install.installed) return
     install.installed = true
     components.forEach(component => {
-       //自动挂载
+        //自动挂载
         Vue.component(component.name, component);
     });
     // 
