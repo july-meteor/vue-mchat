@@ -1,0 +1,74 @@
+{
+  "name": "vue-meteor-chat",
+  "version": "0.0.1",
+  "description": "a vue chat components",
+  "author": "july-meteor <747718944@qq.com>",
+  "main": "lib/MChat.umd.min.js",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/july-meteor/MChat.git"
+  },
+  "bugs": {
+    "url": "https://github.com/july-meteor/MChat/issues"
+  },
+  "homepage": "https://github.com/july-meteor/MChat/blob/master/README.md",
+  "unpkg": "lib/MChat.umd.js",
+  "keywords": [
+    "vue",
+    "IM",
+    "chat"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "lib": "vue-cli-service build --target lib --name MChat --dest lib src/components/index.js",
+    "build:lib": "webpack ---mode production  --display-error-details --config webpack.config.js",
+    "svgo": "svgo -f src/icons/svg --config=src/components/SvgIcon/svgo.yml"
+  },
+  "dependencies": {
+    "element-ui": "^2.13.1",
+    "iscroll": "^5.2.0",
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.3.1",
+    "@vue/cli-plugin-eslint": "^4.3.1",
+    "@vue/cli-service": "^4.3.1",
+    "babel-eslint": "^10.1.0",
+    "core-js": "^3.6.5",
+    "eslint": "^6.8.0",
+    "eslint-plugin-vue": "^6.2.2",
+    "node-sass": "^4.13.1",
+    "sass-loader": "^8.0.2",
+    "vue-template-compiler": "^2.6.11",
+    "svg-sprite-loader": "3.8.0",
+    "svgo": "1.0.5"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "files": [
+    "lib",
+    "README.md",
+    "LICENSE"
+  ]
+}
