@@ -25,43 +25,48 @@ MChat</h1>
 
 ## 简介
 ![演示图](/doc/img/demo_gif.gif)
-![](/doc/img/demo_1.png)
+![MChat-index演示图](/doc/img/sample_1.png)
 这是一款基于vue与elementu-ui开发的聊天室组件库，在UI上模仿了TIM及微信。在提供基础封装的同时，最大程度的增加扩展性。
 
 ## v1.0.0内容
 - 基础聊天室功能 
-    - 文字媒体
+    - 文字媒体转换
     - 未读提醒
-- 右边框自定义扩展
-- 工具栏自定义扩展
+    - 多会话
+- 右边框
+    - 基础群组模板 `还在做`
+    - 自定义组件扩展 
+- 工具栏
+   - 自定义组件扩展
 
 #### 安装
 *使用 `npm` 安装
 
   ``` bash
-  npm install vue-meteor-chat
+  npm install vue-mchat
   ```
 
 * 使用 `yarn` 安装
 
   ``` bash
-  yarn add mchat
+  
   ```
 #### 使用
 在`main.js`中引入
   ``` bash
+  // 进入css
+  import from 
   //引入组件
-  import MChat from 'vue-meteor-chat'
+  import MChat from 'MChat'
   // 使用vue加载组件
   Vue.use(MChat)
   ```
-## 组件说明
-#### MChat-index 
-![MChat-index演示图](/doc/img/mchatIndexDemo.png)
-[Sample](/src/App.vue) 
+#组件说明
 
-### MChat Attributes
-#### config  `MChat配置信息`
+[Sample](/src/App.vue) 
+### MChat
+#### Attributes
+##### config  `MChat配置信息`
 <table  style="text-align: center;">
   <tr>
     <th>参数</th>
@@ -95,7 +100,7 @@ MChat</h1>
   </tr>
 </table>
 
-#### mine  `我的信息`
+##### mine  `我的信息`
 
 <table  style="text-align: center;">
   <tr>
@@ -136,7 +141,7 @@ MChat</h1>
     </tr>
 </table>
 
-#### chats  `会话属性`
+##### chats  `会话属性`
 
 <table  style="text-align: center;">
   <tr>
@@ -187,7 +192,7 @@ MChat</h1>
    </tr>
 </table>
 
-#### Content  talk content format 
+##### Content  talk content format 
 <table  style="text-align: center;">
   <tr>
     <th> 类型 </th>
@@ -228,7 +233,7 @@ MChat</h1>
 </table>
 
 
-### MChat Methods
+#### Methods
 
 <table  style="text-align: center;">
   <tr>
@@ -264,7 +269,7 @@ MChat</h1>
   
 </table>
 
-### MChat Events
+#### MChat Events
 
 <table  style="text-align: center;">
   <tr>
@@ -311,6 +316,60 @@ MChat</h1>
 
 
 **如有问题请先看上述使用文档和文章，若不能满足，欢迎 issue 或者 发邮件给我
+
+### MChat-right-box  
+
+** 通过 `Scoped slot` 可以获取到 chat (内部的状态管理）的数据，用法参考 demo。
+
+### MChat-group-list
+
+#### Attributes
+<table  style="text-align: center;">
+  <tr>
+    <th>参数</th>
+    <th>类型</th>
+    <th>默认值</th>
+     <th>说明</th>
+  </tr>
+  <tr >
+    <td> notices </td>
+    <td> array </td>
+    <td> id, type, title  </td>
+    <td> 群公告栏 </td>
+  </tr>
+  <tr >
+    <td> userList </td>
+    <td> array </td>
+    <td> id, name,type, avatar  </td>
+    <td> 成员信息 </td>
+  </tr>
+  <tr >
+    <td> filter-user-method </td>
+    <td> Function(value, data) </td>
+    <td> —  </td>
+    <td> 对成员节点进行筛选时执行的方法，返回 true 表示这个节点可以显示，返回 false 则表示这个节点会被隐藏 </td>
+  </tr>
+</table>
+
+#### Methods
+
+<table  style="text-align: center;">
+  <tr>
+    <th>方法名</th>
+    <th>说明</th>
+    <th>参数</th>
+  </tr>
+  <tr >
+    <td> click </td>
+    <td> 点击群公告，或者成员触发 </td>
+    <td> event  </td>
+  </tr>
+</table>
+
+#### Event
+
+
+
 
 
 ## Browsers support
