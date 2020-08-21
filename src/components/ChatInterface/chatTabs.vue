@@ -33,8 +33,8 @@ export default {
   render() {
     let { rootChat, panes, stickyTop, handleScroll, bindClick } = this;
     // 如果只有一个chat的情况
+    if (rootChat.alone) return;
     const { config, chatDisplay } = rootChat;
-
     const el_chat_tabs = this._l(panes, (pane, index) => {
       const { active, chat, unread } = pane;
       const { name, id, avatar } = chat;
@@ -69,7 +69,7 @@ export default {
           <img
             src={avatar}
             on-click={(ev) => {
-              ev.stoppropagation()
+              ev.stoppropagation();
               bindClick("tabClick", { pane, ev });
             }}
           />
@@ -77,7 +77,7 @@ export default {
           <i
             class="im-icon el-icon-error"
             on-click={(ev) => {
-              ev.stopPropagation()
+              ev.stopPropagation();
               bindClick("tabRemove", { pane, ev });
             }}
           ></i>

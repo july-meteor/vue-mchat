@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       // pane index
-      index: null,
+      index: "0",
       // 聊天记录
       taleList: [],
       //已加载
@@ -124,7 +124,7 @@ export default {
     bindEmoji(emoji) {
       this.content += emoji;
     },
-    bindTalkEvent(event,data) {
+    bindTalkEvent(event, data) {
       this.$emit("talkEvent", event, data);
     },
     handleUnread(count) {
@@ -180,8 +180,8 @@ export default {
         loadHistory: function () {
           loadHistory();
         },
-        talkEvent: function (event, data) { 
-          bindTalkEvent( event, data );
+        talkEvent: function (event, data) {
+          bindTalkEvent(event, data);
         },
       },
     };
@@ -259,7 +259,14 @@ export default {
     }
 
     el_chat = (
-      <div class="im-chat-main" id={`chat-${name}`} key={`chat-${name}`}>
+      <div
+        class={{
+          "im-chat-main": true,
+          page: !rootChat.alone,
+        }}
+        id={`chat-${name}`}
+        key={`chat-${name}`}
+      >
         <div
           class={{
             "im-pane-item": true,

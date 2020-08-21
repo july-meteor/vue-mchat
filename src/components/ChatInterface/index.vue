@@ -2,7 +2,6 @@
 import MChatTabs from "./chatTabs";
 import { playTipSound } from "../util/play";
 
-
 export default {
   name: "mchat",
   components: {
@@ -46,9 +45,25 @@ export default {
       display: true,
       //chats是否隐藏
       chatDisplay: true,
+      width: "800",
     };
   },
-  watch: {},
+  computed: {
+    alone() {
+      let flag = true;
+      if (this.chats.length > 1) {
+        flag = false;
+      }
+      return flag;
+    },
+  },
+  watch: {
+    alone(nv,ov){
+      if(nv){
+         this.chatDisplay = true;
+      }
+    }
+  },
   methods: {
     loadHistory(callBack) {
       this.$emit("loadHistory", callBack);
@@ -66,7 +81,6 @@ export default {
         item.getMessage(message);
       });
     },
-
     handleEvent(event, data) {
       switch (event) {
         case "minRight":
@@ -179,8 +193,9 @@ export default {
       handleEnter,
       loadHistory,
       chatDisplay,
+      alone,
     } = this;
-    if(chats.length < 1) return
+    if (chats.length < 1) return;
     // 窗口页面
     const el_chat_panes = this._l(chats, (chat) => {
       let data_chat = {
@@ -222,10 +237,11 @@ export default {
         <div
           class={{
             "im-layer  layer-anim im-box im-chat": true,
-            "chat-show": chatDisplay,
+            "chat-show": chatDisplay ,
+            'alone':alone
           }}
           ref="chat"
-          style={{
+            style={{
             "z-index": 1002,
             left: "296.5px",
             display: "inline",
@@ -276,5 +292,10 @@ export default {
   min-width: 500px;
   width: 800px;
 }
+
+.chat-show.alone{
+  width: 620px;
+}
+
 </style>
 

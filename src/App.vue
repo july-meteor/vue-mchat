@@ -1,5 +1,16 @@
 <template>
   <div id="app" class="wrapper">
+    <el-row>
+      <el-col :span="8">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>操作示例</span>
+          </div>
+          <el-button>增加会话</el-button>
+          <el-button>删除会话</el-button>
+        </el-card>
+      </el-col>
+    </el-row>
     <mchat
       ref="mchat"
       :config="config"
@@ -19,7 +30,7 @@
             :filter-user-method="filterUser"
             @click="handleRightEvent"
           ></mchat-group-list>
-          <div v-else > 发挥你的想象</div>
+          <div v-else>发挥你的想象</div>
         </template>
       </mchat-right-box>
     </mchat>

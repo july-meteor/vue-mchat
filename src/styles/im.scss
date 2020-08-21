@@ -351,8 +351,9 @@ body {
 
 // 聊天主体css
 .im-chat-main {
-    margin-left: $tabsWidth;
-
+    &.page {
+        margin-left: $tabsWidth;
+    }
     // 窗口 
     .im-pane-item {
         display: none;

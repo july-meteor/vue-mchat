@@ -6,7 +6,6 @@ import emojis from "./emoji";
 
 //转换 聊天内容
 export function ConvertContext(content) {
-    console.log(content)
     //支持的html标签
     var html = function (end) {
         return new RegExp('\\n*\\[' + (end || '') + '(pre|div|p|table|thead|th|tbody|tr|td|ul|li|ol|li|dl|dt|dd|h2|h3|h4|h5)([\\s\\S]*?)\\]\\n*', 'g');
@@ -38,8 +37,8 @@ export function ConvertContext(content) {
             return '<a href="' + href + '" target="_blank">' + (text || href) + '</a>';
         }).replace(html(), '<$1 $2>').replace(html('/'), '</$1>') //转移HTML代码
         .replace(/\n/g, '<br>')
-         //转义换行 
-  
+    //转义换行 
+
     return (content);
 
 }
