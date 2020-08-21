@@ -6,6 +6,7 @@ import emojis from "./emoji";
 
 //转换 聊天内容
 export function ConvertContext(content) {
+    console.log(content)
     //支持的html标签
     var html = function (end) {
         return new RegExp('\\n*\\[' + (end || '') + '(pre|div|p|table|thead|th|tbody|tr|td|ul|li|ol|li|dl|dt|dd|h2|h3|h4|h5)([\\s\\S]*?)\\]\\n*', 'g');
@@ -13,7 +14,7 @@ export function ConvertContext(content) {
     content = (content || '').replace(/&(?!#?[a-zA-Z0-9]+;)/g, '&amp;')
         .replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&#39;').replace(/"/g, '&quot;') //XSS
         .replace(/@(\S+)(\s+?|$)/g, '@<a href="javascript:;">$1</a>$2') //转义@
-        .replace(/\s{2}/g, '&nbsp') //转义空格
+        // .replace(/\s{2}/g, '&nbsp') //转义空格
         .replace(/img\[([^\s]+?)\]/g, function (img) {  //转义图片
             return '<img class="im-content-img" src="' + img.replace(/(^img\[)|(\]$)/g, '') + '">';
         })
@@ -36,8 +37,9 @@ export function ConvertContext(content) {
             if (!href) return str;
             return '<a href="' + href + '" target="_blank">' + (text || href) + '</a>';
         }).replace(html(), '<$1 $2>').replace(html('/'), '</$1>') //转移HTML代码
-        .replace(/\n/g, '<br>') //转义换行 
-
+        .replace(/\n/g, '<br>')
+         //转义换行 
+  
     return (content);
 
 }

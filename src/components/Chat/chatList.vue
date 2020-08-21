@@ -1,5 +1,9 @@
 <script>
-import { ConvertContext, ConvertRecord, dateFormat} from "../util/convertContext";
+import {
+  ConvertContext,
+  ConvertRecord,
+  dateFormat,
+} from "../util/convertContext";
 import Scroll from "../util/scroll";
 
 export default {
@@ -106,9 +110,8 @@ export default {
     },
   },
   methods: {
-    bindTalkEvent(event,data){
-      this.$emit("talkEvent",{event,data})
-
+    bindTalkEvent(event, data) {
+      this.$emit("talkEvent", event, data);
     },
     // 拉取历史记录
     handleHistory() {
@@ -132,6 +135,7 @@ export default {
       dom.addEventListener(
         "ontouchstart" in window ? "touchstart" : "mousedown",
         function (e) {
+        //阻止冒泡事件
           e.stopPropagation();
           // var target = e.target;
           // console.log(e);
@@ -242,7 +246,6 @@ export default {
   render(h) {
     let {
       list,
-
       historyLoding,
       scrollUp,
       scrollBottom,
@@ -268,7 +271,13 @@ export default {
               <i>{tiem}</i> {rightName}
             </cite>
           </div>
-          <div class="content-text" on-click={()=>bindTalkEvent('talkContent')}> {contentHtml}</div>
+          <div
+            class="content-text"
+            on-click={() => bindTalkEvent("talkContent", item)}
+          >
+            {" "}
+            {contentHtml}
+          </div>
         </li>
       );
     });

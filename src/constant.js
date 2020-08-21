@@ -119,12 +119,12 @@ const chats = [
     userList: user_list,
     notices: notice_list,
   },
-  {
-    id: 2,
-    name: "初音",
-    type: "friend",
-    avatar: "/avatar/初音.png",
-  },
+  // {
+  //   id: 2,
+  //   name: "初音",
+  //   type: "friend",
+  //   avatar: "/avatar/初音.png",
+  // },
 ]
 
 export default {

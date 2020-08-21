@@ -174,22 +174,7 @@ MChat</h1>
      <td> url </td>
      <td> 会话头像 </td>
    </tr>
-   <tr >
-     <td> userList </td>
-     <td> 
-       <pre>[{id: 1, name: "七月", type: "admin", avatar: "/avatar/avatar_meteor.png" }]</pre> 
-     </td>
-     <td> array </td>
-     <td> 使用user-list 组件需要该参数</td>
-   </tr>
-   <tr >
-     <td> notices </td>
-     <td> 
-       <pre>[{id: 1, type: "文件", title: "RocketMQ原理.dock" }]</pre> 
-     </td>
-     <td> array </td>
-     <td> 使用notice-box 组件需要该参数</td>
-   </tr>
+
 </table>
 
 ##### Content  talk content format 
@@ -253,7 +238,8 @@ MChat</h1>
   </tr>
   <tr >
     <td> sendMessage </td>
-    <td> 每当你发送一个消息，都可以通过该事件监听到。回调参数接受一个object类型的值，携带发送的聊天信息 </td>
+    <td> 每当你发送一个消息，都可以通过该事件监听到。 </br>
+    回调参数接受一个object类型的值，携带发送的聊天信息 </td>
     <td> message </td>
   </tr>
   <tr >

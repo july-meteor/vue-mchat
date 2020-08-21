@@ -41,6 +41,7 @@ body {
         background-color: $chat;
         color: #333;
         font-family: \5FAE\8F6F\96C5\9ED1;
+
         .im-layer-content {
             overflow: visible;
             background: 0 0,
@@ -843,6 +844,10 @@ body {
     border-radius: 2px;
     background-color: #fff;
     box-shadow: 1px 1px 20px rgba(0, 0, 0, .1);
+
+    &.display {
+        display: block;
+    }
 
     li {
         list-style: none;

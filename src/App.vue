@@ -1,10 +1,11 @@
 <template>
   <div id="app" class="wrapper">
     <mchat
-      ref="chat"
+      ref="mchat"
       :config="config"
       :chats="chats"
       :mine="mine"
+      @chatEvent="handleChatEvent"
       @talkEvent="talkEvent"
       @sendMessage="sendMessage"
       @loadHistory="handleHistory"
@@ -18,9 +19,7 @@
             :filter-user-method="filterUser"
             @click="handleRightEvent"
           ></mchat-group-list>
-          <div>
-            发挥你的想象
-          </div>
+          <div v-else > 发挥你的想象</div>
         </template>
       </mchat-right-box>
     </mchat>
@@ -38,10 +37,9 @@ export default {
         // 是否有下拉按钮
         downBtn: true,
         rightBox: true,
-
         minRight: true,
         // 是否开启桌面消息提醒，即在浏览器之外的提醒
-        notice: true,
+        notice: false,
         // 设定
         voice: true,
       },
@@ -60,16 +58,8 @@ export default {
       let list = CONST.notice_list;
       return list;
     },
-
-    handleRightEvent(event) {
-      console.log("右边框事件", event);
-    },
-    handleHistory(callBack) {
-      let list = CONST.history;
-      callBack(list);
-    },
-    talkEvent({ event, data }) {
-      let channels = this.config.chats;
+    handleChatEvent(event, data) {
+      let channels = this.chats;
       let len = channels.length;
       if (len < 1) return;
       let ary = [];
@@ -81,11 +71,20 @@ export default {
               ary.push(model);
             }
           }
-          this.config.chats = ary;
+          this.chats = ary;
           break;
       }
     },
-
+    handleRightEvent(event) {
+      console.log("右边框事件", event);
+    },
+    handleHistory(callBack) {
+      let list = CONST.history;
+      callBack(list);
+    },
+    talkEvent(event, data) {
+      console.log("谈话内容", { event, data });
+    },
     sendMessage(data) {
       const { mine, to, content, timestamp } = data;
       let message = {
@@ -109,7 +108,8 @@ export default {
         timestamp,
       };
 
-      this.$im.emit("getMessage", message);
+      // this.$im.emit("getMessage", message);
+      this.$refs.mchat.getMessage(message);
     },
   },
   mounted() {

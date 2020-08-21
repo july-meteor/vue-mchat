@@ -2,6 +2,7 @@
 import MChatTabs from "./chatTabs";
 import { playTipSound } from "../util/play";
 
+
 export default {
   name: "mchat",
   components: {
@@ -47,7 +48,7 @@ export default {
       chatDisplay: true,
     };
   },
-
+  watch: {},
   methods: {
     loadHistory(callBack) {
       this.$emit("loadHistory", callBack);
@@ -59,12 +60,42 @@ export default {
       if (voice) {
         playTipSound();
       }
-
       this.panes.forEach((item) => {
         let { chat } = item;
         if (chat.id != message.id || chat.type != message.type) return;
         item.getMessage(message);
       });
+    },
+
+    handleEvent(event, data) {
+      switch (event) {
+        case "minRight":
+          this.chatDisplay = !this.chatDisplay;
+          break;
+        case "tabClick":
+          this.handleTabClick(data);
+          break;
+        case "tabRemove":
+          this.handleRemoveChat(data);
+          break;
+        default:
+          break;
+      }
+    },
+    // 会话内容的事件
+    bindTalkEvent(event, data) {
+      this.$emit("talkEvent", event, data);
+    },
+    // 会话框的事件
+    bindChatEvent(event, data) {
+      this.$emit("chatEvent", event, data);
+    },
+    handleTabClick({ pane }) {
+      this.selected = pane.index;
+    },
+    handleRemoveChat({ pane }) {
+      const { name, type, id } = pane.chat;
+      this.bindChatEvent("removeChat", { id, name, type });
     },
     handleEnter(chat, content) {
       const mine = this.mine;
@@ -90,38 +121,9 @@ export default {
         //发起的时间戳
         timestamp: new Date(),
       };
+      //是否写回去
 
       this.$emit("sendMessage", message);
-    },
-    handleEvent({ event, data }) {
-      switch (event) {
-        case "minRight":
-          this.chatDisplay = !this.chatDisplay;
-          break;
-        case "tabClick":
-          this.handleTabClick(data);
-          break;
-        case "tabRemove":
-          this.handleRemoveChat(data);
-          break;
-        default:
-          break;
-      }
-    },
-    // 会话内容的事件
-    handleTalkEvent(event) {
-      this.$emit("talkEvent", event);
-    },
-    // 会话框的事件
-    handleChatEvent() {
-      this.$emit("chatEvent", event);
-    },
-    handleTabClick({ pane }) {
-      this.selected = pane.index;
-    },
-    handleRemoveChat({ pane }) {
-      const { name, type, id } = pane.chat;
-      this.handleTalkEvent({ event: "removeChat", data: { id, name, type } });
     },
     handPanesDrag(e) {
       let el = this.$refs.chat;
@@ -156,11 +158,12 @@ export default {
           panes.length === this.panes.length &&
           panes.every((pane, index) => pane === this.panes[index])
         );
+        let size = this.panes.length;
         if (isForceUpdate || panesChanged) {
           this.selected = "0";
           this.panes = panes;
         }
-      } else if (this.panes.length !== 0) {
+      } else if (size !== 0) {
         this.panes = [];
       }
     },
@@ -171,12 +174,13 @@ export default {
       config,
       chats,
       panes,
+      bindTalkEvent,
       handleEvent,
       handleEnter,
       loadHistory,
       chatDisplay,
     } = this;
-
+    if(chats.length < 1) return
     // 窗口页面
     const el_chat_panes = this._l(chats, (chat) => {
       let data_chat = {
@@ -192,6 +196,9 @@ export default {
           loadHistory: function (callBack) {
             loadHistory(callBack);
           },
+          talkEvent: function (event, data) {
+            bindTalkEvent(event, data);
+          },
         },
       };
 
@@ -205,12 +212,11 @@ export default {
       },
       ref: "MChatTabs",
       on: {
-        click: function (data) {
-          handleEvent(data);
+        click: function (event, data) {
+          handleEvent(event, data);
         },
       },
     };
-
     return (
       <div>
         <div

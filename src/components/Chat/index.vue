@@ -114,7 +114,7 @@ export default {
         });
       });
     },
-    handleEnter(message) {
+    bindEnter(message) {
       this.$emit("enter", message);
     },
     // 处理收到的消息
@@ -124,6 +124,9 @@ export default {
     bindEmoji(emoji) {
       this.content += emoji;
     },
+    bindTalkEvent(event,data) {
+      this.$emit("talkEvent", event, data);
+    },
     handleUnread(count) {
       if (this.active) {
         this.unread = 0;
@@ -132,8 +135,6 @@ export default {
       }
     },
   },
-  mounted() {},
-  updated() {},
   render(h) {
     let {
       rootChat,
@@ -143,7 +144,8 @@ export default {
       taleList,
       rightActive,
       bindEmoji,
-      handleEnter,
+      bindTalkEvent,
+      bindEnter,
       handleUnread,
       loadHistory,
       handleRighActive,
@@ -178,6 +180,9 @@ export default {
         loadHistory: function () {
           loadHistory();
         },
+        talkEvent: function (event, data) { 
+          bindTalkEvent( event, data );
+        },
       },
     };
     var self = this;
@@ -201,7 +206,7 @@ export default {
           self.content = value;
         },
         submit: function (data) {
-          handleEnter(data);
+          bindEnter(data);
         },
       },
     };
@@ -271,6 +276,5 @@ export default {
     );
     return el_chat;
   },
-  created() {},
 };
 </script>

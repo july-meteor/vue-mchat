@@ -1,4 +1,6 @@
 <script>
+import { on, off } from "../util/dom";
+
 export default {
   name: "MChat-enter-box",
   componentName: "MChatEnterBox",
@@ -13,7 +15,11 @@ export default {
   },
   data() {
     return {
-      currentContent: '',
+      currentContent: "",
+
+      setBoxDisplay: false,
+      // 发送模式
+      enter: true,
     };
   },
   watch: {
@@ -31,10 +37,26 @@ export default {
       immediate: true,
     },
   },
-  created(){
-
-  },
+  created() {},
   methods: {
+    doToggle() {
+      this.setBoxDisplay = !this.setBoxDisplay;
+    },
+    selectEnter(flag) {
+      this.enter = flag;
+    },
+    handleDocumentClick(e) {
+      let reference = this.$refs.reference;
+      let setting = this.$refs.setting;
+      if (
+        !setting ||
+        !reference ||
+        setting.contains(e.target) ||
+        reference.contains(e.target)
+      )
+        return;
+      this.setBoxDisplay = false;
+    },
     // 数据格式往上抛
     handleSend() {
       if (!this.currentContent) return;
@@ -44,8 +66,21 @@ export default {
       });
     },
   },
+  destroyed() {
+    off(document, "click", this.handleDocumentClick);
+  },
+  mounted() {
+    on(document, "click", this.handleDocumentClick);
+  },
   render(h) {
-    let {  handleSend,  placeholder, recording } = this;
+    let {
+      handleSend,
+      enter,
+      placeholder,
+      selectEnter,
+      setBoxDisplay,
+      doToggle,
+    } = this;
     var self = this;
     const textareaVnode = h("textarea", {
       domProps: {
@@ -59,10 +94,10 @@ export default {
         keydown: function (ev) {
           let keyCode = ev.keyCode;
           let ctrlKey = ev.ctrlKey;
-          //  if(ctrlKey && keyCode === 13){
-          //   self.sendMessage();
-          //  }
-          if (keyCode === 13) {
+          if (ctrlKey && keyCode === 13 && !enter) {
+            handleSend();
+          }
+          if (keyCode === 13 && enter) {
             if (ctrlKey) {
               self.currentContent += "\n";
             } else {
@@ -73,6 +108,9 @@ export default {
         },
       },
     });
+    let enter_prompt = enter
+      ? "按Enter发送，按住Ctrl+Enter换行"
+      : "按Ctrl+Enter发送，按住Enter换行";
 
     let el_enter_box = (
       <div>
@@ -80,37 +118,35 @@ export default {
         <div class="im-chat-bottom">
           <div class="im-chat-btn-bar">
             <span
-              on-click={() => {
-             
-              }}
-            >
-              关闭
-            </span>
-            <span
-              on-click={() => {
-        
-              }}
-              style={{ "background-color": recording ? "red" : "" }}
-            >
-              PTT
-            </span>
-            <span
               class="im-btn-send"
               on-click={() => {
                 handleSend();
               }}
+              title={enter_prompt}
             >
-              发送
+              发送(<font style="text-decoration: underline;">S</font>)
             </span>
-            <span class="im-send-set">
+            <span class="im-send-set" on-click={() => doToggle()} ref="setting">
               <em class="icon-edge"></em>
             </span>
-            <ul class="im-menu-box">
-              <li class="im-this">
+            <ul
+              ref="reference"
+              class={{
+                "im-menu-box": true,
+                display: setBoxDisplay,
+              }}
+            >
+              <li
+                class={{ "im-this": enter }}
+                on-click={() => selectEnter(true)}
+              >
                 <i class="im-icon el-icon-check"></i>
                 按Enter键发送消息
               </li>
-              <li>
+              <li
+                class={{ "im-this": !enter }}
+                on-click={() => selectEnter(false)}
+              >
                 <i class="im-icon el-icon-check"></i>按Ctrl+Enter键发送消息
               </li>
             </ul>

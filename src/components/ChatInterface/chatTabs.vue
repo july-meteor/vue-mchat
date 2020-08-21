@@ -25,7 +25,7 @@ export default {
       this.stickyTop = event.target.scrollTop;
     },
     bindClick(event, data) {
-      this.$emit("click", { event, data });
+      this.$emit("click", event, data);
     },
     // 处理未读信息
     handleUnread() {},
@@ -69,6 +69,7 @@ export default {
           <img
             src={avatar}
             on-click={(ev) => {
+              ev.stoppropagation()
               bindClick("tabClick", { pane, ev });
             }}
           />
@@ -76,6 +77,7 @@ export default {
           <i
             class="im-icon el-icon-error"
             on-click={(ev) => {
+              ev.stopPropagation()
               bindClick("tabRemove", { pane, ev });
             }}
           ></i>
