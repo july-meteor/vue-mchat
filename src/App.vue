@@ -6,11 +6,13 @@
           <div slot="header" class="clearfix">
             <span>操作示例</span>
           </div>
-          <el-button>增加会话</el-button>
-          <el-button>删除会话</el-button>
+          <el-button @click="handleAddChat">增加会话</el-button>
+          <el-button @click="handleDelChat">删除会话</el-button>
+          <el-button @click="config.brief= !config.brief">简约模式</el-button>
         </el-card>
       </el-col>
     </el-row>
+
     <mchat
       ref="mchat"
       :config="config"
@@ -39,6 +41,32 @@
 <script>
 import CONST from "./constant";
 
+//红色语录
+var replay = [
+  "我认识的人很多，而且我的同志遍布五湖四海。emoji[嘻嘻]",
+  "我才五年级，老马讲什么都听不懂了，因为他坚持奋斗福报走资理论。emoji[威武]",
+  "我喜欢你，emoji[爱你]从初级阶段直到共产主义。",
+  "奋斗了三十年他终究还是离开了我们，但他还在我们身边。 ",
+  "我通过了你的入党申请，现在我们可以开始为全人类解放的伟大事业共同奋斗了。emoji[心]emoji[心]",
+  "资产阶级的白鸽不会亲吻乌鸦，世间没有所谓跨阶级的爱。",
+  "中国真好，下次还来。",
+  "生而为人，为人民服务。",
+  "<（@￣︶￣@）>",
+  "(*^__^*) emojio[嘻嘻] ，请我喝咖啡吗？",
+];
+
+var authReplay = {
+  username: "july-meteor",
+  avatar: "/avatar/黑骑.png",
+  id: undefined,
+  type: undefined,
+  content: undefined,
+  cid: 0,
+  mine: false,
+  fromid: -1,
+  timestamp: new Date(),
+};
+
 export default {
   name: "app",
   data() {
@@ -48,7 +76,8 @@ export default {
         // 是否有下拉按钮
         downBtn: true,
         rightBox: true,
-        minRight: true,
+        // 简约模式
+        brief:false,
         // 是否开启桌面消息提醒，即在浏览器之外的提醒
         notice: false,
         // 设定
@@ -119,21 +148,33 @@ export default {
         timestamp,
       };
 
-      // this.$im.emit("getMessage", message);
+      // 
       this.$refs.mchat.getMessage(message);
+
+      //自动回复
+      authReplay.id = to.id;
+      authReplay.type = to.type;
+      authReplay.content = replay[(Math.random() * 9) | 0];
+      this.$im.emit("getMessage", authReplay);
+    },
+    //添加回话
+    handleAddChat() {
+      let newChat = {
+        id: parseInt(Math.random() * 10, 10),
+        name: "新会话",
+        type: "friend",
+        avatar: "/avatar/temp2.jpg",
+      };
+
+      this.chats.push(newChat);
+    },
+    handleDelChat() {
+      this.chats.pop();
     },
   },
-  mounted() {
-    let message = CONST.test_send_msg;
-    // message.forEach((mes) => {
-    //   this.$im.emit("getMessage", mes);
-    // });
-  },
+  mounted() {},
 };
 </script>
-
-
-
 
 <style lang="scss">
 #app {

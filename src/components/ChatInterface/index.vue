@@ -17,7 +17,7 @@ export default {
       type: Object,
       default: () => ({
         rightBox: false,
-        minRight: false,
+        brief: false,
         voice: false,
         notice: false,
       }),
@@ -58,11 +58,16 @@ export default {
     },
   },
   watch: {
-    alone(nv,ov){
-      if(nv){
-         this.chatDisplay = true;
+    alone(nv, ov) {
+      if (nv) {
+        this.chatDisplay = true;
       }
-    }
+    },
+    "config.brief"(nv, ov) {
+      if (!nv) {
+        this.chatDisplay = true;
+      }
+    },
   },
   methods: {
     loadHistory(callBack) {
@@ -144,14 +149,14 @@ export default {
       var oDiv = el;
       var disX = e.clientX - oDiv.offsetLeft;
       var disY = e.clientY - oDiv.offsetTop;
-      document.onmousemove = function (e) {
+      document.onmousemove = function(e) {
         e.preventDefault();
         var l = e.clientX - disX;
         var t = e.clientY - disY;
         oDiv.style.left = l + "px";
         oDiv.style.top = t + "px";
       };
-      document.onmouseup = function () {
+      document.onmouseup = function() {
         document.onmousemove = null;
         document.onmouseup = null;
       };
@@ -205,13 +210,13 @@ export default {
         },
         ref: "MChatIndex",
         on: {
-          enter: function (content) {
+          enter: function(content) {
             handleEnter(chat, content);
           },
-          loadHistory: function (callBack) {
+          loadHistory: function(callBack) {
             loadHistory(callBack);
           },
-          talkEvent: function (event, data) {
+          talkEvent: function(event, data) {
             bindTalkEvent(event, data);
           },
         },
@@ -227,7 +232,7 @@ export default {
       },
       ref: "MChatTabs",
       on: {
-        click: function (event, data) {
+        click: function(event, data) {
           handleEvent(event, data);
         },
       },
@@ -237,11 +242,11 @@ export default {
         <div
           class={{
             "im-layer  layer-anim im-box im-chat": true,
-            "chat-show": chatDisplay ,
-            'alone':alone
+            "chat-show": chatDisplay,
+            alone: alone,
           }}
           ref="chat"
-            style={{
+          style={{
             "z-index": 1002,
             left: "296.5px",
             display: "inline",
@@ -293,9 +298,7 @@ export default {
   width: 800px;
 }
 
-.chat-show.alone{
+.chat-show.alone {
   width: 620px;
 }
-
 </style>
-

@@ -20,11 +20,11 @@ MChat</h1>
   </a>
 </p>
 
-简体中文 | [English](README.en.md)
+[简体中文](README.md) | English
 
 
 ## 简介
-![演示图](/doc/img/demo_gif.gif)
+![演示图](/doc/img/vue_mchat_demo.gif)
 ![MChat-index演示图](/doc/img/sample_1.png)
 这是一款基于vue与elementu-ui开发的聊天室组件库，在UI上模仿了TIM及微信。在提供基础封装的同时，最大程度的增加扩展性。
 
@@ -55,7 +55,7 @@ MChat</h1>
 在`main.js`中引入
   ``` bash
   // 进入css
-  import from 
+  import 'MChat/lib/MChat.css'
   //引入组件
   import MChat from 'MChat'
   // 使用vue加载组件
@@ -81,7 +81,7 @@ MChat</h1>
     <td> 是否有右侧抽屉,如果为true,则右侧面板显示，可以加入自定义组件</td>
   </tr>
   <tr >
-    <td> minRight </td>
+    <td> brief </td>
     <td> true </td>
     <td>boolean</td>
     <td> 是否开启简约模式,Chat可以被缩小</td>
@@ -238,7 +238,8 @@ MChat</h1>
   </tr>
   <tr >
     <td> sendMessage </td>
-    <td> 每当你发送一个消息，都可以通过该事件监听到。回调参数接受一个object类型的值，携带发送的聊天信息 </td>
+    <td> 每当你发送一个消息，都可以通过该事件监听到。 </br>
+    回调参数接受一个object类型的值，携带发送的聊天信息 </td>
     <td> message </td>
   </tr>
   <tr >
@@ -300,7 +301,7 @@ MChat</h1>
 
 
 
-**如有问题请先看上述使用文档和文章，若不能满足，欢迎 issue 或者 发邮件给我
+**如有问题请先看上述使用文档和文章，若不能满足，欢迎 issue 或者 发邮件给我，根据star和watch的人数进行下一步更新
 
 ### MChat-right-box  
 

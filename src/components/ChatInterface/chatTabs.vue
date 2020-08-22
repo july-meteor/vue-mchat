@@ -69,7 +69,7 @@ export default {
           <img
             src={avatar}
             on-click={(ev) => {
-              ev.stoppropagation();
+              // ev.stoppropagation();
               bindClick("tabClick", { pane, ev });
             }}
           />
@@ -88,7 +88,7 @@ export default {
 
     let el_tabs_bar = "";
 
-    if (config.minRight) {
+    if (config.brief) {
       const el_icon = (
         <i
           class={{
