@@ -1,34 +1,39 @@
+
+/**
+ *  tomcat 部署 图片名称不能使用中文
+ */
+
 // 用户列表
 const user_list = [
   {
     id: 1,
     name: "七月",
     type: "",
-    avatar: "/avatar/avatar_meteor.png",
+    avatar:require("../public/avatar/avatar_meteor.png"),
   },
   {
     id: 1,
     name: "初音",
     type: "",
-    avatar: "/avatar/初音.png",
+    avatar: require("../public/avatar/chuyin.png"),
   },
   {
     id: 2,
     name: "雪",
     type: "",
-    avatar: "/avatar/雪.png",
+    avatar: require("../public/avatar/xue.png"),
   },
   {
     id: 3,
     name: "可可罗",
     type: "",
-    avatar: "/avatar/可可罗.png",
+    avatar: require("../public/avatar/kekeluo.png"),
   },
   {
     id: 4,
     name: "栞",
     type: "",
-    avatar: "/avatar/栞.png",
+    avatar:require("../public/avatar/kan.png"),
   },
 ];
 
@@ -50,7 +55,7 @@ const notice_list = [
 const history = [
   {
     username: "历史记录",
-    avatar: "/avatar/temp2.jpeg ",
+    avatar: require("../public/avatar/temp2.jpg"),
     id: 1,
     type: "group",
     content: "audio[https://www.w3school.com.cn/i/horse.mp3]",
@@ -65,7 +70,7 @@ const history = [
 const test_send_msg = [
   {
     username: "小白",
-    avatar: "/avatar/temp1.jpg",
+    avatar: require("../public/avatar/temp1.jpg"),
     id: 1,
     type: "group",
     content: "img[/emoticon/emoticon_1.jpg]",
@@ -76,7 +81,7 @@ const test_send_msg = [
   },
   {
     username: "小奶",
-    avatar: "/avatar/temp2.jpeg ",
+    avatar: require("../public/avatar/temp2.jpg"),
     id: 1,
     type: "group",
     content: "video[https://www.w3school.com.cn/i/movie.mp4]",
@@ -87,7 +92,7 @@ const test_send_msg = [
   },
   {
     username: "老八",
-    avatar: "/avatar/temp2.jpeg ",
+    avatar: require("../public/avatar/temp2.jpg"),
     id: 1,
     type: "group",
     content: "audio[https://www.w3school.com.cn/i/horse.mp3]",
@@ -107,7 +112,7 @@ const mine = {
   status: "online",
   //签名
   sign: "与其感慨路难行,不如马上出发！",
-  avatar: "/avatar/avatar_meteor.png",
+  avatar: require("../public/avatar/avatar_meteor.png"),
 }
 
 const chats = [
@@ -115,7 +120,7 @@ const chats = [
     id: 1,
     name: "海喵突基队",
     type: "group",
-    avatar: "/images/group_1.jpg",
+    avatar: require("../public/images/group_1.jpg"),
     userList: user_list,
     notices: notice_list,
   },
@@ -123,7 +128,7 @@ const chats = [
     id: 2,
     name: "初音",
     type: "friend",
-    avatar: "/avatar/初音.png",
+    avatar: require("../public/avatar/chuyin.png"),
   },
 ]
 

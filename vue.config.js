@@ -9,7 +9,7 @@ function resolve(dir) {
 module.exports = {
 
   publicPath: './',
-  outputDir: 'dist',
+  outputDir: 'chat',
   assetsDir: 'static',
   // lintOnSave: process.env.NODE_ENV === 'development',
   lintOnSave: false,

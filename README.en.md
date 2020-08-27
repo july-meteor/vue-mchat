@@ -20,13 +20,20 @@ MChat</h1>
   </a>
 </p>
 
-[简体中文](README.md) | English
+简体中文 | [English](README.en.md)
 
 
-## 简介
+## 简介 `如果觉得还行请给个star 谢谢` 
+
 ![演示图](/doc/img/vue_mchat_demo.gif)
 ![MChat-index演示图](/doc/img/sample_1.png)
 这是一款基于vue与elementu-ui开发的聊天室组件库，在UI上模仿了TIM及微信。在提供基础封装的同时，最大程度的增加扩展性。
+[演示地址](http://www.julymeteor.com/chat/)
+- 代码地址
+ - [Github]()
+ - [Gitee] (https://gitee.com/july-meteor/vue-mchat)
+
+
 
 ## v1.0.0内容
 - 基础聊天室功能 

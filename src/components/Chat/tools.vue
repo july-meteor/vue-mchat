@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import emojis from '../util/emoji';
+import emojis from './emoji';
 
 export default {
   name: "chat-tools",

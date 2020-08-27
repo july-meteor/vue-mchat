@@ -3,7 +3,7 @@ import {
   ConvertContext,
   ConvertRecord,
   dateFormat,
-} from "../util/convertContext";
+} from "./convertContext";
 import Scroll from "../util/scroll";
 
 export default {

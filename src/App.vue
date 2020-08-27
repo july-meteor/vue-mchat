@@ -57,7 +57,7 @@ var replay = [
 
 var authReplay = {
   username: "july-meteor",
-  avatar: "/avatar/黑骑.png",
+  avatar:require("../public/avatar/heiqi.png"),
   id: undefined,
   type: undefined,
   content: undefined,
@@ -163,7 +163,7 @@ export default {
         id: parseInt(Math.random() * 10, 10),
         name: "新会话",
         type: "friend",
-        avatar: "/avatar/temp2.jpg",
+        avatar:require("../public/avatar/temp2.jpg"),
       };
 
       this.chats.push(newChat);
