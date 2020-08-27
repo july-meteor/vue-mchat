@@ -33,8 +33,8 @@ MChat</h1>
 
 [演示地址](http://www.julymeteor.com/chat/)
 - 代码地址
- - [Github]()
- - [Gitee] (https://gitee.com/july-meteor/vue-mchat)
+ - [Github](https://github.com/july-meteor/vue-mchat)
+ - [Gitee](https://gitee.com/july-meteor/vue-mchat)
 
 
 
