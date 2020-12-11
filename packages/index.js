@@ -4,8 +4,8 @@ import EventHub from './util/eventHub'
 import MChatRightBox from './RightBox'
 import MChatRightList from './GroupList'
 import SvgIcon from './SvgIcon'
-import '../styles/im.scss'
-import '../styles/index.scss'
+import './styles/im.scss'
+import './styles/index.scss'
 
 
 const components = [MChat, MChatIndex, MChatRightBox, MChatRightList, SvgIcon]
