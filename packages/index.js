@@ -1,5 +1,4 @@
-import MChatIndex from './chat'
-import MChat from './chatInterface'
+import MChat from './MChat'
 import EventHub from './util/eventHub'
 import MChatRightBox from './rightBox'
 import MChatRightList from './groupList'
@@ -11,7 +10,7 @@ import ELPopver from  './element/popover'
 import './styles/index.scss'
 
 
-const components = [MChat, MChatIndex, MChatRightBox, MChatRightList, MDialog, MIcon,ELPopver]
+const components = [MChat, MChatRightBox, MChatRightList, MDialog, MIcon,ELPopver]
 
 // const req = require.context('./SvgIcon/svg/', false, /\.svg$/)
 // const requireAll = requireContext => requireContext.keys().map(requireContext)

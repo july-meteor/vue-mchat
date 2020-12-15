@@ -110,8 +110,53 @@ export default {
       console.log("右边框事件", event);
     },
     handleHistory(callBack) {
-      let list = CONST.history;
-      callBack(list);
+        let history = [
+            {
+                username: "历史记录",
+                avatar: require("../public/avatar/temp2.jpg"),
+                id: 1,
+                type: "group",
+                content: "audio[https://www.w3school.com.cn/i/horse.mp3]",
+                cid: parseInt(Math.random() * 10, 10),
+                mine: false,
+                fromid: 3,
+                timestamp: new Date(),
+            },
+            {
+                username: "历史记录",
+                avatar: require("../public/avatar/temp2.jpg"),
+                id: 1,
+                type: "group",
+                content: "audio[https://www.w3school.com.cn/i/horse.mp3]",
+                cid: parseInt(Math.random() * 10, 10),
+                mine: false,
+                fromid: 3,
+                timestamp: new Date(),
+            },
+            {
+                username: "历史记录",
+                avatar: require("../public/avatar/temp2.jpg"),
+                id: 1,
+                type: "group",
+                content: "audio[https://www.w3school.com.cn/i/horse.mp3]",
+                cid: parseInt(Math.random() * 10, 10),
+                mine: false,
+                fromid: 3,
+                timestamp: new Date(),
+            },
+            {
+                username: "历史记录",
+                avatar: require("../public/avatar/temp2.jpg"),
+                id: 1,
+                type: "group",
+                content: "audio[https://www.w3school.com.cn/i/horse.mp3]",
+                cid: parseInt(Math.random() * 10, 10),
+                mine: false,
+                fromid: 3,
+                timestamp: new Date(),
+            },
+        ];
+      callBack(history);
     },
     talkEvent(event, data) {
       console.log("谈话内容", { event, data });
@@ -143,18 +188,18 @@ export default {
       this.$refs.mchat.getMessage(message);
 
       //自动回复
-        let authReplay = {
-            username: "july-meteor",
-            avatar:require("../public/avatar/heiqi.png"),
-            id: to.id,
-            type: to.type,
-            content:  replay[(Math.random() * 9) | 0],
-            cid: 0,
-            mine: false,
-            fromid: -1,
-            timestamp: new Date(),
-        };
-        this.$im.emit("getMessage", authReplay);
+      //   let authReplay = {
+      //       username: "july-meteor",
+      //       avatar:require("../public/avatar/heiqi.png"),
+      //       id: to.id,
+      //       type: to.type,
+      //       content:  replay[(Math.random() * 9) | 0],
+      //       cid: 0,
+      //       mine: false,
+      //       fromid: -1,
+      //       timestamp: new Date(),
+      //   };
+        // this.$im.emit("getMessage", authReplay);
     },
     //添加回话
     handleAddChat() {
@@ -171,7 +216,23 @@ export default {
       this.chats.pop();
     },
   },
-  mounted() {},
+  mounted() {
+      let _this = this;
+      // setInterval(function () {
+      //     let authReplay = {
+      //         username: "july-meteor",
+      //         avatar:require("../public/avatar/heiqi.png"),
+      //         id: 2,
+      //         type: 'friend',
+      //         content:  replay[(Math.random() * 9) | 0],
+      //         cid: 0,
+      //         mine: false,
+      //         fromid: -1,
+      //         timestamp: new Date(),
+      //     };
+      //     _this.$im.emit("getMessage", authReplay);
+      // } ,5000);
+  },
 };
 </script>
 

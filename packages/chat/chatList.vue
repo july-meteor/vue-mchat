@@ -10,6 +10,11 @@ export default {
   name: "chat-list",
   componentName: "ChatList",
   props: {
+     //是否是当前对话框
+    current:{
+        type:Boolean,
+        default:false,
+    },
     //聊天记录
     list: {
       type: Array,
@@ -25,7 +30,8 @@ export default {
   },
   data() {
     return {
-      load: false,
+      // 锁
+      lock: false,
       scroll: null,
       scrollTimer: null,
       // 标题前消息
@@ -35,52 +41,64 @@ export default {
       //下载历史
       loadHistory: false,
       // 历史是否下载了
-      historyLoding: false,
+      historyBtnShow: false,
     };
   },
   watch: {
-    //
-    load(newval) {
-      if (newval) {
+    // 当前窗口切换
+    current(newVal,oldVal){
+        if (newVal){
+            let reset = this.isBottom;
+            this.scrollRefresh()
+            if (reset){
+                this.scrollBottom();
+            }
+        }
+        if (!newVal && oldVal ){
+            // this.scroll.read();
+        }
+    },
+    // 锁
+    lock(newVal) {
+      if (newVal) {
         setTimeout(() => {
           this.scroll && this.scroll.refresh();
-          this.load = false;
-        }, 1000);
+          this.lock = false;
+        }, 100);
       }
     },
-    list(newval) {
-      if (newval) {
+    list(newVal) {
+      if (newVal) {
         this.$nextTick(() => {
-          setTimeout(() => {
-            let reset = false;
-            if (this.historyLoding) {
-              reset = true;
-              this.closeTopTip();
-              this.$nextTick(() => {
-                this.scroll.toBeforePosition();
-              });
-            }
-            this.load = true;
             this.childnodeLoad();
-            if (reset) {
-              this.scroll.resetTop();
+            // 下载记录历史
+            if (this.loadHistory) {
+              this.closeTopTip();
+                this.scrollRefresh();
+                this.$nextTick(() => {
+                    this.scroll.toBeforePosition()
+                })
             }
-            if (this.scrollType === "scroll") {
-              this.scrollBottom();
+
+            // 如果不是当前
+            if (!this.current){
+                // 增加未读数
+            }else  if(this.isBottom){ // 如果触底了直接往下滚
+                this.scrollBottom();
             }
-          }, 300);
+            //还有一种情况是自己发送的。。
         });
       }
     },
     //
-    "config.scrollToButton"(newval) {
-      if (newval) {
+    "config.scrollToButton"(newVal) {
+      if (newVal) {
         this.scrollBottom();
       }
     },
     // 未读
-    unread(newval) {
-      if (newval) {
+    unread(newVal) {
+      if (newVal) {
         this.beforeTitle && this.resetTitle(this.beforeTitle);
         this.saveTitle();
         this.changeTitle();
@@ -94,13 +112,8 @@ export default {
   },
   computed: {
     //是否在最下面
-    isBottom() {
+      isBottom() {
       return this.scroll && this.scroll.isBottom;
-    },
-    // 滚动条类型
-    scrollType() {
-      const { scrollType: type = "noroll" } = this.config;
-      return type;
     },
     //未读
     unread() {
@@ -108,6 +121,7 @@ export default {
       this.$emit("messageUnread", unread);
       return unread;
     },
+
   },
   methods: {
     bindTalkEvent(event, data) {
@@ -115,10 +129,11 @@ export default {
     },
     // 拉取历史记录
     handleHistory() {
+        //锁住拉取
+      this.loadHistory = true;
       this.$emit("loadHistory");
     },
     /******  滚动条设置 ******/
-
     createScroll() {
       const that = this;
       const dom = this.$refs.scroller;
@@ -142,63 +157,55 @@ export default {
         }
       );
 
-      // scroll done callback
+      // 停止滚动时触发。
       this.scroll.on("scrollEnd", function () {
         that.scrollTop();
-        if (that.historyLoding) return;
         that.scroll.savePosition();
-        that.scroll.read();
+        // that.scroll.read();
       });
     },
 
     // 读取 历史记录强行拉动滚动条
     scrollTop() {
+        //是否触顶
       const { isTop } = this.scroll;
       if (isTop) {
-        if (this.loadHistory) {
-          this.historyLoding = true;
-        } else this.loadHistory = true;
-        return;
+          // 后期自动拉取历史再改进
+          this.historyBtnShow = true;
+          return;
       }
-      this.closeTopTip();
+        this.closeTopTip();
     },
     scrollUp() {
       if (this.scroll) {
-        this.scroll.refresh();
-        setTimeout(() => {
-          this.scroll.scrollTo(0, 0, 200);
-        }, 500);
+          this.scrollRefresh();
+        this.scroll.scrollTo(0, 0, 200);
       }
     },
     scrollBottom() {
       if (this.scroll) {
-        this.scroll.refresh();
-        setTimeout(() => {
-          this.scroll.scrollTo(0, this.scroll.maxScrollY, 200);
-        }, 500);
+        this.scrollRefresh();
+        this.scroll.scrollTo(0, this.scroll.maxScrollY, 200);
       }
     },
     closeTopTip() {
       this.loadHistory = false;
-      this.historyLoding = false;
+      this.historyBtnShow = false;
     },
-    // 看看有几条了
+    // 判断是否有未读记录
     childnodeLoad() {
-      if (this.scrollType === "scroll") return;
       const parent = this.$refs.main;
       if (!parent) return;
       const childs = parent.children;
       for (let el of childs) {
         const top = el.offsetTop;
-        this.scroll.setPosition(top, el);
+        this.scroll.addNode(top, el);
       }
     },
+    // 刷新滚动条长度
     scrollRefresh() {
-      setTimeout(() => {
-        this.scroll && this.scroll.refresh();
-        this.scrollRefresh();
-      }, 1000);
-      return;
+        // 因为是通过界面去计算的所以如果图形隐藏不要去触发这个方法
+        this.scroll.refresh();
     },
     /**** 滚动条结束 ********/
     /*** 标签标题  开始***/
@@ -241,12 +248,11 @@ export default {
   },
   mounted() {
     this.createScroll();
-    this.scrollRefresh();
   },
   render(h) {
     let {
       list,
-      historyLoding,
+      historyBtnShow,
       scrollUp,
       scrollBottom,
       bindTalkEvent,
@@ -283,7 +289,7 @@ export default {
     });
 
     let el_history_log;
-    if (historyLoding) {
+    if (historyBtnShow) {
       el_history_log = (
         <div class="history_lable" on-click={() => handleHistory()}>
           查看更多消息

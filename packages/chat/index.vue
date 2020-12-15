@@ -99,7 +99,6 @@ export default {
       }
     },
   },
-
   methods: {
     handleRighActive() {
       this.rightActive = !this.rightActive;
@@ -114,8 +113,13 @@ export default {
         });
       });
     },
+    // 发送消息
     bindEnter(message) {
       this.$emit("enter", message);
+        this.$nextTick(() => {
+            this.$refs.chatList.scrollBottom();
+        });
+
     },
     // 处理收到的消息
     getMessage(message) {
@@ -169,6 +173,7 @@ export default {
     // chat list  的数据
     data_chat_list = {
       props: {
+        current: active,
         list: taleList,
         config,
       },

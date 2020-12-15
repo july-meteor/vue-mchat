@@ -1,11 +1,12 @@
 <script>
 import MChatTabs from "./chatTabs";
+import MChatIndex from '../chat'
 import { playTipSound } from "../util/play";
 
 export default {
   name: "mchat",
   components: {
-    MChatTabs,
+    MChatTabs,MChatIndex,
   },
   provide() {
     return {
@@ -231,8 +232,7 @@ export default {
           },
         },
       };
-
-      return <mchat-index {...data_chat}></mchat-index>;
+      return <m-chat-index {...data_chat}></m-chat-index>;
     });
 
     // 标签页面

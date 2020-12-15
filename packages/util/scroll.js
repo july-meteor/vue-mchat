@@ -1,135 +1,129 @@
 'use strict'
 import IScroll from 'iscroll'
+
 /**
- * 【中文Api地址】https://iiunknown.gitbooks.io/iscroll-5-api-cn/content/index.html
+ * http://caibaojian.com/iscroll-5/scrollers.html
+ *  已读未读是根据 每次新增数据 li 链上挂上 node 来判断
+ *
  */
 
+
 class Scroll extends IScroll {
-  domPotision = []
-  isCroll = null
-  previousPostion = 0
-  beforeNode = null
+    domNodes = []
+    isCroll = null
+    readPosition = 0
+    // 之前是在第几个
+    beforeIndex = 0
 
-  constructor(node, options) {
-    super(node, options)
-  }
-
-  setPosition(postion, node) {
-    // this._findDom(postion, node)
-    this.addPostion(postion, node)
-  }
-
-  get nodePosition() {
-    return this.domPotision
-  }
-
-  get unread() {
-    let result = 0
-    this.domPotision.forEach(i => {
-      const { read } = i
-      if (!read) {
-        result += 1
-      }
-    })
-    return result
-  }
-
-  get isTop() {
-    let top = false
-    let { y } = this
-    if (y === 0) top = true
-    return top
-  }
-
-  addPostion(top, node) {
-    if (!this.domPotision.find(i => {
-      if (i.node === node) return i
-    })) {
-      this.domPotision.push({ node, read: false, top })
+    constructor(node, options) {
+        super(node, options)
     }
-  }
 
-  resetTop() {
-    const postion = this.domPotision
-    if (!postion) return
-    const newPosition = postion.map(({ node, read }) => {
-      return {
-        node, read, top: node.offsetTop
-      }
-    })
-    newPosition.sort((a, b) => a.top - b.top)
-    this.domPotision = newPosition
-    const index = this._findIndex()
-    index > -1 && this.read(index)
-  }
+    get nodePosition() {
+        return this.domNodes
+    }
 
-  _findIndex() {
-    const beforeNode = this.beforeNode
-    return this.domPotision.findIndex(i => i.node == beforeNode.node)
-  }
+    //  根据节点来判断是否已读
+    get unread() {
+        let result = 0
+        this.domNodes.forEach(i => {
+            const {read} = i
+            if (!read) {
+                result += 1
+            }
+        })
+        return result
+    }
 
-  read(index) {
-    const key = index || this.findDom()
-    let bottom = this.isBottom
+    get isTop() {
+        let top = false
+        let {y} = this
+        if (y === 0) top = true
+        return top
+    }
 
-    this.domPotision.forEach((i, j) => {
-      if (bottom || key > j) {
-        i.read = true
-      }
-    })
-  }
+    // 增加节点
+    addNode(top, node) {
+        if (!this.domNodes.find(i => {
+            if (i.node === node) return i
+        })) {
+            this.domNodes.push({node, read: false, top})
+        }
+    }
 
-  get isBottom() {
-    let result = false
-    const { y, maxScrollY } = this
-    result = Math.abs(y) >= Math.abs(maxScrollY)
-    return result
-  }
+    // 重新设置顶点
+    resetTop() {
+        const postion = this.domNodes
+        if (!postion) return
+        const newPosition = postion.map(({node, read}) => {
+            return {
+                node, read, top: node.offsetTop
+            }
+        })
+        newPosition.sort((a, b) => a.top - b.top)
+        this.domNodes = newPosition
+        const index = this._findIndex()
+        index > -1 && this.read(index)
+    }
+    // 之前的node
+    beforeNode() {
+        const beforeIndex = this.domNodes.length - this.beforeIndex;
+        if (!beforeIndex) {
+            return 0;
+        }
+        return this.domNodes[beforeIndex]
+    }
 
-  findDom() {
-    const { y } = this
-    let currentTop = Math.abs(y)
-    if (currentTop == 0) return 0
-    const doms = this.domPotision
-    let result = -1
+    // 已读
+    read(index) {
+        const key = index || this.findCurrentIndex()
+        let bottom = this.isBottom
+        this.domNodes.forEach((i, j) => {
+            if (bottom || key > j) {
+                i.read = true
+            }
+        })
+    }
 
-    // doms.forEach((i, j) => {
-    //   const { top: t, node } = i
-    //   const size = node.offsetHeight
-    //   if (result < 0 && currentTop < t + size) {
-    //     result = j
-    //     if (currentTop > t) result += 1
-    //   }
-    // })
+    get isBottom() {
+        let result = false
+        const {y, maxScrollY} = this
+        result = Math.abs(y) >= Math.abs(maxScrollY)
+        return result
+    }
 
-    doms.forEach((i, j) => {
-      const { top } = i
-      if (result === -1 || currentTop >= top) {
-        result = j + 1
-        // currentTop = top
-        // if (currentTop > top) result += 1
-      }
-    })
+    // 查找当前的索引
+    findCurrentIndex() {
+        const {y} = this
+        let currentTop = Math.abs(y)
+        if (currentTop == 0) return 0
+        const doms = this.domNodes
+        let result = -1
+        doms.forEach((i, j) => {
+            const {top} = i
+            if (result === -1 || currentTop >= top) {
+                result = j + 1
+            }
+        })
+        return result
+    }
+    // 保存当前位置
+    savePosition() {
+        const {y} = this
+        this.readPosition = y
+        this.saveCurrentIndex()
+    }
 
-    return result
-  }
-
-  savePosition() {
-    const { y } = this
-    this.previousPostion = y
-    this.savseCurrentNode()
-  }
-
-  savseCurrentNode() {
-    const nodeIndex = this.findDom()
-    this.beforeNode = this.domPotision[nodeIndex]
-  }
-
-  toBeforePosition() {
-    // scrollToElement(el, time, offsetX, offsetY, easing)
-    const { node } = this.beforeNode
-    this.scrollToElement(node, 0, 0, -30)
-  }
+    saveCurrentIndex() {
+        const nodeIndex = this.findCurrentIndex()
+        // 这个索引需要从末尾往上找才
+        this.beforeIndex = this.domNodes.length - nodeIndex;
+    }
+    // 前往先前的坐标点
+    toBeforePosition() {
+        let {node} = this.beforeNode()
+        this.scrollToElement(node, 0, 0, -30)
+    }
 }
 
 export default Scroll
