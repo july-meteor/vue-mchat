@@ -12,7 +12,7 @@
         <!--</el-card>-->
       <!--</el-col>-->
     <!--</el-row>-->
-    <span class="m-icon-ashbin"></span>//记住别写错！！
+ <button @click="handleAddChat">增加会话 </button>
 
 
     <mchat
@@ -117,6 +117,7 @@ export default {
       console.log("谈话内容", { event, data });
     },
     sendMessage(data) {
+      console.log("发送内容", {  data });
       const { mine, to, content, timestamp } = data;
       let message = {
         //消息来源用户名
@@ -138,12 +139,11 @@ export default {
         //服务端时间戳毫秒数。注意：如果你返回的是标准的 unix 时间戳，记得要 *1000
         timestamp,
       };
-
       //
       this.$refs.mchat.getMessage(message);
 
       //自动回复
-        var authReplay = {
+        let authReplay = {
             username: "july-meteor",
             avatar:require("../public/avatar/heiqi.png"),
             id: to.id,
@@ -154,8 +154,7 @@ export default {
             fromid: -1,
             timestamp: new Date(),
         };
-
-
+        this.$im.emit("getMessage", authReplay);
     },
     //添加回话
     handleAddChat() {

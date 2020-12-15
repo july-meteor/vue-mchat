@@ -1,60 +1,55 @@
 // base color
 
-
-//标签盒子 
-$tabsbox:#EFEFEF;
+//标签盒子
+$tabsbox: #EFEFEF;
 $tabsTitle: #EEEAE8;
 // 标签中后
 $tabActicve: #C8C6C6;
-$tabHover:#E1E1E1;
-$chat:#F6F6F6;
+$tabHover: #E1E1E1;
+$chat: #F6F6F6;
 
-$pane:#ffffff;
+$pane: #ffffff;
 
 //内容
 //标题
 $title: #F5F5F5;
 //文字内容框
-$content:#F5F5F5;
-$footer:#ffffff;
+$content: #F5F5F5;
+$footer: #ffffff;
 
 //按钮悬停 默认选中效果
 $btnHover: #2D93CA;
 
-$contentText:#000;
+$contentText: #000;
 
-$mineText:#9EEA6A;
+$mineText: #9EEA6A;
 $mineTextHover: #98E165;
-$otherText:#fff;
-$otherTextHvoer:#F6F6F6;
+$otherText: #fff;
+$otherTextHvoer: #F6F6F6;
 
-$btn:#F5F5F5;
-$btnColor:#606060;
-$btnHover:#129611;
+$btn: #F5F5F5;
+$btnColor: #606060;
+$btnHover: #129611;
 $btnHoverColor: #fff;
-$tabsWidth:180px;
-$tabsLabel:80px;
+$tabsWidth: 180px;
+$tabsLabel: 80px;
 
-$userlistWidt:198px;
+$userlistWidt: 198px;
 // 600
-$contentWidth:calc(590px - 198px);
+$contentWidth: calc(590px - 198px);
 
-$chatMainOffset:180px;
+$chatMainOffset: 180px;
 
-$foolterWidth:calc(600px - 130px);
+$foolterWidth: calc(600px - 130px);
 
 // 右边box 设置 相关
-$rightBoxWidth:148px;
+$rightBoxWidth: 148px;
 
-$rightBoxCloseOffset:139px;
+$rightBoxCloseOffset: 139px;
 
 $noticeBoxHight: 146px;
 // 用户列表大小
-$userListBoxHight:200px;
-
-
-
-
+$userListBoxHight: 200px;
 
 :export {
   tabsbox: $tabsbox;

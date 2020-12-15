@@ -39,11 +39,11 @@ body {
     color: #333;
     font-family: \5FAE\8F6F\96C5\9ED1;
 
-        .im-layer-content {
-            overflow: visible;
-            background: 0 0,
+    .im-layer-content {
+      overflow: visible;
+      background: 0 0,
 
-        }
+    }
 
     & cite,
     & em {
@@ -146,9 +146,7 @@ body {
     }
   }
 
-
   a {
-
     position: relative;
     width: 16px;
     height: 16px;
@@ -325,8 +323,8 @@ body {
         color: #999;
         padding-left: 10px;
       }
-      &.im-box-setwin{
-        top:15px;
+      &.im-box-setwin {
+        top: 15px;
       }
     }
 
@@ -366,7 +364,7 @@ body {
       cursor: pointer;
 
       &:hover {
-        background-color: #49A8FF;
+        background-color: $btnHover;
       }
 
       &.close {
@@ -541,7 +539,6 @@ body {
           margin-left: 10px;
 
           i {
-            padding-left: 0;
             padding-right: 15px;
             padding-left: 15px;
             font-style: normal
@@ -578,7 +575,6 @@ body {
         a {
           color: $contentText;
         }
-
         .im-content-img,
         .im-content-video {
           position: relative;
@@ -636,12 +632,10 @@ body {
           margin-left: 0;
           background-color: $mineText;
           color: $contentText;
-
           &:after {
             left: auto;
             right: -10px;
             border-top-color: $mineText;
-
           }
 
           a {
@@ -674,27 +668,32 @@ body {
     .im-chat-toolbar {
       position: relative;
       padding: 0 8px;
-      height: 38px;
-      line-height: 38px;
+      height: 30px;
+      line-height: 30px;
       font-size: 0;
-
+      border-top: 1px solid #E0E0E0;
       .im-chat-tools {
         text-align: left;
-        padding-left: 8px;
         box-sizing: border-box;
         display: flex;
         align-items: center;
-        height: 30px;
-
-        span {
+        .im-chat-tool-item {
           position: relative;
-          margin: 0 10px;
           display: inline-block;
           *display: inline;
           *zoom: 1;
           vertical-align: top;
           font-size: 24px;
           cursor: pointer;
+          padding: 5px;
+
+          i {
+            color: #7F7F7F;
+            &:hover {
+              color: #3F3F3F;
+            }
+          }
+
         }
       }
 
@@ -703,12 +702,11 @@ body {
     //输入框
     .im-chat-textarea {
       margin-left: 10px;
-
       & textarea {
         display: block;
         width: 100%;
         padding: 5px 0 0;
-        height: 68px;
+        height: 75px;
         line-height: 20px;
         border: none;
         overflow: auto;
@@ -735,7 +733,6 @@ body {
         line-height: 32px;
         font-size: 0;
         cursor: pointer;
-
         span {
           display: inline-block;
           *display: inline;
@@ -748,7 +745,6 @@ body {
           background-color: $btn;
           color: $btnColor;
           border-radius: 3px;
-
           &:hover {
             background-color: $btnHover;
             color: $btnHoverColor;

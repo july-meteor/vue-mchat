@@ -140,14 +140,14 @@ export default {
                 class={{ "im-this": enter }}
                 on-click={() => selectEnter(true)}
               >
-                <i class="im-icon el-icon-check"></i>
+                <i class="im-icon m-icon-select-bold"></i>
                 按Enter键发送消息
               </li>
               <li
                 class={{ "im-this": !enter }}
                 on-click={() => selectEnter(false)}
               >
-                <i class="im-icon el-icon-check"></i>按Ctrl+Enter键发送消息
+                <i class="im-icon m-icon-select-bold"></i>按Ctrl+Enter键发送消息
               </li>
             </ul>
           </div>

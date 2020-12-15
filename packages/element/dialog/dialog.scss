@@ -33,9 +33,7 @@
     border-radius: 2px 2px 0 0;
     text-align: left;
     .dialog_title, &.dialog_title {
-      line-height: 24px;
-      font-size: 16px;
-      color: #303133;
+
     }
     .dialog_headerbtn {
       position: absolute;
@@ -61,7 +59,17 @@
     }
   }
   .dialog_foote {
-
+    padding: 5px 10px 10px 10px ;
+    text-align: right;
+    box-sizing: border-box;
+    .dialog-footer {
+      //padding: 10px 20px 20px;
+      text-align: right;
+      box-sizing: border-box;
+    }
+    button:first-child {
+      margin-right: 10px;
+    }
   }
 }
 
@@ -79,7 +87,7 @@ button, input, optgroup, option, select, textarea {
     display: block;
     width: 300px;
     height: 160px;
-    border: 10px solid #F8F8F8;
+    border: 10px solid #fff;
     border-top-width: 0;
     padding: 10px;
     line-height: 20px;
@@ -87,6 +95,5 @@ button, input, optgroup, option, select, textarea {
     background-color: #3F3F3F;
     color: #eee;
     font-size: 12px;
-    font-family: Courier New;
   }
 }

@@ -173,6 +173,10 @@ export function setStyle(element, styleName, value) {
   }
 };
 
+export const generateId = function() {
+    return Math.floor(Math.random() * 10000);
+};
+
 export const isScroll = (el, vertical) => {
   if (isServer) return;
 

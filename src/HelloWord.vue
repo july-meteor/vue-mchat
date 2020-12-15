@@ -1,6 +1,7 @@
 <template>
     <div id="app" class="wrapper">
-        <m-dialog></m-dialog>
+        <!--<m-dialog></m-dialog>-->
+
     </div>
 </template>
 
