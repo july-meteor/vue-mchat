@@ -3,16 +3,18 @@ import MChat from './ChatInterface'
 import EventHub from './util/eventHub'
 import MChatRightBox from './RightBox'
 import MChatRightList from './GroupList'
-import SvgIcon from './SvgIcon'
-import './styles/im.scss'
+import MDialog from './dialog'
+import MIcon from './icon'
+
+
 import './styles/index.scss'
 
 
-const components = [MChat, MChatIndex, MChatRightBox, MChatRightList, SvgIcon]
+const components = [MChat, MChatIndex, MChatRightBox, MChatRightList, MDialog,MIcon]
 
-const req = require.context('./SvgIcon/svg/', false, /\.svg$/)
-const requireAll = requireContext => requireContext.keys().map(requireContext)
-requireAll(req)
+// const req = require.context('./SvgIcon/svg/', false, /\.svg$/)
+// const requireAll = requireContext => requireContext.keys().map(requireContext)
+// const iconMap = requireAll(req)
 
 
 // 初始化  函数  ，需要将 mcaht组件 自动挂载到 app 下

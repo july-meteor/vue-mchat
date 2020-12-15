@@ -73,9 +73,19 @@ export default {
     loadHistory(callBack) {
       this.$emit("loadHistory", callBack);
     },
+    //  获得当前对话框
+    getCurrent(){
+        for( let pane of this.panes){
+            // 激活的就是当前的
+            if (pane.active){
+              let { chat, taleList }= pane
+                return {chat ,taleList} ;
+            }
+        }
+    },
     // 收到消息
     getMessage(message) {
-      let voice = this.config.voice;
+        let voice = this.config.voice;
       // 提示音
       if (voice) {
         playTipSound();
@@ -264,11 +274,10 @@ export default {
             {el_chat_panes}
           </div>
           <span class="im-box-setwin">
-            <a class="im-btn-min" href="javascript:;">
-              <cite></cite>
-            </a>
-            <a class="im-ico im-icon-max" href="javascript:;"></a>
-            <a class="im-ico im-icon-close" href="javascript:;"></a>
+          <i class="m-icon-top" title="置顶"></i>
+          <i class="m-icon-minus" title="最小化"></i>
+          <i class="m-icon-maxus" title="最大化"></i>
+          <i class="m-icon-close" title="关闭"></i>
           </span>
           <span class="im-icon-resize"></span>
         </div>

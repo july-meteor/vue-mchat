@@ -309,10 +309,10 @@ export default {
         <ul ref="main">{el_record_list}</ul>
 
         <div class="scrollButton" on-click={() => scrollUp()}>
-          <i class="up  el-icon-arrow-up"></i>
+          <i class="up  m-icon-arrow-up"></i>
         </div>
         <div class="scrollButton" on-click={() => scrollBottom()}>
-          <i class="down el-icon-arrow-down"></i>
+          <i class="down m-icon-arrow-down"></i>
         </div>
       </div>
     );

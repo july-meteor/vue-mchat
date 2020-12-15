@@ -1,17 +1,19 @@
 <template>
   <div id="app" class="wrapper">
-    <el-row>
-      <el-col :span="8">
-        <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span>操作示例</span>
-          </div>
-          <el-button @click="handleAddChat">增加会话</el-button>
-          <el-button @click="handleDelChat">删除会话</el-button>
-          <el-button @click="config.brief= !config.brief">简约模式</el-button>
-        </el-card>
-      </el-col>
-    </el-row>
+    <!--<el-row>-->
+      <!--<el-col :span="8">-->
+        <!--<el-card class="box-card">-->
+          <!--<div slot="header" class="clearfix">-->
+            <!--<span>操作示例</span>-->
+          <!--</div>-->
+          <!--<el-button @click="handleAddChat">增加会话</el-button>-->
+          <!--<el-button @click="handleDelChat">删除会话</el-button>-->
+          <!--<el-button @click="config.brief= !config.brief">简约模式</el-button>-->
+        <!--</el-card>-->
+      <!--</el-col>-->
+    <!--</el-row>-->
+    <span class="m-icon-ashbin"></span>//记住别写错！！
+
 
     <mchat
       ref="mchat"
@@ -55,17 +57,6 @@ var replay = [
   "(*^__^*) emojio[嘻嘻] ，请我喝咖啡吗？",
 ];
 
-var authReplay = {
-  username: "july-meteor",
-  avatar:require("../public/avatar/heiqi.png"),
-  id: undefined,
-  type: undefined,
-  content: undefined,
-  cid: 0,
-  mine: false,
-  fromid: -1,
-  timestamp: new Date(),
-};
 
 export default {
   name: "app",
@@ -77,7 +68,7 @@ export default {
         downBtn: true,
         rightBox: true,
         // 简约模式
-        brief:false,
+        brief:true,
         // 是否开启桌面消息提醒，即在浏览器之外的提醒
         notice: false,
         // 设定
@@ -148,24 +139,33 @@ export default {
         timestamp,
       };
 
-      // 
+      //
       this.$refs.mchat.getMessage(message);
 
       //自动回复
-      authReplay.id = to.id;
-      authReplay.type = to.type;
-      authReplay.content = replay[(Math.random() * 9) | 0];
-      this.$im.emit("getMessage", authReplay);
+        var authReplay = {
+            username: "july-meteor",
+            avatar:require("../public/avatar/heiqi.png"),
+            id: to.id,
+            type: to.type,
+            content:  replay[(Math.random() * 9) | 0],
+            cid: 0,
+            mine: false,
+            fromid: -1,
+            timestamp: new Date(),
+        };
+
+
     },
     //添加回话
     handleAddChat() {
+     let chatId =   parseInt(Math.random() * 10, 10)
       let newChat = {
-        id: parseInt(Math.random() * 10, 10),
+        id:chatId,
         name: "新会话",
         type: "friend",
         avatar:require("../public/avatar/temp2.jpg"),
       };
-
       this.chats.push(newChat);
     },
     handleDelChat() {

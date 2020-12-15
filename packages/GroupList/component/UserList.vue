@@ -8,7 +8,7 @@
         <div class="im-list-filter">
           <input class="im-input-search" v-model="_value" placeholder="搜索成员" />
           <span class="im-input-search-prefix">
-            <i class="im-icon el-icon-search"></i>
+            <i class="im-icon m-icon-search"></i>
           </span>
         </div>
       </li>

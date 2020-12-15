@@ -250,8 +250,8 @@ export default {
           <i
             class={{
               "im-icon": true,
-              "el-icon-arrow-left": !rightActive,
-              "el-icon-arrow-right": rightActive,
+              "m-icon-arrow-left": !rightActive,
+              "m-icon-arrow-right": rightActive,
             }}
           ></i>
         </span>

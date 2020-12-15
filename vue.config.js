@@ -1,6 +1,6 @@
 const path = require('path')
 const port = 8080
-const svgIconDir = 'src/components/SvgIcon'
+const svgIconDir = 'packages/SvgIcon'
 
 const name = 'Meteor Chat' // page title
 function resolve(dir) {
@@ -13,7 +13,6 @@ module.exports = {
   assetsDir: 'static',
   // lintOnSave: process.env.NODE_ENV === 'development',
   lintOnSave: false,
-
   productionSourceMap: false,
   devServer: {
     port: port,

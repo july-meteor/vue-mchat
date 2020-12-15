@@ -1,5 +1,7 @@
 // 提示音文件
-const tipSound = '/media/tip.wav'
+//
+// 为了部署方便
+const tipSound = '../static/media/tip.wav'
 
 export function playTipSound(url = tipSound) {
     playMedia(url)
@@ -43,7 +45,20 @@ function playMedia(src) {
         if (audioPlay.src != src) {
             audioPlay.src = src
         }
-        audioPlay.play();
+        // 为了防止 The play() request was interrupted by a new load request  这个异常。所以音乐延迟播放
+        let  playPromise = audioPlay.play();
+        if (playPromise) {
+            playPromise.then(() => {
+                // 音频加载成功
+                // 音频的播放需要耗时
+                setTimeout(() => {
+                    // 后续操作
+                }, audioPlay.duration * 1000); // audio.duration 为音频的时长单位为秒
+            }).catch((e) => {
+                // 音频加载失败
+            });
+        }
+
     }
 }
 

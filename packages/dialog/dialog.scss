@@ -1,0 +1,92 @@
+.dialog__wrapper {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: auto;
+  margin: 0;
+}
+
+.dialog {
+  -webkit-overflow-scrolling: touch;
+  top: 150px;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  -webkit-background-clip: content;
+  border-radius: 2px;
+  box-shadow: 1px 1px 50px rgba(0, 0, 0, .3);
+  position: fixed;
+  _position: absolute;
+  pointer-events: auto;
+  .dialog_head {
+    padding: 0 80px 0 20px;
+    height: 42px;
+    line-height: 42px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #333;
+    overflow: hidden;
+    background-color: #F8F8F8;
+    border-radius: 2px 2px 0 0;
+    text-align: left;
+    .dialog_title, &.dialog_title {
+      line-height: 24px;
+      font-size: 16px;
+      color: #303133;
+    }
+    .dialog_headerbtn {
+      position: absolute;
+      top: 14px;
+      right: 20px;
+      padding: 0;
+      background: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+  }
+  .dialog_body {
+    padding: 5px;
+    color: #606266;
+    font-size: 14px;
+    word-break: break-all;
+    &.dialog_content {
+      position: relative;
+      overflow: auto;
+
+    }
+  }
+  .dialog_foote {
+
+  }
+}
+
+button, input, optgroup, option, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  outline: 0;
+}
+
+.runtest {
+  position: relative;
+  textarea {
+    display: block;
+    width: 300px;
+    height: 160px;
+    border: 10px solid #F8F8F8;
+    border-top-width: 0;
+    padding: 10px;
+    line-height: 20px;
+    overflow: auto;
+    background-color: #3F3F3F;
+    color: #eee;
+    font-size: 12px;
+    font-family: Courier New;
+  }
+}

@@ -75,7 +75,7 @@ export default {
           />
           {el_tab_lable}
           <i
-            class="im-icon el-icon-error"
+            class="im-icon m-icon-error"
             on-click={(ev) => {
               ev.stopPropagation();
               bindClick("tabRemove", { pane, ev });
@@ -94,8 +94,8 @@ export default {
           class={{
             "im-icon": true,
             "btn-pane-show": true,
-            "el-icon-arrow-right": !chatDisplay,
-            "el-icon-arrow-down": chatDisplay,
+            "m-icon-arrow-right": !chatDisplay,
+            "m-icon-arrow-left": chatDisplay,
           }}
           on-click={() => {
             bindClick("minRight");

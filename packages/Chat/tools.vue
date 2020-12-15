@@ -1,18 +1,18 @@
 <template>
   <div class="im-chat-toolbar">
     <div class="im-chat-tools">
-      <span>
-        <el-popover placement="top-start" trigger="click" ref="popover">
-          <div class="emoji-box">
-            <ul>
-              <li v-for="(item,key) in emojis" :key="item" @click="emojiEmit(key)">
-                <img :src="item" />
-              </li>
-            </ul>
-          </div>
-          <svg-icon slot="reference" iconClass="smiley"></svg-icon>
-        </el-popover>
-      </span>
+      <!--<span>-->
+        <!--<el-popover placement="top-start" trigger="click" ref="popover">-->
+          <!--<div class="emoji-box">-->
+            <!--<ul>-->
+              <!--<li v-for="(item,key) in emojis" :key="item" @click="emojiEmit(key)">-->
+                <!--<img :src="item" />-->
+              <!--</li>-->
+            <!--</ul>-->
+          <!--</div>-->
+          <!--<svg-icon slot="reference" iconClass="smiley"></svg-icon>-->
+        <!--</el-popover>-->
+      <!--</span>-->
     </div>
   </div>
 </template>
