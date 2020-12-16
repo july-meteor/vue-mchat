@@ -24,14 +24,14 @@ export default {
     handleScroll(event) {
       this.stickyTop = event.target.scrollTop;
     },
-    bindClick(event, data) {
-      this.$emit("click", event, data);
+    bindChatEvent(event, data) {
+      this.$emit("chatEvent", event, data);
     },
     // 处理未读信息
     handleUnread() {},
   },
   render() {
-    let { rootChat, panes, stickyTop, handleScroll, bindClick } = this;
+    let { rootChat, panes, stickyTop, handleScroll, bindChatEvent } = this;
     // 如果只有一个chat的情况
     if (rootChat.alone) return;
     const { config, chatDisplay } = rootChat;
@@ -62,7 +62,7 @@ export default {
           id={`tab-${tabName}`}
           key={`tab-${tabName}`}
           on-click={(ev) => {
-            bindClick("tabClick", { pane, ev });
+            bindChatEvent("tabClick", { pane, ev });
           }}
         >
           {el_unread_badge}
@@ -70,7 +70,7 @@ export default {
             src={avatar}
             on-click={(ev) => {
               // ev.stoppropagation();
-              bindClick("tabClick", { pane, ev });
+              bindChatEvent("tabClick", { pane, ev });
             }}
           />
           {el_tab_lable}
@@ -78,7 +78,7 @@ export default {
             class="im-icon m-icon-error"
             on-click={(ev) => {
               ev.stopPropagation();
-              bindClick("tabRemove", { pane, ev });
+              bindChatEvent("tabRemove", { pane, ev });
             }}
           ></i>
         </li>
@@ -98,7 +98,7 @@ export default {
             "m-icon-arrow-left": chatDisplay,
           }}
           on-click={() => {
-            bindClick("minRight");
+            bindChatEvent("minRight");
           }}
         ></i>
       );

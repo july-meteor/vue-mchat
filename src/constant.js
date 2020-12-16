@@ -128,8 +128,16 @@ const chats = [
     id: 2,
     name: "初音",
     type: "friend",
+    online:true,
     avatar: require("../public/avatar/chuyin.png"),
   },
+ {
+   id: 3,
+   name: "雪爷",
+   type: "friend",
+   online:false,
+   avatar: require("../public/avatar/xue.png"),
+ },
 ]
 
 export default {

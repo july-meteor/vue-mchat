@@ -100,13 +100,12 @@ export default {
     },
   },
   methods: {
-    handleRighActive() {
+    handleRightActive() {
       this.rightActive = !this.rightActive;
     },
     // 拉取历史记录
     loadHistory() {
       let that = this;
-      //
       this.$emit("loadHistory", function (list) {
         list.forEach((item) => {
           that.taleList.unshift(item);
@@ -119,7 +118,10 @@ export default {
         this.$nextTick(() => {
             this.$refs.chatList.scrollBottom();
         });
-
+    },
+    // 会话框的事件
+    bindChatEvent(event, data) {
+         this.$emit("chatEvent", event, data);
     },
     // 处理收到的消息
     getMessage(message) {
@@ -127,9 +129,6 @@ export default {
     },
     bindEmoji(emoji) {
       this.content += emoji;
-    },
-    bindTalkEvent(event, data) {
-      this.$emit("talkEvent", event, data);
     },
     handleUnread(count) {
       if (this.active) {
@@ -148,24 +147,38 @@ export default {
       taleList,
       rightActive,
       bindEmoji,
-      bindTalkEvent,
+
       bindEnter,
+      bindChatEvent,
       handleUnread,
       loadHistory,
-      handleRighActive,
+        handleRightActive,
     } = this;
     let { name, avatar } = chat;
 
     let el_chat, el_chat_titel, data_chat_list, el_chat_footer;
+
+    let el_chat_title_status, gray = false;
+    if (chat.type === "group") {
+        el_chat_title_status = (<p class="im-chat-group"><span> 群组 </span></p>  )
+    }else  if (chat.type === "friend") {
+        if (chat.online){
+            el_chat_title_status = (<p class="im-chat-status online"><span>在线</span></p>  )
+        }else {
+            gray = true;
+            el_chat_title_status = (<p class="im-chat-status"><span>离线</span></p>  )
+        }
+    }
     // 标题栏
     el_chat_titel = (
       <div class=" im-chat-title">
-        <div class="im-chat-info" title="编辑群组">
-          <img src={avatar} on-click={() => {}} />
+        <div class={{
+          "im-chat-info":true,
+          "gray": gray
+            }} title="群组信息">
+          <img class="im-chat-avatar" src={avatar} on-click={() => { bindChatEvent("clickHeader")}} />
           <span class="im-chat-username">{name}</span>
-          <p class="im-chat-group">
-            <span>群组</span>
-          </p>
+            {el_chat_title_status}
         </div>
       </div>
     );
@@ -186,8 +199,11 @@ export default {
           loadHistory();
         },
         talkEvent: function (event, data) {
-          bindTalkEvent(event, data);
+            bindChatEvent(event, data)
         },
+        chatEvent: function (event, data) {
+         bindChatEvent(event, data)
+        }
       },
     };
     var self = this;
@@ -213,6 +229,9 @@ export default {
         submit: function (data) {
           bindEnter(data);
         },
+        chatEvent: function (event, data) {
+            bindChatEvent(event, data)
+        }
       },
     };
 
@@ -250,7 +269,7 @@ export default {
             "im-chat-btn-expand": true,
             close: rightActive,
           }}
-          on-click={() => handleRighActive()}
+          on-click={() => handleRightActive()}
         >
           <i
             class={{

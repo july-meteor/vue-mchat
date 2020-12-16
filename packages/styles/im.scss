@@ -319,6 +319,8 @@ body {
       overflow: hidden;
       text-overflow: ellipsis;
       display: inline-block;
+      text-align: left;
+      color: black;
       cite {
         color: #999;
         padding-left: 10px;
@@ -437,8 +439,14 @@ body {
       padding-left: 60px;
       cursor: default;
 
+
+      &.gray img,&.gray .im-chat-status {
+        -webkit-filter: grayscale(1); /* Webkit */
+        filter: gray; /* IE6-9 */
+        filter: grayscale(1); /* W3C */
+      }
       //头像
-      img {
+      .im-chat-avatar  {
         position: absolute;
         left: 0;
         top: 0;
@@ -464,9 +472,8 @@ body {
         margin-top: 6px;
         font-size: 14px;
         color: #999;
-
-        .online {
-          color: #FF5722;
+        &.online {
+          color: green;
         }
       }
 

@@ -1,7 +1,6 @@
 <script>
 import {
   ConvertContext,
-  ConvertRecord,
   dateFormat,
 } from "./convertContext";
 import Scroll from "../util/scroll";
@@ -55,7 +54,7 @@ export default {
             }
         }
         if (!newVal && oldVal ){
-            // this.scroll.read();
+            this.scroll.read();
         }
     },
     // 锁
@@ -70,20 +69,15 @@ export default {
     list(newVal) {
       if (newVal) {
         this.$nextTick(() => {
-            this.childnodeLoad();
+            // 更新节点
+            this.updateNode();
             // 下载记录历史
             if (this.loadHistory) {
               this.closeTopTip();
-                this.scrollRefresh();
-                this.$nextTick(() => {
-                    this.scroll.toBeforePosition()
-                })
+              this.scrollRefresh();
+              this.scroll.toBeforePosition()
             }
-
-            // 如果不是当前
-            if (!this.current){
-                // 增加未读数
-            }else  if(this.isBottom){ // 如果触底了直接往下滚
+            if(this.current && this.isBottom){
                 this.scrollBottom();
             }
             //还有一种情况是自己发送的。。
@@ -124,9 +118,18 @@ export default {
 
   },
   methods: {
-    bindTalkEvent(event, data) {
-      this.$emit("talkEvent", event, data);
+    bindTalkEvent( data) {
+     this.$emit("chatEvent", "talkEvent", data);
     },
+    bindClickUser(data){
+        let userInfo = {
+            id:data.id,
+            username:data.username,
+            mine:data.mine,
+        }
+        this.$emit("chatEvent", 'clickUser', userInfo);
+    },
+
     // 拉取历史记录
     handleHistory() {
         //锁住拉取
@@ -152,8 +155,6 @@ export default {
         function (e) {
         //阻止冒泡事件
           e.stopPropagation();
-          // var target = e.target;
-          // console.log(e);
         }
       );
 
@@ -161,7 +162,6 @@ export default {
       this.scroll.on("scrollEnd", function () {
         that.scrollTop();
         that.scroll.savePosition();
-        // that.scroll.read();
       });
     },
 
@@ -192,8 +192,8 @@ export default {
       this.loadHistory = false;
       this.historyBtnShow = false;
     },
-    // 判断是否有未读记录
-    childnodeLoad() {
+    // 节点加载
+    updateNode() {
       const parent = this.$refs.main;
       if (!parent) return;
       const childs = parent.children;
@@ -204,8 +204,7 @@ export default {
     },
     // 刷新滚动条长度
     scrollRefresh() {
-        // 因为是通过界面去计算的所以如果图形隐藏不要去触发这个方法
-        this.scroll.refresh();
+      this.scroll.refresh();
     },
     /**** 滚动条结束 ********/
     /*** 标签标题  开始***/
@@ -256,6 +255,7 @@ export default {
       scrollUp,
       scrollBottom,
       bindTalkEvent,
+      bindClickUser,
       handleHistory,
     } = this;
 
@@ -270,8 +270,8 @@ export default {
       let tiem = dateFormat(item.timestamp);
       return (
         <li class={{ "content-mine": item.mine }}>
-          <div class="content-user">
-            <img src={item.avatar} />
+          <div class="content-user" >
+            <img src={item.avatar}  on-click={()=>bindClickUser(item)}/>
             <cite>
               {leftName}
               <i>{tiem}</i> {rightName}
@@ -279,7 +279,7 @@ export default {
           </div>
           <div
             class="content-text"
-            on-click={() => bindTalkEvent("talkContent", item)}
+            on-click={() => bindTalkEvent(item)}
           >
             {" "}
             {contentHtml}

@@ -16,7 +16,6 @@ export default {
   data() {
     return {
       currentContent: "",
-
       setBoxDisplay: false,
       // 发送模式
       enter: true,
@@ -44,6 +43,9 @@ export default {
     },
     selectEnter(flag) {
       this.enter = flag;
+    },
+    bindChatEvent(event, data){
+        this.$emit("chatEvent", event, data);
     },
     handleDocumentClick(e) {
       let reference = this.$refs.reference;
@@ -74,6 +76,7 @@ export default {
   },
   render(h) {
     let {
+      bindChatEvent,
       handleSend,
       enter,
       placeholder,
@@ -117,11 +120,14 @@ export default {
         <div class="im-chat-textarea">{textareaVnode}</div>
         <div class="im-chat-bottom">
           <div class="im-chat-btn-bar">
+             <span  class="im-btn-close"
+                  title="关闭对话框"
+                  on-click={() => bindChatEvent("chatClose") }>
+               关闭(<font style="text-decoration: underline;">C</font>)
+             </span>
             <span
               class="im-btn-send"
-              on-click={() => {
-                handleSend();
-              }}
+              on-click={() => handleSend()}
               title={enter_prompt}
             >
               发送(<font style="text-decoration: underline;">S</font>)

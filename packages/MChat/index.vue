@@ -100,16 +100,24 @@ export default {
     handleEvent(event, data) {
       switch (event) {
         case "minRight":
-          this.chatDisplay = !this.chatDisplay;
+           this.chatDisplay = !this.chatDisplay;
           break;
         case "tabClick":
-          this.handleTabClick(data);
+           this.handleTabClick(data);
           break;
         case "tabRemove":
-          this.handleRemoveChat(data);
+           this.handleRemoveChat(data);
           break;
-        default:
+        case "chatClose":
+           this.handleRemoveChat({pane :this.getCurrent()});
           break;
+        case "talkEvent":
+           this.bindTalkEvent(event, data)
+          break
+       default:
+           this.bindChatEvent(event, data);
+          break;
+
       }
     },
     // 会话内容的事件
@@ -122,6 +130,11 @@ export default {
     },
     handleTabClick({ pane }) {
       this.selected = pane.index;
+    },
+     // 处理对话框Setting
+    handleChatSet(event){
+        const { name, type, id } = this.getCurrent().chat;
+        this.bindChatEvent(event, { id, name, type });
     },
     handleRemoveChat({ pane }) {
       const { name, type, id } = pane.chat;
@@ -204,9 +217,9 @@ export default {
       config,
       chats,
       panes,
-      bindTalkEvent,
       handleEvent,
       handleEnter,
+      handleChatSet,
       loadHistory,
       chatDisplay,
       alone,
@@ -227,9 +240,10 @@ export default {
           loadHistory: function(callBack) {
             loadHistory(callBack);
           },
-          talkEvent: function(event, data) {
-            bindTalkEvent(event, data);
-          },
+          chatEvent: function (event, data) {
+              handleEvent(event, data)
+
+          }
         },
       };
       return <m-chat-index {...data_chat}></m-chat-index>;
@@ -242,7 +256,7 @@ export default {
       },
       ref: "MChatTabs",
       on: {
-        click: function(event, data) {
+         chatEvent: function(event, data) {
           handleEvent(event, data);
         },
       },
@@ -274,10 +288,10 @@ export default {
             {el_chat_panes}
           </div>
           <span class="im-box-setwin">
-          <i class="m-icon-top" title="置顶"></i>
-          <i class="m-icon-minus" title="最小化"></i>
-          <i class="m-icon-maxus" title="最大化"></i>
-          <i class="m-icon-close" title="关闭"></i>
+          <i class="m-icon-top" title="置顶"  on-click={(ev)=>handleChatSet("chatTop")}></i>
+          <i class="m-icon-minus" title="最小化" on-click={(ev)=>handleChatSet("chatMin")} ></i>
+          <i class="m-icon-maxus" title="最大化" on-click={(ev)=>handleChatSet("chatMax")} ></i>
+          <i class="m-icon-close" title="关闭" on-click={(ev)=>handleChatSet("chatClose")} ></i>
           </span>
           <span class="im-icon-resize"></span>
         </div>

@@ -51,6 +51,7 @@ class Scroll extends IScroll {
         }
     }
 
+
     // 重新设置顶点
     resetTop() {
         const postion = this.domNodes
@@ -65,17 +66,25 @@ class Scroll extends IScroll {
         const index = this._findIndex()
         index > -1 && this.read(index)
     }
+
     // 之前的node
     beforeNode() {
         const beforeIndex = this.domNodes.length - this.beforeIndex;
         if (!beforeIndex) {
-            return 0;
+            return null;
         }
         return this.domNodes[beforeIndex]
     }
 
-    // 已读
-    read(index) {
+    //
+    read() {
+        this.domNodes.forEach((i, j) => {
+            i.read = true
+        })
+    }
+
+    //
+    reading() {
         const key = index || this.findCurrentIndex()
         let bottom = this.isBottom
         this.domNodes.forEach((i, j) => {
@@ -84,6 +93,7 @@ class Scroll extends IScroll {
             }
         })
     }
+
 
     get isBottom() {
         let result = false
@@ -107,10 +117,9 @@ class Scroll extends IScroll {
         })
         return result
     }
+
     // 保存当前位置
     savePosition() {
-        const {y} = this
-        this.readPosition = y
         this.saveCurrentIndex()
     }
 
@@ -119,10 +128,13 @@ class Scroll extends IScroll {
         // 这个索引需要从末尾往上找才
         this.beforeIndex = this.domNodes.length - nodeIndex;
     }
+
     // 前往先前的坐标点
     toBeforePosition() {
         let {node} = this.beforeNode()
-        this.scrollToElement(node, 0, 0, -30)
+        if (node) {
+            this.scrollToElement(node, 0, 0, -30)
+        }
     }
 }
 
