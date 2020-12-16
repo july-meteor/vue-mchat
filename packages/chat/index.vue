@@ -158,14 +158,14 @@ export default {
 
     let el_chat, el_chat_titel, data_chat_list, el_chat_footer;
 
-    let el_chat_title_status, gray = false;
+    let el_chat_title_status, offline = false;
     if (chat.type === "group") {
         el_chat_title_status = (<p class="im-chat-group"><span> 群组 </span></p>  )
     }else  if (chat.type === "friend") {
         if (chat.online){
             el_chat_title_status = (<p class="im-chat-status online"><span>在线</span></p>  )
         }else {
-            gray = true;
+            offline = true;
             el_chat_title_status = (<p class="im-chat-status"><span>离线</span></p>  )
         }
     }
@@ -174,7 +174,7 @@ export default {
       <div class=" im-chat-title">
         <div class={{
           "im-chat-info":true,
-          "gray": gray
+          "offline": offline
             }} title="群组信息">
           <img class="im-chat-avatar" src={avatar} on-click={() => { bindChatEvent("clickHeader")}} />
           <span class="im-chat-username">{name}</span>

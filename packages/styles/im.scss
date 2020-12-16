@@ -240,7 +240,7 @@ body {
     box-shadow: 1px 1px 14px rgba(0, 0, 0, 0.3);
   }
 
-  li {
+  .im-chat-tab {
     display: inline-block;
     *display: inline;
     *zoom: 1;
@@ -254,9 +254,15 @@ body {
     border-radius: 3px;
     white-space: nowrap;
 
+    &.offline img {
+      -webkit-filter: grayscale(1); /* Webkit */
+      filter: gray; /* IE6-9 */
+      filter: grayscale(1); /* W3C */
+    }
+
+
     &:hover {
       background-color: $tabHover;
-
       .im-icon {
         display: inline-block;
 
@@ -440,7 +446,7 @@ body {
       cursor: default;
 
 
-      &.gray img,&.gray .im-chat-status {
+      &.offline img,&.offline .im-chat-status {
         -webkit-filter: grayscale(1); /* Webkit */
         filter: gray; /* IE6-9 */
         filter: grayscale(1); /* W3C */

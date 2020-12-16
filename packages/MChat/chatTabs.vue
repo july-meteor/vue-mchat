@@ -37,7 +37,7 @@ export default {
     const { config, chatDisplay } = rootChat;
     const el_chat_tabs = this._l(panes, (pane, index) => {
       const { active, chat, unread } = pane;
-      const { name, id, avatar } = chat;
+      const { name, id, avatar,online } = chat;
       let tabName = name + id + index;
       pane.index = `${index}`;
 
@@ -55,10 +55,17 @@ export default {
       // } else {
       //   el_tab_lable = <span> {label}</span>;
       // }
+        let offline = false;
+        if (chat.type == "friend"){
+            offline = !online;
+        }
 
       return (
         <li
-          class={{ "im-this": active }}
+          class={{
+              "im-chat-tab":true,
+              "offline":offline,
+              "im-this": active }}
           id={`tab-${tabName}`}
           key={`tab-${tabName}`}
           on-click={(ev) => {
@@ -106,6 +113,7 @@ export default {
       el_tabs_bar = (
         <li
           class={{
+            "im-chat-tab":true,
             "im-tabs-title": true,
             active: true,
           }}

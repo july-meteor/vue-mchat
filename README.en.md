@@ -64,9 +64,7 @@ vue-mchat 是本人前端阶段性学习总结的项目，因为并非前端开�
 - 提供更好的演示服务
     - 用户注册/登录
     - 群聊
-- 去除element-ui依赖
-    - 提供i标签封装
-    - 提供弹出层封装
+- 提供弹出层封装
 - 工具类
    - 文件上传
    - 代码
@@ -203,13 +201,18 @@ vue-mchat 是本人前端阶段性学习总结的项目，因为并非前端开�
     <td> string </td>
     <td> 会话类型 group/friend 根据你的需要自行扩展</td>
   </tr>
-   <tr >
-     <td> avatar </td>
-     <td> /images/group_1.jpg </td>
-     <td> url </td>
-     <td> 会话头像 </td>
-   </tr>
-
+  <tr >
+    <td> avatar </td>
+    <td> /images/group_1.jpg </td>
+    <td> url </td>
+    <td> 会话头像 </td>
+  </tr>
+  <tr >
+    <td> online </td>
+    <td> true </td>
+    <td> boolean </td>
+    <td> type类型为friend  </td>
+  </tr>
 </table>
 
 ##### Content  talk content format 
@@ -263,12 +266,12 @@ vue-mchat 是本人前端阶段性学习总结的项目，因为并非前端开�
   </tr>
   <tr >
     <td> chatEvent </td>
-    <td> 操作会话框触发,返回事件类型及窗口信息 </td>
-    <td> event  </td>
+    <td> 操作会话框触发,返回事件类型及窗口信息。具体事件看下表1</td>
+    <td> event,data </td>
   </tr>
   <tr >
-    <td> talkEvent </td>
-    <td> 当你点击对话内容返回对话信息触发 </td>
+    <td > <span style="text-decoration:line-through;"> talkEvent </span> </td>
+    <td> 当你点击对话内容返回对话信息触发 (已经弃用) </td>
     <td> user,message </td>
   </tr>
   <tr >
@@ -287,8 +290,38 @@ vue-mchat 是本人前端阶段性学习总结的项目，因为并非前端开�
     <td> 监听接受的消息 </td>
     <td> user,message </td>
   </tr>
-  
 </table>
+
+表1
+<table  style="text-align: center;">
+  <tr>
+    <th>事件名称</th>
+    <th>说明</th>
+    <th>参数</th>
+  </tr>
+  <tr >
+    <td> chatTop </td>
+    <td> 会话置顶</td>
+    <td> { id: 会话id, name: 会话名称 ,type: 会话类型 } </td>
+  </tr>
+  <tr >
+    <td> chatTop </td>
+    <td> 会话置顶</td>
+    <td> 窗口信息 </td>
+  </tr>
+  <tr >
+    <td> clickTalk </td>
+    <td>  当你点击对话内容返回对话信息触发 </td>
+    <td> 对话内容 </td>
+  </tr>
+    <tr >
+      <td> clickUser </td>
+      <td>  当你点击聊天框内用户头像 </td>
+      <td> {id: 用户Id, mine: 是否是自己 , username:用户名称 } </td>
+    </tr>
+</table>
+
+
 
 #### MChat Events
 
@@ -302,6 +335,11 @@ vue-mchat 是本人前端阶段性学习总结的项目，因为并非前端开�
     <td> getMessage </td>
     <td> 监听接受的消息  </td>
     <td> 参考下方示例1 </td>
+  </tr>
+  <tr >
+    <td> getCurrent </td>
+    <td> 获取当前会话  </td>
+    <td> Objectg </td>
   </tr>
 </table>
 <div>
