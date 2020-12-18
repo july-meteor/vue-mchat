@@ -21,6 +21,21 @@
   position: fixed;
   _position: absolute;
   pointer-events: auto;
+
+  &.dialog__center{
+    .dialog_body, .dialog_foote{
+      text-align: center;
+    }
+  }
+  // 全屏
+  &.is_fullScreen{
+    width: 100%;
+    margin-top: 0;
+    margin-bottom: 0;
+    height: 100%;
+    overflow: auto;
+  }
+
   .dialog_head {
     padding: 0 80px 0 20px;
     height: 42px;
@@ -35,16 +50,31 @@
     .dialog_title, &.dialog_title {
 
     }
-    .dialog_headerbtn {
+    .dialog_header_group{
       position: absolute;
-      top: 14px;
-      right: 20px;
-      padding: 0;
+      right: 0;
+      top: 0;
+      font-size: 16px;
+      line-height: initial;
+      text-align: left;
+    }
+    .dialog_header_btn {
       background: transparent;
       border: none;
       outline: none;
       cursor: pointer;
       font-size: 16px;
+      padding: 10px;
+      position: relative;
+      _overflow: hidden;
+      display: inline-block;
+      *display: inline;
+      *zoom: 1;
+      vertical-align: top;
+      color: #959595;
+      &:hover {
+        color: #409eff;
+      }
     }
   }
   .dialog_body {
@@ -55,7 +85,6 @@
     &.dialog_content {
       position: relative;
       overflow: auto;
-
     }
   }
   .dialog_foote {
@@ -63,8 +92,6 @@
     text-align: right;
     box-sizing: border-box;
     .dialog-footer {
-      //padding: 10px 20px 20px;
-      text-align: right;
       box-sizing: border-box;
     }
     button:first-child {
@@ -81,19 +108,13 @@ button, input, optgroup, option, select, textarea {
   outline: 0;
 }
 
-.runtest {
-  position: relative;
-  textarea {
-    display: block;
-    width: 300px;
-    height: 160px;
-    border: 10px solid #fff;
-    border-top-width: 0;
-    padding: 10px;
-    line-height: 20px;
-    overflow: auto;
-    background-color: #3F3F3F;
-    color: #eee;
-    font-size: 12px;
-  }
+
+
+.dialog-fade-enter-active {
+  animation: bounceIn .3s;
 }
+
+.dialog-fade-leave-active {
+  animation: bounceOut .3s;
+}
+

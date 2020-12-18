@@ -71,6 +71,12 @@ export default {
     },
   },
   methods: {
+      // 初始化窗口的位置
+    initChatPosition(){
+          let el = this.$refs.chat;
+          el.style.left =( document.body.clientWidth -10 - el.clientWidth )/2+ "px";
+          el.style.top = (document.body.clientHeight -70 - el.clientHeight)/2+ "px";
+    },
     loadHistory(callBack) {
       this.$emit("loadHistory", callBack);
     },
@@ -272,7 +278,6 @@ export default {
           ref="chat"
           style={{
             "z-index": 1002,
-            left: "296.5px",
             display: "inline",
           }}
         >
@@ -305,7 +310,11 @@ export default {
     });
   },
   mounted() {
-    this.calcPaneInstances();
+      this.calcPaneInstances();
+      this.$nextTick(()=>{
+          this.initChatPosition();
+      })
+
   },
   updated() {
     this.calcPaneInstances();

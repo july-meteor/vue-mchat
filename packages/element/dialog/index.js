@@ -1,4 +1,3 @@
-import './dialog.scss'
 import MDialog from './index.vue'
 
 MDialog.install = function (Vue) {

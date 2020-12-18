@@ -34,6 +34,8 @@
                 </template>
             </mchat-right-box>
         </mchat>
+
+
     </div>
 </template>
 <script>
