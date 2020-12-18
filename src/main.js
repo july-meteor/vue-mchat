@@ -1,7 +1,7 @@
 
 import Vue from 'vue'
-// import App from './HelloWord.vue'
-import App from './App.vue'
+import App from './HelloWord.vue'
+// import App from './App.vue'
 import MChat from '../packages/index'
 
 

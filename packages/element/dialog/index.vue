@@ -26,7 +26,7 @@
                                 @click="handleFullScreen"
                                 aria-label="fullScreen"
                                 class="dialog_header_btn">
-                            <i :class="iconMaxClass" ></i>
+                            <i :class="iconMaxClass"></i>
                         </button>
                         <button
                                 type="button"
@@ -41,7 +41,7 @@
 
                 </div>
                 <div class="dialog_body dialog_content">
-                        <slot></slot>
+                    <slot></slot>
                 </div>
                 <div class="dialog_foote ">
             <span class="dialog-footer">
@@ -56,6 +56,7 @@
 <script>
     import Popup from '../../util/popup/index'
     import emitter from '../../mixins/emitter'
+
     export default {
         name: "m-dialog",
         //插槽
@@ -75,8 +76,8 @@
             },
             //是否全屏
             fullScreen: {
-                type:Boolean,
-                default:false,
+                type: Boolean,
+                default: false,
             },
             customClass: {
                 type: String,
@@ -93,13 +94,13 @@
             return {
                 wrapper: false,
                 closed: false,
-                isFullScreen:false,
+                isFullScreen: false,
                 key: 0
             };
         },
-        computed:{
-            iconMaxClass(){
-                return !this.isFullScreen?"m-icon-maxus":"m-icon-minus";
+        computed: {
+            iconMaxClass() {
+                return !this.isFullScreen ? "m-icon-maxus" : "m-icon-minus";
             }
         },
         watch: {
@@ -110,7 +111,7 @@
                     this.$emit('open');
                     this.$el.addEventListener('scroll', this.updatePopper);
                     this.$nextTick(() => {
-                        this.centerDialogPosition(true);
+                        this.resetDialogPosition(true);
                         this.$refs.dialog.scrollTop = 0;
                     });
                     if (this.appendToBody) {
@@ -129,24 +130,24 @@
         },
 
         methods: {
-            centerDialogPosition(flag) {
+            resetDialogPosition(flag) {
                 let el = this.$refs.dialog;
-                if (flag){
+                if (flag) {
                     el.style.left = (document.body.clientWidth - 10 - el.clientWidth) / 2 + "px";
                     el.style.top = (document.body.clientHeight - 70 - el.clientHeight) / 2 + "px";
                 } else {
                     el.style.left = 0;
-                    el.style.top =0;
+                    el.style.top = 0;
                 }
             },
             handPageDrag(e) {
                 let el = this.$refs.dialog;
                 let X = e.clientX - el.offsetLeft;
                 let Y = e.clientY - el.offsetTop;
-                let _this = this ;
+                let _this = this;
                 document.onmousemove = function (e) {
                     e.preventDefault();
-                    if (!_this.isFullScreen){
+                    if (!_this.isFullScreen) {
                         let l = e.clientX - X;
                         let t = e.clientY - Y;
                         el.style.left = l + "px";
@@ -158,10 +159,10 @@
                     document.onmouseup = null;
                 };
             },
-            handleFullScreen(){
+            handleFullScreen() {
                 this.isFullScreen = !this.isFullScreen;
-                this.$nextTick(()=>{
-                    this.centerDialogPosition(!this.isFullScreen);
+                this.$nextTick(() => {
+                    this.resetDialogPosition(!this.isFullScreen);
                 })
             },
             handleClose() {
@@ -192,6 +193,7 @@
             },
         },
         mounted() {
+            this.resetDialogPosition(true)
         },
     }
 </script>
