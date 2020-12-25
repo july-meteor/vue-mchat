@@ -8,6 +8,9 @@
 import chatList from "./chatList";
 import enterBox from "./enterBox";
 import tools from "./tools";
+import {default_avatar } from '../util/constant'
+
+
 
 // 空方法
 
@@ -156,6 +159,7 @@ export default {
     } = this;
     let { name, avatar } = chat;
 
+    if (!avatar)  avatar =default_avatar;
     let el_chat, el_chat_titel, data_chat_list, el_chat_footer;
 
     let el_chat_title_status, offline = false;

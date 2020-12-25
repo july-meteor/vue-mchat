@@ -122,7 +122,7 @@ const chats = [
     type: "group",
     avatar: require("../public/images/group_1.jpg"),
     userList: user_list,
-    notices: notice_list,
+    notices: [],
   },
   {
     id: 2,

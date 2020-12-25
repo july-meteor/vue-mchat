@@ -76,6 +76,8 @@
                 mine: CONST.mine,
                 //会话
                 chats: CONST.chats,
+                // chats: [],
+
             };
         },
         methods: {

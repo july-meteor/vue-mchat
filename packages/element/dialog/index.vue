@@ -10,7 +10,7 @@
                     role="dialog"
                     :key="key"
                     ref="dialog"
-                    :class="['dialog', {'is_fullScreen': isFullScreen,'dialog__center': center }, customClass]"
+                    :class="['dialog', {'dialog__center': center }, customClass]"
             >
                 <div
                         class="dialog_head"
@@ -22,9 +22,9 @@
                     <div class="dialog_header_group">
                         <button
                                 type="button"
-                                v-if="fullScreen"
-                                @click="handleFullScreen"
-                                aria-label="fullScreen"
+                                v-if="shrink"
+                                @click="handleshrink"
+                                aria-label="shrink"
                                 class="dialog_header_btn">
                             <i :class="iconMaxClass"></i>
                         </button>
@@ -40,10 +40,10 @@
                     </div>
 
                 </div>
-                <div class="dialog_body dialog_content">
+                <div class="dialog_body dialog_content" v-show="isShrink">
                     <slot></slot>
                 </div>
-                <div class="dialog_foote ">
+                <div class="dialog_foote " v-show="isShrink">
             <span class="dialog-footer">
                  <slot name="footer"></slot>
             </span>
@@ -75,9 +75,9 @@
                 default: true
             },
             //是否全屏
-            fullScreen: {
+            shrink: {
                 type: Boolean,
-                default: false,
+                default: true,
             },
             customClass: {
                 type: String,
@@ -94,13 +94,13 @@
             return {
                 wrapper: false,
                 closed: false,
-                isFullScreen: false,
+                isShrink: true,
                 key: 0
             };
         },
         computed: {
             iconMaxClass() {
-                return !this.isFullScreen ? "m-icon-maxus" : "m-icon-minus";
+                return !this.isShrink ? "m-icon-maxus" : "m-icon-minus";
             }
         },
         watch: {
@@ -133,11 +133,12 @@
             resetDialogPosition(flag) {
                 let el = this.$refs.dialog;
                 if (flag) {
+
                     el.style.left = (document.body.clientWidth - 10 - el.clientWidth) / 2 + "px";
                     el.style.top = (document.body.clientHeight - 70 - el.clientHeight) / 2 + "px";
                 } else {
-                    el.style.left = 0;
-                    el.style.top = 0;
+                    el.style.left = (document.body.clientWidth - 10 - el.clientWidth) + "px";
+                    el.style.top = 0 + "px";
                 }
             },
             handPageDrag(e) {
@@ -147,22 +148,20 @@
                 let _this = this;
                 document.onmousemove = function (e) {
                     e.preventDefault();
-                    if (!_this.isFullScreen) {
-                        let l = e.clientX - X;
-                        let t = e.clientY - Y;
-                        el.style.left = l + "px";
-                        el.style.top = t + "px";
-                    }
+                    let l = e.clientX - X;
+                    let t = e.clientY - Y;
+                    el.style.left = l + "px";
+                    el.style.top = t + "px";
                 };
                 document.onmouseup = function () {
                     document.onmousemove = null;
                     document.onmouseup = null;
                 };
             },
-            handleFullScreen() {
-                this.isFullScreen = !this.isFullScreen;
+            handleshrink() {
+                this.isShrink = !this.isShrink;
                 this.$nextTick(() => {
-                    this.resetDialogPosition(!this.isFullScreen);
+                    this.resetDialogPosition(this.isShrink);
                 })
             },
             handleClose() {

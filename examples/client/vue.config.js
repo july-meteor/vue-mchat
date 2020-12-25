@@ -1,13 +1,14 @@
 const path = require('path')
 const port = 8080
 const svgIconDir = 'packages/SvgIcon'
+// 测试的代理路径
 
-const name = 'Meteor Chat' // page title
+const proxyUrl = 'http://localhost:3000'
+const name = 'Chat Client' // page title
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
 module.exports = {
-
   publicPath: './',
   outputDir: 'chat',
   assetsDir: 'static',
@@ -21,6 +22,17 @@ module.exports = {
       warnings: false,
       errors: true
     },
+      proxy: {
+          '/': {
+              target: proxyUrl,
+              changeOrigin: true,
+              ws: false, // 需要websocket 开启
+              pathRewrite: {
+                  '^/': '/'
+              }
+          }
+          // 3.5 以后不需要再配置
+      },
   },
   configureWebpack: {
     name: name,
@@ -73,14 +85,5 @@ module.exports = {
       .options({
         appendTsSuffixTo: [/\.vue$/],
       }).end()
-
-      config.module
-          .rule('images')
-          .use('url-loader')
-          .loader('url-loader')
-          .tap(options => {
-              options.limit = 999999999;
-              return options
-          }).end()
   }
 }

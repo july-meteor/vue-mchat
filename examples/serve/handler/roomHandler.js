@@ -9,9 +9,7 @@
 module.exports =(channel,event)=> {
 
     const  {socket} = channel;
-    event.on("message", data=>{
-        console.log(data)
-    })
+
 
     //加入房间
     event.on("joinRoom",function (data,fn) {
@@ -25,12 +23,12 @@ module.exports =(channel,event)=> {
         fn({"code":0,"msg":"已退出房间","roomName":data.roomName});
     });
     //监听客户端发送的 sendMsg 事件
-    event.on("sendMsg",function (data,fn) {
+    event.on("sendMsg",function (data) {
         // data 为客户端发送的消息，可以是 字符串，json对象或buffer
 
         // 使用 emit 发送消息，broadcast 表示 除自己以外的所有已连接的socket客户端。
-        // to(房间名)表示给除自己以外的同一房间内的socket用户推送消息
+        // to(房间名)表示给除自己以外的同一房间内的socket用户推送消息.
+        console.log(data)
         socket.broadcast.to(data.roomName).emit("receiveMsg",data);
-        fn({"code":0,"msg":"消息发生成功"});
     })
 }

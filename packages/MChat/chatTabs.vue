@@ -1,5 +1,7 @@
 <script>
-export default {
+ import {default_avatar } from '../util/constant'
+
+    export default {
   name: "MChatTabs",
   //注入父级属性
   inject: ["rootChat"],
@@ -37,11 +39,13 @@ export default {
     const { config, chatDisplay } = rootChat;
     const el_chat_tabs = this._l(panes, (pane, index) => {
       const { active, chat, unread } = pane;
-      const { name, id, avatar,online } = chat;
+      let { name, id, avatar,online } = chat;
       let tabName = name + id + index;
       pane.index = `${index}`;
+        // 是否有头像
+      if (!avatar)  avatar =default_avatar;
 
-      //对话是否激活
+        //对话是否激活
       let label = name;
       const el_tab_lable = <span class="im-label"> {label}</span>;
       const el_unread_badge =

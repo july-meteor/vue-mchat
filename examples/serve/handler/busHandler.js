@@ -14,14 +14,13 @@ module.exports =(handler)=>{
     //统计客户端登录用户
     let onlineUsers={};
 
-
     handler.on("open",socket =>{
         // 前置拦截
         let  channel = {
             onlineUserCount,
             onlineUsers,
             cid:socket.id,
-            username:null,
+            current:{id :0},
             socket,
         }
         // 事件分发
@@ -29,10 +28,14 @@ module.exports =(handler)=>{
         const event = new EventEmitter();
         // 基础事件处理
         const base =  require("./baseHandler")
-
-        const room =  require("./roomHandler")
+        const chat =  require("./chatHandler")
         base(channel,event);
-        room(channel,event);
+        chat(channel,event);
+
+
+        // const room =  require("./roomHandler")
+        // room(channel,event);
+
         // 注册事件
         let events= event._events;
         for(let key in events){

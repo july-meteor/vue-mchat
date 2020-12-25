@@ -69,13 +69,27 @@ export default {
         this.chatDisplay = true;
       }
     },
+      // 观察窗口变化
+     panes(nv,ov){
+        // 如果 窗口是从0变多
+         let o_len =  ov.length
+         if(0 == o_len){
+             this.$nextTick(()=>{
+                 this.initChatPosition();
+             })
+         }
+     }
+
   },
   methods: {
       // 初始化窗口的位置
     initChatPosition(){
           let el = this.$refs.chat;
-          el.style.left =( document.body.clientWidth -10 - el.clientWidth )/2+ "px";
-          el.style.top = (document.body.clientHeight -70 - el.clientHeight)/2+ "px";
+        if (el){
+            el.style.left =( document.body.clientWidth -10 - el.clientWidth )/2+ "px";
+            el.style.top = (document.body.clientHeight -70 - el.clientHeight)/2+ "px";
+        }
+
     },
     loadHistory(callBack) {
       this.$emit("loadHistory", callBack);
@@ -176,15 +190,14 @@ export default {
     },
     handPanesDrag(e) {
       let el = this.$refs.chat;
-      var oDiv = el;
-      var disX = e.clientX - oDiv.offsetLeft;
-      var disY = e.clientY - oDiv.offsetTop;
+      let X = e.clientX - el.offsetLeft;
+      let Y = e.clientY - el.offsetTop;
       document.onmousemove = function(e) {
         e.preventDefault();
-        var l = e.clientX - disX;
-        var t = e.clientY - disY;
-        oDiv.style.left = l + "px";
-        oDiv.style.top = t + "px";
+          let left = e.clientX - X;
+          let top = e.clientY - Y;
+          el.style.left = left + "px";
+          el.style.top = top + "px";
       };
       document.onmouseup = function() {
         document.onmousemove = null;
@@ -207,12 +220,11 @@ export default {
           panes.length === this.panes.length &&
           panes.every((pane, index) => pane === this.panes[index])
         );
-        let size = this.panes.length;
         if (isForceUpdate || panesChanged) {
           this.selected = "0";
           this.panes = panes;
         }
-      } else if (size !== 0) {
+      } else if (this.panes.length !== 0) {
         this.panes = [];
       }
     },
@@ -311,10 +323,6 @@ export default {
   },
   mounted() {
       this.calcPaneInstances();
-      this.$nextTick(()=>{
-          this.initChatPosition();
-      })
-
   },
   updated() {
     this.calcPaneInstances();
