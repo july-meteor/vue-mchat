@@ -1,7 +1,8 @@
 // 提示音文件
 //
 // 为了部署方便
-const tipSound = '../static/media/tip.wav'
+const tipSound = require('../static/media/tip.wav');
+
 
 export function playTipSound(url = tipSound) {
     playMedia(url)

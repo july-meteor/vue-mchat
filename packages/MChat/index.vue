@@ -1,12 +1,13 @@
 <script>
 import MChatTabs from "./chatTabs";
-import MChatIndex from '../chat'
+import MChatIndex from "../chat";
 import { playTipSound } from "../util/play";
 
 export default {
   name: "mchat",
   components: {
-    MChatTabs,MChatIndex,
+    MChatTabs,
+    MChatIndex,
   },
   provide() {
     return {
@@ -69,47 +70,49 @@ export default {
         this.chatDisplay = true;
       }
     },
-      // 观察窗口变化
-     panes(nv,ov){
-        // 如果 窗口是从0变多
-         let o_len =  ov.length
-         if(0 == o_len){
-             this.$nextTick(()=>{
-                 this.initChatPosition();
-             })
-         }
-     }
-
+    // 观察窗口变化
+    panes(nv, ov) {
+      // 如果 窗口是从0变多
+      let o_len = ov.length;
+      if (0 == o_len) {
+        this.$nextTick(() => {
+          this.initChatPosition();
+        });
+      }
+    },
   },
   methods: {
-      // 初始化窗口的位置
-    initChatPosition(){
-          let el = this.$refs.chat;
-        if (el){
-            el.style.left =( document.body.clientWidth -10 - el.clientWidth )/2+ "px";
-            el.style.top = (document.body.clientHeight -70 - el.clientHeight)/2+ "px";
-        }
-
+    // 初始化窗口的位置
+    initChatPosition() {
+      let el = this.$refs.chat;
+      if (el) {
+        el.style.left =
+          (document.body.clientWidth - 10 - el.clientWidth) / 2 + "px";
+        el.style.top =
+          (document.body.clientHeight - 70 - el.clientHeight) / 2 + "px";
+      }
     },
     loadHistory(callBack) {
       this.$emit("loadHistory", callBack);
     },
     //  获得当前对话框
-    getCurrent(){
-        for( let pane of this.panes){
-            // 激活的就是当前的
-            if (pane.active){
-              let { chat, taleList }= pane
-                return {chat ,taleList} ;
-            }
+    getCurrent() {
+      for (let pane of this.panes) {
+        // 激活的就是当前的
+        if (pane.active) {
+          let { chat, taleList } = pane;
+          return { chat, taleList };
         }
+      }
     },
     // 收到消息
     getMessage(message) {
-        let voice = this.config.voice;
+      let voice = this.config.voice;
       // 提示音
       if (voice) {
-        playTipSound();
+        if (!message.mine) {
+          playTipSound();
+        }
       }
       this.panes.forEach((item) => {
         let { chat } = item;
@@ -120,24 +123,23 @@ export default {
     handleEvent(event, data) {
       switch (event) {
         case "minRight":
-           this.chatDisplay = !this.chatDisplay;
+          this.chatDisplay = !this.chatDisplay;
           break;
         case "tabClick":
-           this.handleTabClick(data);
+          this.handleTabClick(data);
           break;
         case "tabRemove":
-           this.handleRemoveChat(data);
+          this.handleRemoveChat(data);
           break;
         case "chatClose":
-           this.handleRemoveChat({pane :this.getCurrent()});
+          this.handleRemoveChat({ pane: this.getCurrent() });
           break;
         case "talkEvent":
-           this.bindTalkEvent(event, data)
-          break
-       default:
-           this.bindChatEvent(event, data);
+          this.bindTalkEvent(event, data);
           break;
-
+        default:
+          this.bindChatEvent(event, data);
+          break;
       }
     },
     // 会话内容的事件
@@ -151,10 +153,10 @@ export default {
     handleTabClick({ pane }) {
       this.selected = pane.index;
     },
-     // 处理对话框Setting
-    handleChatSet(event){
-        const { name, type, id } = this.getCurrent().chat;
-        this.bindChatEvent(event, { id, name, type });
+    // 处理对话框Setting
+    handleChatSet(event) {
+      const { name, type, id } = this.getCurrent().chat;
+      this.bindChatEvent(event, { id, name, type });
     },
     handleRemoveChat({ pane }) {
       const { name, type, id } = pane.chat;
@@ -194,10 +196,10 @@ export default {
       let Y = e.clientY - el.offsetTop;
       document.onmousemove = function(e) {
         e.preventDefault();
-          let left = e.clientX - X;
-          let top = e.clientY - Y;
-          el.style.left = left + "px";
-          el.style.top = top + "px";
+        let left = e.clientX - X;
+        let top = e.clientY - Y;
+        el.style.left = left + "px";
+        el.style.top = top + "px";
       };
       document.onmouseup = function() {
         document.onmousemove = null;
@@ -258,10 +260,9 @@ export default {
           loadHistory: function(callBack) {
             loadHistory(callBack);
           },
-          chatEvent: function (event, data) {
-              handleEvent(event, data)
-
-          }
+          chatEvent: function(event, data) {
+            handleEvent(event, data);
+          },
         },
       };
       return <m-chat-index {...data_chat}></m-chat-index>;
@@ -274,7 +275,7 @@ export default {
       },
       ref: "MChatTabs",
       on: {
-         chatEvent: function(event, data) {
+        chatEvent: function(event, data) {
           handleEvent(event, data);
         },
       },
@@ -305,10 +306,26 @@ export default {
             {el_chat_panes}
           </div>
           <span class="im-box-setwin">
-          <i class="m-icon-top" title="置顶"  on-click={(ev)=>handleChatSet("chatTop")}></i>
-          <i class="m-icon-minus" title="最小化" on-click={(ev)=>handleChatSet("chatMin")} ></i>
-          <i class="m-icon-maxus" title="最大化" on-click={(ev)=>handleChatSet("chatMax")} ></i>
-          <i class="m-icon-close" title="关闭" on-click={(ev)=>handleChatSet("chatClose")} ></i>
+            <i
+              class="m-icon-top"
+              title="置顶"
+              on-click={(ev) => handleChatSet("chatTop")}
+            ></i>
+            <i
+              class="m-icon-minus"
+              title="最小化"
+              on-click={(ev) => handleChatSet("chatMin")}
+            ></i>
+            <i
+              class="m-icon-maxus"
+              title="最大化"
+              on-click={(ev) => handleChatSet("chatMax")}
+            ></i>
+            <i
+              class="m-icon-close"
+              title="关闭"
+              on-click={(ev) => handleChatSet("chatClose")}
+            ></i>
           </span>
           <span class="im-icon-resize"></span>
         </div>
@@ -322,7 +339,7 @@ export default {
     });
   },
   mounted() {
-      this.calcPaneInstances();
+    this.calcPaneInstances();
   },
   updated() {
     this.calcPaneInstances();

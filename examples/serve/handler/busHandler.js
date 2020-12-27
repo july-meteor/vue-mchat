@@ -1,5 +1,5 @@
 
-function  put(io, data) {
+function put(io, data) {
     // 告诉用户消息发送成功
     io.emit('successful', data);
 }
@@ -8,37 +8,35 @@ function  put(io, data) {
 
 
 // 当做一个类来写
-module.exports =(handler)=>{
+module.exports = (handler) => {
     //客户端连接数量
-    let onlineUserCount=0;
+    let onlineUserCount = 0;
     //统计客户端登录用户
-    let onlineUsers={};
+    let onlineUsers = {};
 
-    handler.on("open",socket =>{
+    handler.on("open", (serve, socket) => {
         // 前置拦截
-        let  channel = {
+        let channel = {
+            serve,
             onlineUserCount,
             onlineUsers,
-            cid:socket.id,
-            current:{id :0},
             socket,
         }
         // 事件分发
         const EventEmitter = require('events');
         const event = new EventEmitter();
         // 基础事件处理
-        const base =  require("./baseHandler")
-        const chat =  require("./chatHandler")
-        base(channel,event);
-        chat(channel,event);
-
+        const base = require("./baseHandler")
+        const chat = require("./chatHandler")
+        base(channel, event);
+        chat(channel, event);
 
         // const room =  require("./roomHandler")
         // room(channel,event);
 
         // 注册事件
-        let events= event._events;
-        for(let key in events){
+        let events = event._events;
+        for (let key in events) {
             socket.on(key, events[key]);
         }
     })

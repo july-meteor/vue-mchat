@@ -1,7 +1,7 @@
 <template>
 
   <div id="app" class="wrapper">
-    <login v-if="!user"></login>
+    <login v-if="!user" @login="load"></login>
     <client v-else :user="user"></client>
 
   </div>

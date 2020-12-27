@@ -112,6 +112,7 @@
                     }
                     const {token} = data;
                     sessionStorage.setItem("token", token);
+                    this.$emit("login");
                 })
             }
         }

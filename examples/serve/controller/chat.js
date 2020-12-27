@@ -14,18 +14,35 @@ const resultVO = {
 }
 
 module.exports = (router) => {
-    // 会话初始化
-    initChat();
+    // 初始化数据库
+    initSystem();
 }
 
 
-async function initChat() {
+async function initSystem() {
+
+    let admin = await  User.findOne({account: 'admin'});
+    if (admin) {
+        return
+    }
+    let userModel = {
+        account: 'admin',
+        password: 'admin',
+        name: '七月',
+        id: 0,
+    }
+    const lastUser = await  User.findOne({}).sort({id: -1});
+    
+    if (lastUser) {
+        form.id = lastUser.id + 1;
+    }
+     admin =  await User.create(userModel)
 
     let group = await  Chat.findOne({id: 0});
     if (group) {
         return
     }
-    let form = {
+    let chatForm = {
         id: 0,
         avatar: '',
         name: '共同进步',
@@ -34,11 +51,8 @@ async function initChat() {
         master: undefined,
         userList: [],
     }
-    const admin = await  User.findOne({account: 'admin'});
-    if (!admin) {
-        return
-    }
-    createGroup(admin,form)
+
+    await createGroup(admin,chatForm)
 }
 
 

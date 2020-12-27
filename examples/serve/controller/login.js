@@ -14,10 +14,9 @@ const resultVO = {
     data: undefined,
 }
 
-module.exports = (router) => {
+module.exports = async (router) => {
 
-     initAdmin();
-
+    
     // 登录方法
     router.post('/login', async (req, resp) => {
         const user = await User.findOne(req.body);
@@ -77,25 +76,6 @@ module.exports = (router) => {
     })
 }
 
-
-async function initAdmin() {
-
-    let admin = await  User.findOne({account: 'admin'});
-    if (admin) {
-        return
-    }
-    let form = {
-        account: 'admin',
-        password: 'admin',
-        name: '七月',
-        id: 0,
-    }
-    const lastUser = await  User.findOne({}).sort({id: -1});
-    if (lastUser) {
-        form.id = lastUser.id + 1;
-    }
-    User.create(form)
-}
 
 
 

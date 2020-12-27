@@ -6,17 +6,34 @@ const Chat = require("../models/Chat")
 /*
 * 处理连接事件相关处理器
  */
-module.exports =(channel,event)=>{
-    let {onlineUserCount,onlineUsers,cid,userId,socket } =channel;
+module.exports = (channel, event) => {
+
+    let { onlineUserCount, serve, onlineUsers, socket } = channel;
+
+    // client 拉取对话变化
+    event.on("pull_chat", async () => {
+        if (!socket._id) {
+            return
+        }
+
+        const user = await User.findById(socket._id);
+        // 查询更新群组
+        const chatList = await Chat.find({
+            _id: {
+                $in: user.chats
+            }
+        }).populate("userList");
+        socket.emit("reset_chat", chatList)
+    })
 
     // 获取消息
-    event.on("message",function (data){
-        const {mine, to, content, timestamp} = data;
+    event.on("message", function (data, fn) {
+        const { mine, to, content, timestamp } = data;
         let message = {
             //消息来源用户名
-            username: data.username,
+            username: mine.username,
             //消息来源用户头像
-            avatar: data.avatar,
+            avatar: mine.avatar,
             //消息的来源ID（如果是私聊，则是用户id，如果是群聊，则是群组id）
             id: to.id,
             //聊天窗口来源类型，从发送消息传递的to里面获取
@@ -32,8 +49,8 @@ module.exports =(channel,event)=>{
             //服务端时间戳毫秒数。注意：如果你返回的是标准的 unix 时间戳，记得要 *1000
             timestamp,
         };
-        socket.to(to.id).emit("receive",message);
-
+        socket.to(to.id).emit("receive", message);
+        fn(message);
     })
 
 
