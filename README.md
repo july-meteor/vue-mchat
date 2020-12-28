@@ -28,11 +28,17 @@ MChat</h1>
 
 ### 这是一款基于vue与elementu-ui开发的聊天室组件库，在UI上模仿了TIM及微信。在提供基础封装的同时，最大程度的增加扩展性。
 
+
+
+
 ![演示图](/doc/img/vue_mchat_demo.gif)
 ![MChat-index演示图](/doc/img/sample_1.png)
 
 
-[演示地址](http://www.julymeteor.com/chat/)
+## 🌰 加群获得群聊版本代码
+
+[群聊演示地址](http://www.julymeteor.com/im/)
+[静态效果演示](http://www.julymeteor.com/chat/)
  - [Github](https://github.com/july-meteor/vue-mchat)
  - [Gitee](https://gitee.com/july-meteor/vue-mchat)
 
@@ -450,6 +456,7 @@ vue-mchat 是本人前端阶段性学习总结的项目，因为并非前端开�
 
 
 ## QQ交流群
+
 ![共同进步](/doc/img/qq_group.png)
 
 ## Browsers support

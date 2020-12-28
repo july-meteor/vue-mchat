@@ -92,16 +92,16 @@ export default {
     },
     // 未读
     unread(newVal) {
-      if (newVal) {
-        this.beforeTitle && this.resetTitle(this.beforeTitle);
-        this.saveTitle();
-        this.changeTitle();
-        if (this.config.notice) {
-          this.showBrowser();
-        }
-      } else {
-        this.resetTitle(this.beforeTitle);
-      }
+      // if (newVal) {
+      //   this.beforeTitle && this.resetTitle(this.beforeTitle);
+      //   this.saveTitle();
+      //   this.changeTitle();
+      //   if (this.config.notice) {
+      //     this.showBrowser();
+      //   }
+      // } else {
+      //   this.resetTitle(this.beforeTitle);
+      // }
     },
   },
   computed: {
