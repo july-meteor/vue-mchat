@@ -9,6 +9,7 @@
                 <button class="m-button m-button-primary" @click="handleDelChat">删除会话</button>
                 <button class="m-button m-button-primary" @click="config.brief= !config.brief">简约模式</button>
             </div>
+
         </div>
 
         <mchat
@@ -20,6 +21,7 @@
                 @talkEvent="talkEvent"
                 @sendMessage="sendMessage"
                 @loadHistory="handleHistory"
+                @uploadEvent="handleUpload"
         >
             <mchat-right-box>
                 <template slot-scope="props">
@@ -71,6 +73,8 @@
                     notice: false,
                     // 设定
                     voice: true,
+                    //上传文件的扩展名
+                    fileExt:"",
                 },
                 //我的信息
                 mine: CONST.mine,
@@ -200,7 +204,7 @@
                       fromid: -1,
                       timestamp: new Date(),
                   };
-                this.$im.emit("getMessage", authReplay);
+                // this.$im.emit("getMessage", authReplay);
             },
             //添加回话
             handleAddChat() {
@@ -216,6 +220,10 @@
             handleDelChat() {
                 this.chats.pop();
             },
+            handleUpload(data,fn){
+                console.log("文件上传",data)
+
+            }
         },
         mounted() {
         },

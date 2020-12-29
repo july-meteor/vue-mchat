@@ -142,6 +142,9 @@ export default {
           break;
       }
     },
+    handleUploadEvent(data,fn){
+      this.$emit("uploadEvent",data,fn);
+    },
     // 会话内容的事件
     bindTalkEvent(event, data) {
       this.$emit("talkEvent", event, data);
@@ -238,6 +241,7 @@ export default {
       chats,
       panes,
       handleEvent,
+      handleUploadEvent,
       handleEnter,
       handleChatSet,
       loadHistory,
@@ -263,6 +267,9 @@ export default {
           chatEvent: function(event, data) {
             handleEvent(event, data);
           },
+          uploadEvent:function (data,fn) {
+            handleUploadEvent(data,fn)
+          }
         },
       };
       return <m-chat-index {...data_chat}></m-chat-index>;
@@ -278,6 +285,7 @@ export default {
         chatEvent: function(event, data) {
           handleEvent(event, data);
         },
+
       },
     };
     return (

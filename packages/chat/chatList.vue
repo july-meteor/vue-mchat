@@ -72,15 +72,24 @@ export default {
             // 更新节点
             this.updateNode();
             // 下载记录历史
-            if (this.loadHistory) {
-              this.closeTopTip();
-              this.scrollRefresh();
-              this.scroll.toBeforePosition()
-            }
-            if(this.current && this.isBottom){
-                this.scrollBottom();
-            }
-            //还有一种情况是自己发送的。。
+            /**
+             *    这里的延时的原因
+             *    是因为发送图片，render的时间太长
+             *    导致scrollrefresh的  长度不对。
+             *    后续有问题在改
+             */
+            setTimeout( ()=>{
+                    if (this.loadHistory) {
+                        this.closeTopTip();
+                        this.scrollRefresh();
+                        this.scroll.toBeforePosition()
+                    }
+                    if(this.current && this.isBottom){
+                        this.scrollBottom();
+                    }
+                    //还有一种情况是自己发送的。。
+                }
+            ,100)
         });
       }
     },
@@ -179,13 +188,13 @@ export default {
     scrollUp() {
       if (this.scroll) {
           this.scrollRefresh();
-        this.scroll.scrollTo(0, 0, 200);
+          this.scroll.scrollTo(0, 0, 200);
       }
     },
     scrollBottom() {
       if (this.scroll) {
-        this.scrollRefresh();
-        this.scroll.scrollTo(0, this.scroll.maxScrollY, 200);
+       this.scrollRefresh();
+       this.scroll.scrollTo(0, this.scroll.maxScrollY, 200);
       }
     },
     closeTopTip() {

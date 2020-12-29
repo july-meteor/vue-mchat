@@ -133,6 +133,15 @@ export default {
     bindEmoji(emoji) {
       this.content += emoji;
     },
+    bindUpload(data){
+        const { type, file} =data
+       this.$emit("uploadEvent",data,(url)=>{
+           if (type === 'img'){
+               this.content += `img[${url}]`;
+           }
+       })
+
+    },
     handleUnread(count) {
       if (this.active) {
         this.unread = 0;
@@ -150,7 +159,7 @@ export default {
       taleList,
       rightActive,
       bindEmoji,
-
+      bindUpload,
       bindEnter,
       bindChatEvent,
       handleUnread,
@@ -219,6 +228,9 @@ export default {
         emoji: function (emoji) {
           bindEmoji(emoji);
         },
+       upload:function (data) {
+           bindUpload(data)
+       }
       },
     };
 
