@@ -79,7 +79,6 @@ const PopupManager = {
         return;
       }
     }
-
     const modalDom = getModal();
 
     addClass(modalDom, 'v-modal');

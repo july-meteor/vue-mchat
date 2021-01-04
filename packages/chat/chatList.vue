@@ -268,6 +268,10 @@ export default {
       handleHistory,
     } = this;
 
+      /**
+       *  渲染 如果要提供更好的 如 图片显示效果，需要更改 vnode的构建
+       *  图片方面可以参考 element-ui image的处理
+        */
     const el_record_list = this._l(list, (item) => {
       let contentHtml = h("div", {
         domProps: {

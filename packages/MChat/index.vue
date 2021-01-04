@@ -2,6 +2,7 @@
 import MChatTabs from "./chatTabs";
 import MChatIndex from "../chat";
 import { playTipSound } from "../util/play";
+import {layerPosition,layerDrag} from '../util/layer'
 
 export default {
   name: "mchat",
@@ -86,10 +87,7 @@ export default {
     initChatPosition() {
       let el = this.$refs.chat;
       if (el) {
-        el.style.left =
-          (document.body.clientWidth - 10 - el.clientWidth) / 2 + "px";
-        el.style.top =
-          (document.body.clientHeight - 70 - el.clientHeight) / 2 + "px";
+          layerPosition(el,"center")
       }
     },
     loadHistory(callBack) {
@@ -195,19 +193,7 @@ export default {
     },
     handPanesDrag(e) {
       let el = this.$refs.chat;
-      let X = e.clientX - el.offsetLeft;
-      let Y = e.clientY - el.offsetTop;
-      document.onmousemove = function(e) {
-        e.preventDefault();
-        let left = e.clientX - X;
-        let top = e.clientY - Y;
-        el.style.left = left + "px";
-        el.style.top = top + "px";
-      };
-      document.onmouseup = function() {
-        document.onmousemove = null;
-        document.onmouseup = null;
-      };
+      layerDrag(e,el);
     },
     //生成panes的数据
     calcPaneInstances(isForceUpdate = false) {

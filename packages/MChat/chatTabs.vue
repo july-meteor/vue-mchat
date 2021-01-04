@@ -43,7 +43,7 @@
       let tabName = name + id + index;
       pane.index = `${index}`;
         // 是否有头像
-      if (!avatar)  avatar =default_avatar;
+       avatar = avatar || default_avatar;
 
         //对话是否激活
       let label = name;

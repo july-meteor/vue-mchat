@@ -2,7 +2,7 @@
   <div class="im-user-list">
     <ul>
       <li>
-        <div class="list-title">成员(24/30)</div>
+        <div class="list-title" v-html="statusText"></div>
       </li>
       <li>
         <div class="im-list-filter">
@@ -45,12 +45,21 @@ export default {
       set(val){
         this.$emit('input',val)
       }
+    },
+    statusText(){
+         let online = 0,count = this.list.length |0;
+         this.list.forEach( item =>{
+             if (item.online) online ++;
+         })
+        return  `群成员(${online}/${count})`
     }
+
   },
   methods: {
     bindClick(event) {
       this.$emit("click", event);
     },
+
   },
 };
 </script>

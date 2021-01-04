@@ -23,7 +23,7 @@
                         <button
                                 type="button"
                                 v-if="shrink"
-                                @click="handleshrink"
+                                @click="handleShrink"
                                 aria-label="shrink"
                                 class="dialog_header_btn">
                             <i :class="iconMaxClass"></i>
@@ -56,6 +56,8 @@
 <script>
     import Popup from '../../util/popup/index'
     import emitter from '../../mixins/emitter'
+    import {layerPosition,layerDrag} from '../../util/layer'
+
 
     export default {
         name: "m-dialog",
@@ -133,32 +135,17 @@
             resetDialogPosition(flag) {
                 let el = this.$refs.dialog;
                 if (flag) {
-
-                    el.style.left = (document.body.clientWidth - 10 - el.clientWidth) / 2 + "px";
-                    el.style.top = (document.body.clientHeight - 70 - el.clientHeight) / 2 + "px";
+                    layerPosition(el,"center");
                 } else {
-                    el.style.left = (document.body.clientWidth - 10 - el.clientWidth) + "px";
-                    el.style.top = 0 + "px";
+                    layerPosition(el,"lt");
+
                 }
             },
             handPageDrag(e) {
                 let el = this.$refs.dialog;
-                let X = e.clientX - el.offsetLeft;
-                let Y = e.clientY - el.offsetTop;
-                let _this = this;
-                document.onmousemove = function (e) {
-                    e.preventDefault();
-                    let l = e.clientX - X;
-                    let t = e.clientY - Y;
-                    el.style.left = l + "px";
-                    el.style.top = t + "px";
-                };
-                document.onmouseup = function () {
-                    document.onmousemove = null;
-                    document.onmouseup = null;
-                };
+                layerDrag(e,el)
             },
-            handleshrink() {
+            handleShrink() {
                 this.isShrink = !this.isShrink;
                 this.$nextTick(() => {
                     this.resetDialogPosition(this.isShrink);

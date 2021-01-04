@@ -6,6 +6,97 @@
   "description": "MChat 聊天室 ui",
   "glyphs": [
     {
+      "icon_id": "2132405",
+      "name": "用户",
+      "font_class": "user",
+      "unicode": "e703",
+      "unicode_decimal": 59139
+    },
+    {
+      "icon_id": "2313951",
+      "name": "用户",
+      "font_class": "team",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "17109880",
+      "name": "warning",
+      "font_class": "warning",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "6486521",
+      "name": "文件",
+      "font_class": "wenjian",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "15838470",
+      "name": "edit",
+      "font_class": "edit",
+      "unicode": "e66e",
+      "unicode_decimal": 58990
+    },
+    {
+      "icon_id": "15838471",
+      "name": "eye-close",
+      "font_class": "eye-close",
+      "unicode": "e674",
+      "unicode_decimal": 58996
+    },
+    {
+      "icon_id": "15838499",
+      "name": "map",
+      "font_class": "map",
+      "unicode": "e679",
+      "unicode_decimal": 59001
+    },
+    {
+      "icon_id": "15838503",
+      "name": "help",
+      "font_class": "help",
+      "unicode": "e67b",
+      "unicode_decimal": 59003
+    },
+    {
+      "icon_id": "15838505",
+      "name": "modular",
+      "font_class": "modular",
+      "unicode": "e68d",
+      "unicode_decimal": 59021
+    },
+    {
+      "icon_id": "15838511",
+      "name": "play",
+      "font_class": "play",
+      "unicode": "e69a",
+      "unicode_decimal": 59034
+    },
+    {
+      "icon_id": "15838517",
+      "name": "prompt",
+      "font_class": "prompt",
+      "unicode": "e69b",
+      "unicode_decimal": 59035
+    },
+    {
+      "icon_id": "15838595",
+      "name": "help-filling",
+      "font_class": "help-filling",
+      "unicode": "e69f",
+      "unicode_decimal": 59039
+    },
+    {
+      "icon_id": "19131344",
+      "name": "warning",
+      "font_class": "warning1-copy",
+      "unicode": "e888",
+      "unicode_decimal": 59528
+    },
+    {
       "icon_id": "4765725",
       "name": "close-circle",
       "font_class": "close-circle",
@@ -74,20 +165,6 @@
       "font_class": "message",
       "unicode": "e78a",
       "unicode_decimal": 59274
-    },
-    {
-      "icon_id": "4766293",
-      "name": "user",
-      "font_class": "user1",
-      "unicode": "e7ae",
-      "unicode_decimal": 59310
-    },
-    {
-      "icon_id": "4766294",
-      "name": "team",
-      "font_class": "team",
-      "unicode": "e7af",
-      "unicode_decimal": 59311
     },
     {
       "icon_id": "4767006",
@@ -340,13 +417,6 @@
       "font_class": "unlock",
       "unicode": "e684",
       "unicode_decimal": 59012
-    },
-    {
-      "icon_id": "15838547",
-      "name": "user",
-      "font_class": "user",
-      "unicode": "e685",
-      "unicode_decimal": 59013
     },
     {
       "icon_id": "15838548",

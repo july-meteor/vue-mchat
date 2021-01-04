@@ -30,11 +30,14 @@ export default {
   created() {
     const { chat } = this.chat;
 
+    // 参考 element-ui 的table
+
        //基本参数
    const basicProps = ['columnKey', 'label', 'className', 'labelClassName', 'type', 'renderHeader', 'formatter', 'fixed', 'resizable'];
     let data = this.getPropsData(basicProps)
     data = mergeOptions(chat, data);
     this.data = data;
+    //  这里只能单单 触发第一次初始化 后续的 变动 因为没有监听所以无法变更。因为看的人太少了懒得维护
   
   },
   methods: {

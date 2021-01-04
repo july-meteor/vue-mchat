@@ -1,7 +1,10 @@
 @import 'im';
-@import './icon/iconfont.css';
 @import "popover";
 @import "dialog";
+@import "massage-box";
+@import "notification";
+@import "icon/iconfont.css";
+@import "apply-box";
 
 
 
@@ -133,4 +136,15 @@ div:focus {
 
 .m-button+.m-button {
   margin-left: 10px;
+}
+
+// 遮盖层
+.v-modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .5;
+  background: #000;
 }

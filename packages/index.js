@@ -4,13 +4,23 @@ import MChatRightBox from './rightBox'
 import MChatRightList from './groupList'
 import MDialog from './element/dialog'
 import MIcon from './element/icon'
+import MessageBox from  './element/message-box'
 import ELPopver from  './element/popover'
+import Notification from './element/notification'
+import ApplyBox from  './system/apply'
+
+
 
 
 import './styles/index.scss'
 
 
-const components = [MChat, MChatRightBox, MChatRightList, MDialog, MIcon,ELPopver]
+const components = [MChat, MChatRightBox, MChatRightList, MDialog, MIcon,
+    ELPopver,
+    MessageBox,
+    Notification,
+    ApplyBox,
+]
 
 // const req = require.context('./SvgIcon/svg/', false, /\.svg$/)
 // const requireAll = requireContext => requireContext.keys().map(requireContext)
@@ -28,6 +38,25 @@ const install = function (Vue) {
     // 
     //观察者
     Vue.prototype.$im = EventHub
+
+    /**
+     *  挂件
+     */
+    Vue.prototype.$msgbox = MessageBox;
+    Vue.prototype.$alert = MessageBox.alert;
+    Vue.prototype.$confirm = MessageBox.confirm;
+    Vue.prototype.$prompt = MessageBox.prompt;
+    Vue.prototype.$notify = Notification;
+    Vue.prototype.$join = ApplyBox.join;
+
+    Vue.prototype.applyFriend = ApplyBox.applyFriend;
+    Vue.prototype.applyGroup = ApplyBox.applyGroup;
+
+    Vue.prototype.confirmGroup = ApplyBox.confirmGroup;
+    Vue.prototype.confirmFriend = ApplyBox.confirmFriend;
+
+
+
 };
 
 

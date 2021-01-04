@@ -1,0 +1,81 @@
+
+.apply-friend-box {
+  margin: 15px;
+  font-size: 0;
+  //width: 405px;
+  .apply-img {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    vertical-align: top;
+    font-size: 14px;
+    width: 100px;
+    margin-right: 20px;
+    text-align: center;
+    img {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 10px;
+    }
+  }
+
+  .apply-remark, .accept-box {
+    display: inline-block;
+    font-size: 14px;
+    text-align: left;
+    width: 280px;
+    span {
+      font-weight: bold;
+      font-size: 13px;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    p {
+      padding: 5px;
+      font-size: 12px;
+      color: gray;
+    }
+    textarea {
+      border-color: #e6e6e6;
+      border-width: 1px;
+      border-style: solid;
+      background-color: #fff;
+      border-radius: 2px;
+      height: 65px;
+      min-height: 65px;
+      resize: none;
+      line-height: 20px;
+      padding: 6px 10px;
+      display: block;
+      width: 100%;
+    }
+    select {
+      border: 1px solid #e6e6e6;
+      height: 38px;
+      line-height: 1.3;
+      line-height: 38px \9
+    ;
+      background-color: #fff;
+      border-radius: 2px;
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 0 10px;
+      font-family: inherit;
+      font-size: inherit;
+      font-style: inherit;
+      font-weight: inherit;
+      appearance: none;
+      -moz-appearance: none; /* Firefox */
+      -webkit-appearance: none; /* Safari 和 Chrome */
+      option {
+        font-family: inherit;
+        font-size: inherit;
+        font-style: inherit;
+        font-weight: inherit;
+        outline: 0;
+      }
+    }
+
+  }
+
+}

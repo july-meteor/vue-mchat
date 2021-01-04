@@ -209,10 +209,7 @@ body {
 
 }
 
-//矢量图
-.im-ico {
-  background: url(icon.png) no-repeat;
-}
+
 
 //im
 
@@ -256,7 +253,6 @@ body {
 
     &.offline img {
       -webkit-filter: grayscale(1); /* Webkit */
-      filter: gray; /* IE6-9 */
       filter: grayscale(1); /* W3C */
     }
 
@@ -1017,6 +1013,11 @@ body {
       margin-right: 6px;
       box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.1);
       cursor: pointer;
+    &.offline{
+      -webkit-filter: grayscale(1); /* Webkit */
+      filter: grayscale(1); /* W3C */
+    }
+
     }
 
     .im-user-info {
@@ -1045,6 +1046,22 @@ body {
         }
 
       }
+    }
+    .im-user-role{
+      position: absolute;
+      right: 5px;
+      font-size: 20px;
+
+      .m-icon-user{
+        &.master{
+          color: #FFCD05;
+        }
+        &.manager{
+          color: #2379FE;
+        }
+      }
+
+
 
     }
 

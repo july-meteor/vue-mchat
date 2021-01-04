@@ -217,7 +217,7 @@ export default {
 
   destroyed() {
     const reference = this.reference;
-
+    console.log(reference)
     off(reference, 'click', this.doToggle);
     off(reference, 'mouseup', this.doClose);
     off(reference, 'mousedown', this.doShow);
