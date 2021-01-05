@@ -24,8 +24,8 @@ export function layerDrag(e, el, moveOut = false) {
             t < stY && (t = stY);
             t > setBot && (t = setBot);
         }
-        el.style.left = l;
-        el.style.top = t;
+        el.style.left = `${l}px`;
+        el.style.top = `${t}px`;
     };
     document.onmouseup = function () {
         document.onmousemove = null;
@@ -36,8 +36,8 @@ export function layerDrag(e, el, moveOut = false) {
 
 export function layerCenter(el) {
     let win = document.body;
-    el.style.left = (win.clientWidth - 10 - el.clientWidth) / 2;
-    el.style.top = (win.clientHeight - 70 - el.clientHeight) / 2;
+    el.style.left = (win.clientWidth - 10 - el.clientWidth) / 2 + "px";
+    el.style.top = (win.clientHeight - 70 - el.clientHeight) / 2 + "px";
 }
 
 /**
@@ -45,20 +45,20 @@ export function layerCenter(el) {
  */
 export function layerTipLB(el) {
     let win = document.body;
-    el.style.left = (win.clientWidth - 10 - el.clientWidth);
-    el.style.top = win.clientHeight - 70;
+    el.style.left = (win.clientWidth - 10 - el.clientWidth) + "px";
+    el.style.top = win.clientHeight - 70 + "px";
 }
 
 export function layerTipLT(el) {
     let win = document.body;
-    el.style.left = (win.clientWidth - 10 - el.clientWidth);
-    el.style.top = 0;
+    el.style.left = (win.clientWidth - 10 - el.clientWidth) + "px";
+    el.style.top = 0 + "px";
 }
 
 export function layerTipRB(el) {
     let win = document.body;
-    el.style.left = 0;
-    el.style.top = win.clientHeight - 70;
+    el.style.left = 0 + "px";
+    el.style.top = win.clientHeight - 70 + "px";
 }
 
 export function layerPosition(el, position) {
