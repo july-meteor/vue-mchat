@@ -2,7 +2,7 @@
     <div class="im-chat-toolbar">
         <div class="im-chat-tools">
       <span class="im-chat-tool-item " title="发送表情">
-        <el-popover placement="top-start" trigger="click" ref="popover">
+        <m-popover placement="top-start" trigger="click" ref="popover">
           <div class="emoji-box">
             <ul>
               <li v-for="(item,key) in emojis" :key="item" @click="emojiEmit(key)">
@@ -11,7 +11,7 @@
             </ul>
           </div>
                 <i slot="reference" class="m-icon-smile"></i>
-        </el-popover>
+        </m-popover>
       </span>
 
             <span class="im-chat-tool-item" title="发送图片">

@@ -5,8 +5,8 @@
       @after-enter="handleAfterEnter"
       @after-leave="handleAfterLeave">
       <div
-        class="el-popover el-popper"
-        :class="[popperClass, content && 'el-popover--plain']"
+        class="m-popover m-popper"
+        :class="[popperClass, content && 'm-popover--plain']"
         ref="popper"
         v-show="!disabled && showPopper"
         :style="{ width: width + 'px' }"
@@ -14,7 +14,7 @@
         :id="tooltipId"
         :aria-hidden="(disabled || !showPopper) ? 'true' : 'false'"
       >
-        <div class="el-popover__title" v-if="title" v-text="title"></div>
+        <div class="m-popover__title" v-if="title" v-text="title"></div>
         <slot>{{ content }}</slot>
       </div>
     </transition>
@@ -26,7 +26,7 @@ import Popper from '../../../util/vue-popper';
 import { on, off ,generateId , addClass ,removeClass } from '../../../util/dom';
 
 export default {
-  name: 'el-popover',
+  name: 'm-popover',
 
   mixins: [Popper],
 
@@ -69,7 +69,7 @@ export default {
 
   computed: {
     tooltipId() {
-      return `el-popover-${generateId()}`;
+      return `m-popover-${generateId()}`;
     }
   },
   watch: {
@@ -90,7 +90,7 @@ export default {
     }
     // 可访问性
     if (reference) {
-      addClass(reference, 'el-popover__reference');
+      addClass(reference, 'm-popover__reference');
       reference.setAttribute('aria-describedby', this.tooltipId);
       reference.setAttribute('tabindex', this.tabindex); // tab序列
       popper.setAttribute('tabindex', 0);
@@ -217,7 +217,6 @@ export default {
 
   destroyed() {
     const reference = this.reference;
-    console.log(reference)
     off(reference, 'click', this.doToggle);
     off(reference, 'mouseup', this.doClose);
     off(reference, 'mousedown', this.doShow);

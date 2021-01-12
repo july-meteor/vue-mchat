@@ -6,6 +6,55 @@
   "description": "MChat 聊天室 ui",
   "glyphs": [
     {
+      "icon_id": "11372647",
+      "name": "创作",
+      "font_class": "chuangzuo",
+      "unicode": "e8ad",
+      "unicode_decimal": 59565
+    },
+    {
+      "icon_id": "4841816",
+      "name": "群组",
+      "font_class": "qunzu",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "11975718",
+      "name": "系统消息",
+      "font_class": "sys_msg",
+      "unicode": "e75e",
+      "unicode_decimal": 59230
+    },
+    {
+      "icon_id": "11095520",
+      "name": "el-icon-menu",
+      "font_class": "menu",
+      "unicode": "e7da",
+      "unicode_decimal": 59354
+    },
+    {
+      "icon_id": "10254162",
+      "name": "用户",
+      "font_class": "yonghu",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "225861",
+      "name": "对话",
+      "font_class": "duihua",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "1022322",
+      "name": "对话",
+      "font_class": "duihua1",
+      "unicode": "e685",
+      "unicode_decimal": 59013
+    },
+    {
       "icon_id": "2132405",
       "name": "用户",
       "font_class": "user",

@@ -1,19 +1,22 @@
 <template>
     <div id="app" class="wrapper">
-        <login></login>
+         <apply-test></apply-test>
     </div>
 </template>
 
 <script>
-    import Login from './components/Login'
+    import applyTest from './test/applyTest'
 
     export default {
         name: "app",
         components: {
-            Login
+            applyTest
         },
         data() {
             return {}
+        },
+        mounted(){
+
         }
     }
 </script>

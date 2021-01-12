@@ -1,5 +1,4 @@
-// css的最前端的名空间  element  也不错吧。。
-$namespace: 'el';
+$namespace: 'm';  // 以防冲突
 $element-separator: '__';
 $modifier-separator: '--';
 $state-prefix: 'is-';

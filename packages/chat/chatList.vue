@@ -304,17 +304,13 @@ export default {
     let el_history_log;
     if (historyBtnShow) {
       el_history_log = (
-        <div class="history_lable" on-click={() => handleHistory()}>
+        <div class="history_label" on-click={() => handleHistory()}>
           查看更多消息
         </div>
       );
     }
 
-    // const el_down_button = (
-    //   <div class="downBtn">
-    //     <span>{{ unread }}</span>
-    //   </div>
-    // );
+
 
     const el_chat_list = (
       <div
@@ -325,7 +321,7 @@ export default {
         ref="scroller"
       >
         {el_history_log}
-        <ul ref="main">{el_record_list}</ul>
+        <ul ref="main"class="talk-list" >{el_record_list}</ul>
 
         <div class="scrollButton" on-click={() => scrollUp()}>
           <i class="up  m-icon-arrow-up"></i>

@@ -2,8 +2,8 @@
 import { on, off } from "../util/dom";
 
 export default {
-  name: "MChat-enter-box",
-  componentName: "MChatEnterBox",
+  name: "enter-box",
+  componentName: "EnterBox",
   props: {
     placeholder: {
       type: String,
@@ -44,6 +44,10 @@ export default {
     selectEnter(flag) {
       this.enter = flag;
     },
+      // 输入框对焦
+      handleInputFocus(){
+          this.$refs.input.focus();
+      },
     bindChatEvent(event, data){
         this.$emit("chatEvent", event, data);
     },
@@ -90,6 +94,7 @@ export default {
         value: self.currentContent,
         placeholder,
       },
+      ref:'input',
       on: {
         input: function (event) {
           self.currentContent = event.target.value;

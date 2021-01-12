@@ -131,9 +131,11 @@ class Scroll extends IScroll {
 
     // 前往先前的坐标点
     toBeforePosition() {
-        let {node} = this.beforeNode()
-        if (node) {
-            this.scrollToElement(node, 0, 0, -30)
+        if (this.beforeNode()) {
+            let {node} = this.beforeNode()
+            if (node) {
+                this.scrollToElement(node, 0, 0, -30)
+            }
         }
     }
 }

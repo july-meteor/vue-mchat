@@ -1,12 +1,15 @@
-@import 'im';
 @import "popover";
 @import "dialog";
 @import "massage-box";
 @import "notification";
 @import "icon/iconfont.css";
 @import "apply-box";
+@import "iChat";
+@import "im";
 
-
+li {
+  list-style: none;
+}
 
 body {
   height: 100%;
