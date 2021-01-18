@@ -8,6 +8,7 @@ import MessageBox from  './element/message-box'
 import MPopver from  './element/popover'
 import Notification from './element/notification'
 import ApplyBox from  './system/apply'
+import  IChat from  './IChat'
 
 
 
@@ -20,6 +21,7 @@ const components = [MChat, MChatRightBox, MChatRightList, MDialog, MIcon,
     MessageBox,
     Notification,
     ApplyBox,
+    IChat,
 ]
 
 

@@ -6,6 +6,7 @@
     </div>
 </template>
 <script>
+    import IChatTest  from  './test/IChatTest';
     import MChatTest from  './test/MChatTest'
 
 
@@ -13,6 +14,7 @@
     export default {
         name: "app",
         components:{
+            IChatTest,
             MChatTest
         },
         data() {

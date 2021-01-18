@@ -157,7 +157,7 @@
 </script>
 
 
-<style >
+<style scoped>
     .badge {
         position: absolute;
         top: 12px;

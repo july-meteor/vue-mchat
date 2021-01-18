@@ -933,7 +933,6 @@ body {
           li {
             padding-right: 15px;
             line-height: 28px;
-
           }
 
         }
@@ -1237,6 +1236,7 @@ body {
       height: 50px;
       font-size: 0;
       padding: 15px;
+      border-bottom: 1px solid #EAEAEA;
       span {
         width: 100%;
         display: inline-block;
@@ -1249,14 +1249,12 @@ body {
         color: #000;
         border: 1px solid #EAEAEA;
       }
-
     }
 
     .manage-tab-content {
-      margin: 10px 0;
       background-color: #FDFDFD;
       text-align: left;
-      height: 430px;
+      height: 439px;
       overflow: auto;
       .tab-divider {
         font-size: 14px;
@@ -1266,9 +1264,7 @@ body {
       }
 
       li {
-        &:nth-child(1) .item_title {
-          border-top: 1px solid #EAEAEA;
-        }
+
         .item_title {
           text-align: left;
           padding: 0 20px;
@@ -1296,16 +1292,17 @@ body {
           }
         }
         em {
-          position: absolute;
           color: #999;
-          right: 20px;
         }
+
+
 
         .item_list {
           display: none;
           &.list-show {
             display: block !important;
           }
+
 
           li {
             position: relative;

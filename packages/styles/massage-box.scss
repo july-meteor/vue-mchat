@@ -96,9 +96,42 @@
       .message-box_message{
 
       }
+      .message-box_input{
+        input{
+          background-color: #fff;
+          background-image: none;
+          border-radius: 4px;
+          border: 1px solid #dcdfe6;
+          box-sizing: border-box;
+          color: #606266;
+          display: inline-block;
+          font-size: inherit;
+          height: 40px;
+          line-height: 40px;
+          outline: none;
+          padding: 0 15px;
+          transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+          width: 100%;
+          &:focus{
+            border: 1px solid #4CA2FB;
+          }
+          &.invalid{
+            border-color:#f56c6c ;
+          }
+
+        }
+
+        .message-box__errormsg{
+          color: #f56c6c;
+          font-size: 12px;
+          min-height: 18px;
+          margin-top: 2px;
+
+        }
+      }
     }
   }
-  .message-box_foote {
+  .message-box_footer {
     padding: 5px 10px 10px 10px ;
     text-align: right;
     box-sizing: border-box;

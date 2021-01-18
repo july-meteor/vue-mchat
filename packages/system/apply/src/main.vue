@@ -83,7 +83,7 @@
                         <div class="accept-box"  v-show="type=='confirmFriend'">
                             <span>请选择分组</span>
                             <select   v-model="selected" :placeholder="selectedPlaceholder">
-                                <option v-for="(item,k)  in  info.options" :value="item.value">
+                                <option v-for="(item,k)  in  info.options" :value="item.value"  >
                                     {{item.label}}
                                 </option>
                             </select>
@@ -110,7 +110,7 @@
                             loading="true"
                             ref="confirm"
                             v-show="showConfirmButton"
-                            class="m-button"
+                            class="m-button m-button-primary"
                             @click="handleAction('confirm')"
                             @keydown.enter="handleAction('confirm')"
                     >
@@ -296,7 +296,7 @@
                 immediate: true,
                 handler(val) {
                     this.$nextTick(_ => {
-                        if (this.$type === 'prompt' && val !== null) {
+                        if (this.$ype === 'prompt' && val !== null) {
                             this.validate();
                         }
                     });
@@ -306,11 +306,15 @@
             visible(val) {
                 if (val) {
                     this.uid++;
-                    if (this.$type === 'confirmGroup' || this.$type === 'confirmFriend') {
+                    if (this.type === 'confirmGroup' || this.type === 'confirmFriend') {
                         this.$nextTick(() => {
                             // 获取焦点
                             this.$refs.confirm.focus();
                         });
+                        if (this.info.options.length>0){
+                            this.selected = this.info.options[0].value
+                        }
+
                     }
                     this.focusAfterClosed = document.activeElement;
 
@@ -318,13 +322,16 @@
                 }
 
                 // prompt
-                if (this.$type !== 'applyGroup'|| this.$type !== 'applyFriend') return;
+                if (this.type !== 'applyGroup'|| this.type !== 'applyFriend') return;
                 if (val) {
                     setTimeout(() => {
                         if (this.$refs.input && this.$refs.input.$el) {
                             this.getInputElement().focus();
                         }
                     }, 500);
+                    if (this.info.options.length>0){
+                        this.selected = this.info.options[0].value
+                    }
                 } else {
                     // this.editorErrorMessage = '';
                     // removeClass(this.getInputElement(), 'invalid');

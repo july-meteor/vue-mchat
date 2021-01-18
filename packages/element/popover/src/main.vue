@@ -34,7 +34,7 @@ export default {
     trigger: {
       type: String,
       default: 'click',
-      validator: value => ['click', 'focus', 'hover', 'manual'].indexOf(value) > -1
+      validator: value => ['click','right',  'focus', 'hover', 'manual'].indexOf(value) > -1
     },
     openDelay: {
       type: Number,
@@ -113,7 +113,12 @@ export default {
     if (this.trigger === 'click') {
       on(reference, 'click', this.doToggle);
       on(document, 'click', this.handleDocumentClick);
-    } else if (this.trigger === 'hover') {
+
+    }   else if (this.trigger === 'right') {//鼠标右键事件
+        on(document, 'click', this.handleDocumentClick);
+        on(document, 'mouseup', this.doClose);
+    }
+    else if (this.trigger === 'hover') {
       on(reference, 'mouseenter', this.handleMouseEnter);
       on(popper, 'mouseenter', this.handleMouseEnter);
       on(reference, 'mouseleave', this.handleMouseLeave);
@@ -176,6 +181,7 @@ export default {
         this.doClose();
       }
     },
+
     handleMouseLeave() {
       clearTimeout(this._timer);
       if (this.closeDelay) {

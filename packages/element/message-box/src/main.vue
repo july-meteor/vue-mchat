@@ -31,20 +31,26 @@
 
                 </div>
                 <div class="message-box_body">
-                    <div class="message-box_content">
+                    <div class="message-box_content"  v-if="message !== ''">
                         <div
                                 :class="['status', icon]"
                                 v-if="icon && !center && message !== ''">
                         </div>
-                        <div class="message-box_message" v-if="message !== ''">
+                        <div class="message-box_message">
                             <slot>
                                 <p v-if="!dangerouslyUseHTMLString">  {{ message }}</p>
                                 <p v-else v-html="message"></p>
                             </slot>
                         </div>
+                        <div  class="message-box_input" v-if="showInput">
+                            <input v-model="inputValue"   :placeholder="inputPlaceholder"  @keydown.enter="handleInputEnter"  ref="input" />
+                            <div class="message-box__errormsg" :style="{ visibility: !!editorErrorMessage ? 'visible' : 'hidden' }">{{ editorErrorMessage }}</div>
+                        </div>
                     </div>
+
+
                 </div>
-                <div class="message-box_foote">
+                <div class="message-box_footer">
                     <span class="message-box-footer">
                            <button
                                    type="button"
@@ -80,6 +86,7 @@
 <script type="text/babel">
     import Popup from '../../../util/popup/index'
     import Dialog from '../../../util/aria-dialog'
+    import { addClass, removeClass } from '../../../util/dom'
 
     let messageBox;
     let typeMap = {
@@ -128,13 +135,6 @@
                 const {type, iconClass} = this;
                 return iconClass || (type && typeMap[type] ? `m-icon-${ typeMap[type] }` : '');
             },
-
-            confirmButtonClasses() {
-                return `el-button--primary ${ this.confirmButtonClass }`;
-            },
-            cancelButtonClasses() {
-                return `${ this.cancelButtonClass }`;
-            }
         },
 
         methods: {
@@ -192,7 +192,7 @@
                 if (this.$type === 'prompt') {
                     const inputPattern = this.inputPattern;
                     if (inputPattern && !inputPattern.test(this.inputValue || '')) {
-                        this.editorErrorMessage = this.inputErrorMessage || t('el.messagebox.error');
+                        this.editorErrorMessage = this.inputErrorMessage || '';
                         addClass(this.getInputElement(), 'invalid');
                         return false;
                     }
@@ -200,7 +200,7 @@
                     if (typeof inputValidator === 'function') {
                         const validateResult = inputValidator(this.inputValue);
                         if (validateResult === false) {
-                            this.editorErrorMessage = this.inputErrorMessage || t('el.messagebox.error');
+                            this.editorErrorMessage = this.inputErrorMessage || '';
                             addClass(this.getInputElement(), 'invalid');
                             return false;
                         }
@@ -216,13 +216,13 @@
                 return true;
             },
             getFirstFocus() {
-                const btn = this.$el.querySelector('.el-message-box__btns .el-button');
-                const title = this.$el.querySelector('.el-message-box__btns .el-message-box__title');
+                const btn = this.$el.querySelector('.message-box .m-button');
+                const title = this.$el.querySelector('.message-box .message-box_title');
                 return btn || title;
             },
             getInputElement() {
-                const inputRefs = this.$refs.input.$refs;
-                return inputRefs.input || inputRefs.textarea;
+                const inputRefs = this.$refs.input;
+                return inputRefs ;
             },
             handleClose() {
                 this.handleAction('close');
@@ -258,8 +258,8 @@
                 if (this.$type !== 'prompt') return;
                 if (val) {
                     setTimeout(() => {
-                        if (this.$refs.input && this.$refs.input.$el) {
-                            this.getInputElement().focus();
+                        if (this.$refs.input ) {
+                            this.getInputElement() .focus();
                         }
                     }, 500);
                 } else {
