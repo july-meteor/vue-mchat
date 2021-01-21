@@ -59,7 +59,8 @@ export default {
       if (!val) {
         return;
       }
-      let ext = this.config.fileExt | "";
+      this.$refs.uploadImage.value='';
+        let ext = this.config.fileExt | "";
       //校验文件
       switch (type) {
         case "file": //一般文件

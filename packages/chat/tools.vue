@@ -18,10 +18,10 @@
                   <i class="m-icon-picture"></i>
                 <input ref="uploadImage" type="file" @change="uploadChange"/>
             </span>
-            <span class="im-chat-tool-item " title="发送文件">
-                  <i class="m-icon-file-open"></i>
-                <input ref="uploadImage" type="file" @change="uploadChange('file')"/>
-            </span>
+            <!--<span class="im-chat-tool-item " title="发送文件">-->
+                  <!--<i class="m-icon-file-open"></i>-->
+                <!--<input ref="uploadImage" type="file" @change="uploadChange('file')"/>-->
+            <!--</span>-->
         </div>
     </div>
 </template>
@@ -62,6 +62,7 @@
                 if (!val) {
                     return;
                 }
+                this.$refs.uploadImage.value='';
                 let ext = this.config.fileExt | "" ;
                 //校验文件
                 switch (type) {
