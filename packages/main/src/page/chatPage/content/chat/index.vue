@@ -97,7 +97,7 @@ export default {
     handleEvent(event, data) {
       switch (event) {
         case "loadHistory":
-          this.loadHistory();
+          this.loadHistory(data);
           break;
         default:
           this.bindEvent(event, data);
@@ -105,13 +105,18 @@ export default {
       }
     },
     // 拉取历史记录
-    loadHistory() {
+    loadHistory(last) {
       let that = this;
-      this.bindEvent("loadHistory", function(list) {
-        list.forEach((item) => {
-          that.taleList.unshift(item);
-        });
-      });
+        let data = {
+            chat:this.chat,
+            last,
+            callback:function (list) {
+                list.forEach((item) => {
+                    that.taleList.unshift(item);
+                });
+            },
+        };
+      this.bindEvent("loadHistory", data);
     },
     // 发送消息
     bindEnter(message) {

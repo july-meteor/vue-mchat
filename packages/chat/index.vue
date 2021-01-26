@@ -107,13 +107,18 @@
                 this.rightActive = !this.rightActive;
             },
             // 拉取历史记录
-            loadHistory() {
+            loadHistory(last) {
                 let that = this;
-                this.$emit("loadHistory", function (list) {
-                    list.forEach((item) => {
-                        that.taleList.unshift(item);
-                    });
-                });
+                let data = {
+                    chat:this.chat,
+                    last,
+                    callback:function (list) {
+                        list.forEach((item) => {
+                            that.taleList.unshift(item);
+                        });
+                    },
+                };
+                this.$emit("loadHistory", data);
             },
             // 发送消息
             bindEnter(message) {
@@ -207,8 +212,8 @@
                     messageUnread: function (count) {
                         handleUnread(count);
                     },
-                    loadHistory: function () {
-                        loadHistory();
+                    loadHistory: function (last) {
+                        loadHistory(last);
                     },
                     talkEvent: function (event, data) {
                         bindChatEvent(event, data)

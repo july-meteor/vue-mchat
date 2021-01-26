@@ -90,8 +90,8 @@
                     layerPosition(el,"center")
                 }
             },
-            loadHistory(callBack) {
-                this.$emit("loadHistory", callBack);
+            loadHistory(data) {
+                this.$emit("loadHistory", data);
             },
             //  获得当前对话框
             getCurrent() {

@@ -143,7 +143,11 @@ export default {
     handleHistory() {
         //锁住拉取
       this.loadHistory = true;
-      this.$emit("loadHistory");
+        let last = {};
+      if (this.list != null && this.list.length>0){
+          last = this.list[ this.list.length-1];
+      }
+      this.$emit("loadHistory",last);
     },
     /******  滚动条设置 ******/
     createScroll() {

@@ -113,7 +113,9 @@
             handleRightEvent(event) {
                 console.log("右边框事件", event);
             },
-            handleHistory(callBack) {
+            handleHistory(data) {
+                const {chat ,last, callback} = data;
+                console.log("获取历史记录",data)
                 let history = [
                     {
                         username: "历史记录",
@@ -160,7 +162,7 @@
                         timestamp: new Date(),
                     },
                 ];
-                callBack(history);
+                callback(history);
             },
             talkEvent(event, data) {
                 console.log("谈话内容", {event, data});
