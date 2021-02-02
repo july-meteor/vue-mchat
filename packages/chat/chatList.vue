@@ -37,6 +37,8 @@ export default {
       beforeTitle: "",
       // 标题时间
       titleTimer: "",
+      // 加载与否。
+      loaded:false,
       //下载历史
       loadHistory: false,
       // 历史是否下载了
@@ -61,9 +63,10 @@ export default {
     lock(newVal) {
       if (newVal) {
         setTimeout(() => {
-          this.scroll && this.scroll.refresh();
-          this.lock = false;
-        }, 100);
+            if (this.lock){
+                this.lock = false;
+            }
+        }, 1000);
       }
     },
     list(newVal) {
@@ -75,8 +78,6 @@ export default {
             /**
              *    这里的延时的原因
              *    是因为发送图片，render的时间太长
-             *    导致scrollrefresh的  长度不对。
-             *    后续有问题在改
              */
             setTimeout( ()=>{
                     if (this.loadHistory) {
@@ -85,6 +86,7 @@ export default {
                         this.scroll.toBeforePosition()
                     }
                     if(this.current && this.isBottom){
+
                         this.scrollBottom();
                     }
                     //还有一种情况是自己发送的。。
@@ -127,6 +129,21 @@ export default {
 
   },
   methods: {
+    // 计算是否已经加载
+    calcLoaded(){
+        let el =  this.$el
+        if(!el)  return
+       let width =  el.clientWidth
+        //有宽度表示页面被显示了,并且只会触发一次。
+        if (width >0 ){
+            if (!this.loaded) {
+                this.loaded = true;
+                this.scrollRefresh()
+            }
+        } else {
+            this.loaded = false;
+        }
+    },
     bindTalkEvent( data) {
      this.$emit("chatEvent", "talkEvent", data);
     },
@@ -143,11 +160,7 @@ export default {
     handleHistory() {
         //锁住拉取
       this.loadHistory = true;
-        let last = {};
-      if (this.list != null && this.list.length>0){
-          last = this.list[ this.list.length-1];
-      }
-      this.$emit("loadHistory",last);
+      this.$emit("loadHistory");
     },
     /******  滚动条设置 ******/
     createScroll() {
@@ -217,7 +230,7 @@ export default {
     },
     // 刷新滚动条长度
     scrollRefresh() {
-      this.scroll.refresh();
+            this.scroll.refresh();
     },
     /**** 滚动条结束 ********/
     /*** 标签标题  开始***/
@@ -258,9 +271,6 @@ export default {
     },
     /****标签标题 结束 ***/
   },
-  mounted() {
-    this.createScroll();
-  },
   render(h) {
     let {
       list,
@@ -284,14 +294,14 @@ export default {
       });
       let leftName = item.mine ? "" : item.username;
       let rightName = item.mine ? item.username : "";
-      let tiem = dateFormat(item.timestamp);
+      let time = dateFormat(item.timestamp);
       return (
         <li class={{ "content-mine": item.mine }}>
           <div class="content-user" >
             <img src={item.avatar}  on-click={()=>bindClickUser(item)}/>
             <cite>
               {leftName}
-              <i>{tiem}</i> {rightName}
+              <i>{time}</i> {rightName}
             </cite>
           </div>
           <div
@@ -338,6 +348,13 @@ export default {
 
     return el_chat_list;
   },
+    updated(){
+        // 解决聊天窗口发生变化，滚动条不会自动计算问题。
+        this.calcLoaded()
+    },
+    mounted() {
+        this.createScroll();
+    },
 };
 </script>
 

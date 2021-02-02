@@ -10,10 +10,7 @@
     import tools from "./tools";
     import {default_avatar } from '../util/constant'
 
-
-
     // 空方法
-
     export default {
         name: "mchat-index",
         componentName: "MChatIndex",
@@ -76,12 +73,7 @@
             },
         },
         watch: {
-            // 滚动
-            scroll(newVal) {
-                if (typeof newVal === "number") {
-                    this.setScroll(newVal);
-                }
-            },
+
             value: {
                 handler() {
                     this.content = this.value;
@@ -94,13 +86,7 @@
                 },
                 immediate: true,
             },
-            scrollToButton(newVal) {
-                if (newVal) {
-                    setTimeout(() => {
-                        this.scrollToButton = false;
-                    }, 0);
-                }
-            },
+
         },
         methods: {
             handleRightActive() {

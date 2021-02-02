@@ -43,6 +43,7 @@ export default {
   watch: {
     // 当前窗口切换
     current(newVal, oldVal) {
+        this.scrollRefresh()
       if (newVal) {
         let reset = this.isBottom;
         this.scrollRefresh();
@@ -54,15 +55,16 @@ export default {
         this.scroll.read();
       }
     },
-    // 锁
-    lock(newVal) {
-      if (newVal) {
-        setTimeout(() => {
-          this.scroll && this.scroll.refresh();
-          this.lock = false;
-        }, 100);
-      }
-    },
+      // 锁
+     lock(newVal) {
+          if (newVal) {
+              setTimeout(() => {
+                  if (this.lock){
+                      this.lock = false;
+                  }
+              }, 1000);
+          }
+      },
     list(newVal) {
       if (newVal) {
         this.$nextTick(() => {
@@ -73,7 +75,7 @@ export default {
            *    这里的延时的原因
            *    是因为发送图片，render的时间太长
            *    导致scrollrefresh的  长度不对。
-           *    后续有问题在改
+           *    加锁避免，其他人的竞争
            */
           setTimeout(() => {
             if (this.loadHistory) {
@@ -122,6 +124,21 @@ export default {
     },
   },
   methods: {
+      // 计算是否已经加载
+      calcLoaded(){
+          let el =  this.$el
+          if(!el)  return
+          let width =  el.clientWidth
+          //有宽度表示页面被显示了,并且只会触发一次。
+          if (width >0 ){
+              if (!this.loaded) {
+                  this.loaded = true;
+                  this.scrollRefresh()
+              }
+          } else {
+              this.loaded = false;
+          }
+      },
     bindEvent(event, data) {
       this.$emit("bindEvent", event, data);
     },
@@ -216,7 +233,7 @@ export default {
     },
     // 刷新滚动条长度
     scrollRefresh() {
-      this.scroll.refresh();
+        this.scroll.refresh();
     },
     /**** 滚动条结束 ********/
     /*** 标签标题  开始***/
@@ -256,9 +273,6 @@ export default {
       }
     },
     /****标签标题 结束 ***/
-  },
-  mounted() {
-    this.createScroll();
   },
   render(h) {
     let {
@@ -344,6 +358,13 @@ export default {
 
     return el_chat_list;
   },
+    updated(){
+        // 解决聊天窗口发生变化，滚动条不会自动计算问题。
+        this.calcLoaded()
+    },
+    mounted() {
+        this.createScroll();
+    },
 };
 </script>
 
