@@ -1,7 +1,7 @@
 {
-  "name": "vue-meteor-chat",
-  "version": "1.0.0",
-  "description": "a vue chat components",
+  "name": "vue-mchat",
+  "version": "1.2.0",
+  "description": "这是一款基于 vue.js 开发的聊天室组件库，在提供基础封装的同时，最大程度的增加扩展性。",
   "author": "july-meteor <747718944@qq.com>",
   "main": "lib/MChat.umd.min.js",
   "private": false,
