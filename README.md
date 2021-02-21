@@ -22,18 +22,31 @@ MChat</h1>
 
 简体中文 | [English](README.en.md)
 
-# 如果觉得还行,请给一个👉 star,谢谢😎 ! 项目修改了太多了东西readme 还没来得及更新有疑问请加群。
+# 如果觉得还行,请给一个👉 star,谢谢😎 ! 有疑问请加群。
 
 ## 简介 
 
-### 这是一款基于vue与elementu-ui开发的聊天室组件库，在UI上模仿了TIM及微信。在提供基础封装的同时，最大程度的增加扩展性。
+### 这是一款基于 vue.js 开发的聊天室组件库，在提供基础封装的同时，最大程度的增加扩展性。
 
-
-
+下面是效果演示图：
 
 ![演示图](/doc/img/vue_mchat_demo.gif)
-![MChat-index演示图](/doc/img/sample_1.png)
 
+MChat组件效果图：
+
+![MChat群聊界面](/doc/img/MChat-group.png)
+
+![MChat群聊界面1](/doc/img/MChat-say.png)
+
+IChat组件效果图：
+
+![IChat群聊界面](/doc/img/IChat-group.png)
+
+![IChat群聊界面1](/doc/img/IChat-Say.png)
+
+![IChat群组信息](/doc/img/IChat-group_info.png)
+
+![IChat系统消息信息](/doc/img/IChat-system.png)
 
 ## 🌰 加群获得群聊版本代码
 
@@ -43,36 +56,27 @@ MChat</h1>
  - [Gitee](https://gitee.com/july-meteor/vue-mchat)
 
 
-## 🌰 项目来由
+## 项目来由
+
 ```
 vue-mchat 是本人前端阶段性学习总结的项目，因为并非前端开发工程师所以还是有不少瑕疵。
+
+如果有问题或者需求可以加群问，或者提 `Issues`!
 ```
 
 ***
    
-#### 安装
-*使用 `npm` 安装
+#### 如何安装
+
+* 使用 `npm` 安装
 
   ``` bash
-  # npm install vue-mchat
-  # 由于最近都在修改代码所以npm 库来不及更新 请使用以下方式进行使用
-  # 在项目根目录
-  npm install
-  # 执行打包 获取lib文件
-  npm run lib
-
-  # 或直接复制packages 文件夹 到你的项目里
-  
+  npm install vue-mchat
   ```
+##### 使用
 
-* 使用 `yarn` 安装
-
-  ``` bash
-  
-  ```
-
-#### 使用
 在`main.js`中引入
+
   ``` bash
   # npm 下载方式
   // 进入css
@@ -81,27 +85,53 @@ vue-mchat 是本人前端阶段性学习总结的项目，因为并非前端开�
   import MChat from 'MChat'
   // 使用vue加载组件
   Vue.use(MChat)
-
-  # 执行 npm run lib 方式
-  import '../lib/MChat.css'
-  import MChat from '../lib/MChat.umd'
-  Vue.use(MChat)
-
-  # 复制packages 文件 方式
-  import MChat from '../packages/index'
-  Vue.use(MChat)
-
   # 
-
-
   ```
-#组件说明
 
-[Sample](/src/App.vue) 
+#### 如何进行二次开发
+
+##### 方案一：
+
+直接将 `pacages` 文件夹复制到你需要的项目，在 `main.js` 中引入 `vue-mchat`:
+
+```JavaScript
+import App from './App.vue'
+import MChat from '../packages/index'
+
+Vue.use(MChat)
+```
+
+##### 方案二：
+
+在 `vue-mchat` 的基础上进行开发，通过打包成js库引入：
+
+在 `vue-mchat` 目录下执行：
+
+```bash
+npm run lib 
+```
+
+可获得 `lib` 文件其中包含 `MChat` 的编译文件库，将 `lib` 整个复制到项目里，在 `main.js` 中引入:
+
+```JavaScript
+import  '../lib/MChat.css'
+import MChat from '../lib/MChat.umd'
+
+Vue.use(MChat)
+```
+
+
+# 组件API
+
+可以根据 `src/test/` 下的 `Test.vue` 进行静态调试
+
+## MChat 与 IChat 的区别
+
+MChat 只具备有基础的 WebIM 功能，它没有用户管理及群组模块，则意味着你需要自己掌控数据变化。适用场景：客服系统
+
+IChat 是模仿 Mac 上的 QQ 进行设计的，它封装了用户群组管理的数据模块，你只需要对接API就能使用。适用场景：独立的 WebIM
 
 ## MChat
-
-单页聊天组件
 
 ### Attributes
 
@@ -289,16 +319,22 @@ vue-mchat 是本人前端阶段性学习总结的项目，因为并非前端开�
   <tr >
     <td> loadHistory </td>
     <td> 点击查看更多信息后触发,会返回一个回调方法  </td>
-    <td> funcation() </td>
+    <td> callback() </td>
   </tr>
   <tr >
     <td> getMessage </td>
     <td> 监听接受的消息 </td>
     <td> user,message </td>
   </tr>
+    <tr >
+    <td> uploadEvent </td>
+    <td> 文件上传接口 </td>
+    <td> data,callback（回调函数） </td>
+  </tr>
 </table>
 
-表1
+##### 窗口级事件
+
 <table  style="text-align: center;">
   <tr>
     <th>事件名称</th>
@@ -310,15 +346,20 @@ vue-mchat 是本人前端阶段性学习总结的项目，因为并非前端开�
     <td> 会话置顶</td>
     <td> { id: 会话id, name: 会话名称 ,type: 会话类型 } </td>
   </tr>
-  <tr >
-    <td> chatTop </td>
-    <td> 会话置顶</td>
-    <td> 窗口信息 </td>
+    <tr >
+    <td> chatMin </td>
+    <td> 窗口最小化</td>
+    <td> { id: 会话id, name: 会话名称 ,type: 会话类型 } </td>
   </tr>
   <tr >
-    <td> clickTalk </td>
-    <td>  当你点击对话内容返回对话信息触发 </td>
-    <td> 对话内容 </td>
+    <td> chatMax </td>
+    <td> 窗口最大化</td>
+    <td> { id: 会话id, name: 会话名称 ,type: 会话类型 }
+  </tr>
+    <tr >
+    <td> removeChat </td>
+    <td> 移除对话框</td>
+    <td> { id: 会话id, name: 会话名称 ,type: 会话类型 }
   </tr>
     <tr >
       <td> clickUser </td>
@@ -326,7 +367,6 @@ vue-mchat 是本人前端阶段性学习总结的项目，因为并非前端开�
       <td> {id: 用户Id, mine: 是否是自己 , username:用户名称 } </td>
     </tr>
 </table>
-
 
 
 #### MChat Events
@@ -378,9 +418,355 @@ vue-mchat 是本人前端阶段性学习总结的项目，因为并非前端开�
         </pre>
 </div>
 
+## IChat
+
+### Attributes
+
+<table  style="text-align: center;">
+  <tr>
+    <th>参数</th>
+    <th>类型</th>
+    <th>默认值</th>
+     <th>说明</th>
+  </tr>
+  
+</table>
+
+##### mine  `我的信息`
+
+<table  style="text-align: center;">
+  <tr>
+    <th>参数</th>
+    <th>默认值</th>
+    <th>类型</th>
+     <th>说明</th>
+  </tr>
+  <tr >
+    <td> id </td>
+    <td> 10001 </td>
+    <td> string/number </td>
+    <td> 我的id</td>
+  </tr>
+    <tr >
+      <td> username </td>
+      <td> july-meteor </td>
+      <td> string </td>
+      <td> 我的昵称</td>
+    </tr>
+    <tr >
+      <td> sign </td>
+      <td> 与其感慨路难行,不如马上出发！ </td>
+      <td> string </td>
+      <td> 签名</td>
+    </tr>
+    <tr >
+      <td> avatar </td>
+      <td> '/avatar/avatar_meteor.png' </td>
+      <td> url </td>
+      <td> 头像</td>
+    </tr>
+    <tr>
+      <td> data </td>
+      <td> 你需要的数据 </td>
+      <td> object </td>
+      <td> 扩展数据</td>
+    </tr>
+</table>
+
+### 初始化
+
+```JavaScript
+
+    let data = {
+      // 好友列表
+      friends: this.friendList,
+      // 群组列表
+      groups: this.groupList,
+      // 系统消息列表
+      messages: this.systemMessage,
+    };
+     this.$nextTick(() => {
+      this.$refs.IChat.setData(data);
+    });
+
+```
+
+##### `groups` 群组列表数据格式
+
+<table  style="text-align: center;">
+  <tr>
+    <th>参数</th>
+    <th>默认值</th>
+    <th>类型</th>
+     <th>说明</th>
+  </tr>
+  <tr >
+    <td> id </td>
+    <td> 10001 </td>
+    <td> string/number </td>
+    <td> 群组Id</td>
+  </tr>
+    <tr >
+      <td> name </td>
+      <td> 小小甜心 </td>
+      <td> string </td>
+      <td> 群组名称</td>
+    </tr>
+    <tr >
+      <td> mine </td>
+      <td> null </td>
+      <td> string </td>
+      <td> 当前人在群组里的昵称</td>
+    </tr>
+    <tr >
+      <td> avatar </td>
+      <td> '/avatar/avatar_meteor.png' </td>
+      <td> url </td>
+      <td> 头像</td>
+    </tr>
+     <tr>
+      <td> sign </td>
+      <td> 8月22日 17:44 </td>
+      <td> string </td>
+      <td> 最后发言时间</td>
+    </tr>
+    <tr>
+      <td> introduce </td>
+      <td> 这里是共同进步 </td>
+      <td> string </td>
+      <td> 群介绍</td>
+    </tr>
+    <tr>
+      <td> userList </td>
+      <td> <pre> [{
+                id: 1,
+                cid: 123401,
+                name: "怜",
+                remark: '剑圣',
+                online: false,
+                avatar: require("../public/avatar/lian.png"),
+                sign: "继续下去的话优衣会生气的。"
+            }]</pre> </td>
+      <td> object </td>
+      <td> 成员数组，online 表示是否在线 </td>
+    </tr>
+</table>
+
+##### `friends` 好友列表数据格式
+
+<table  style="text-align: center;">
+  <tr>
+    <th>参数</th>
+    <th>默认值</th>
+    <th>类型</th>
+     <th>说明</th>
+  </tr>
+  <tr >
+    <td> id </td>
+    <td> 10001 </td>
+    <td> string/number </td>
+    <td> 好友分组Id</td>
+  </tr>
+  <tr >
+    <td> name </td>
+    <td> 好友 </td>
+    <td> string </td>
+    <td> 分组名称</td>
+  </tr>
+    <tr>
+      <td> userList </td>
+      <td> <pre> [ {
+                id: 1,
+                cid: 123401,
+                name: "怜",
+                remark: '剑圣',
+                online: true,
+                avatar: require("../public/avatar/lian.png"),
+                sign: "继续下去的话优衣会生气的。"
+            },]</pre> </td>
+      <td> object </td>
+      <td> 分组成员，online 表示是否在线 </td>
+    </tr>
+</table>
+
+##### `messages` 系统消息列表数据格式
 
 
-**如有问题请先看上述使用文档和文章，若不能满足，欢迎 issue 或者 发邮件给我，根据star和watch的人数进行下一步更新
+<table  style="text-align: center;">
+  <tr>
+    <th>参数</th>
+    <th>默认值</th>
+    <th>类型</th>
+     <th>说明</th>
+  </tr>
+  <tr >
+    <td> id </td>
+    <td> null </td>
+    <td> string/number </td>
+    <td> 消息Id</td>
+  </tr>
+    <tr >
+    <td> message </td>
+    <td> null </td>
+    <td> string </td>
+    <td> 消息内容</td>
+  </tr>
+   <tr>
+    <td> timestamp </td>
+    <td> null </td>
+    <td> string </td>
+    <td> 时间戳</td>
+  </tr>
+     <tr>
+    <td> from </td>
+    <td> <pre>
+       {
+            id: 0,
+            name: '真琴',
+            avatar: require("../public/avatar/zhenqin.png"),
+        },
+    </pre> </td>
+    <td> Object </td>
+    <td> 发送人</td>
+   </tr>
+       <tr>
+    <td> to </td>
+    <td> <pre>
+       {
+            id: 0,
+            name: '真琴',
+            avatar: require("../public/avatar/zhenqin.png"),
+        },
+    </pre> </td>
+    <td> Object </td>
+    <td> 发送目标人</td>
+  </tr>
+  <tr >
+    <td> type </td>
+    <td> null </td>
+    <td> string </td>
+    <td> 消息类型包含以下几张类型{ 'applyFriend':'申请好友', 'acceptFriend':'接受好友申请', 'rejectFriend':'拒接好友申请',
+    'accept':'被拒接好友申请',
+    'reject':'被拒接好友申请',
+    'system':'系统消息'}</td>
+  </tr>
+  
+</table>
+
+```JavaScript
+[
+    {
+        id: 1,
+        from:
+        {
+            id: 0,
+            name: '草野优衣',
+            avatar: require("../public/avatar/ue.png"),
+        },
+        to:
+        {
+            id: 1,
+            name: '七月',
+            avatar: require("../public/avatar/avatar_meteor.png"),
+        },
+        type: 'acceptFriend',
+        message: '111',
+        timestamp: undefined
+    },
+]
+```
+
+#### Methods
+
+IChat 将全部事件集中到了 `bindEvent(event, data)` 上:
+
+```html
+  <IChat ref="IChat" :config="config" :mine="mine" @bindEvent="handleEvent">
+    </IChat>
+```
+
+bindEvent 包含以下事件
+
+<table  style="text-align: center;">
+  <tr>
+    <th>方法名</th>
+    <th>说明</th>
+    <th>参数</th>
+  </tr>
+  <tr >
+    <td> chatEvent </td>
+    <td> 操作会话框触发,返回事件类型及窗口信息。具体事件看下表1</td>
+    <td> event,data </td>
+  </tr>
+  <tr >
+    <td > <span style="text-decoration:line-through;"> talkEvent </span> </td>
+    <td> 当你点击对话内容返回对话信息触发 (已经弃用) </td>
+    <td> user,message </td>
+  </tr>
+  <tr >
+    <td> sendMessage </td>
+    <td> 每当你发送一个消息，都可以通过该事件监听到。 </br>
+    回调参数接受一个object类型的值，携带发送的聊天信息 </td>
+    <td> message </td>
+  </tr>
+  <tr >
+    <td> loadHistory </td>
+    <td> 点击查看更多信息后触发,会返回一个回调方法  </td>
+    <td> callback() </td>
+  </tr>
+  <tr >
+    <td> getMessage </td>
+    <td> 监听接受的消息 </td>
+    <td> user,message </td>
+  </tr>
+    <tr >
+    <td> uploadEvent </td>
+    <td> 文件上传接口 </td>
+    <td> data,callback（回调函数） </td>
+  </tr>
+</table>
+
+#### Event
+
+初始化 `IChat` 数据:
+
+```JavaScript
+  this.$refs.IChat.setData();
+```
+
+更新群组列表 `groups`:
+
+```JavaScript
+  this.$refs.IChat.setGroups();
+```
+
+更新好友列表 `friends`:
+
+```JavaScript
+  this.$refs.IChat.setFriends();
+```
+
+更新系统消息列表 `messages`:
+
+```JavaScript
+  this.$refs.IChat.setSystemMessage();
+```
+
+新的系统消息:
+
+```JavaScript
+  this.$refs.IChat.newSystemMessage();
+```
+
+新消息:
+
+```JavaScript
+  this.$refs.IChat.getMessage();
+```
+
+
+
+** 如有问题请先看上述使用文档和文章，若不能满足，欢迎 issue 或者 发邮件给我，根据star和watch的人数进行下一步更新
 
 ### MChat-right-box  
 
@@ -430,10 +816,6 @@ vue-mchat 是本人前端阶段性学习总结的项目，因为并非前端开�
     <td> event  </td>
   </tr>
 </table>
-
-#### Event
-
-
 
 ## QQ交流群
 
