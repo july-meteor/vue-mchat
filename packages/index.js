@@ -8,7 +8,7 @@ import MessageBox from  './element/message-box'
 import MPopver from  './element/popover'
 import Notification from './element/notification'
 import ApplyBox from  './system/apply'
-import  IChat from  './IChat'
+import IChat from  './IChat'
 
 
 
@@ -16,7 +16,7 @@ import  IChat from  './IChat'
 import './styles/index.scss'
 
 
-const components = [MChat, MChatRightBox, MChatRightList, MDialog, MIcon,
+const components = [MChat, MChatRightBox, MChatRightList, MDialog,
     MPopver,
     MessageBox,
     Notification,
@@ -44,7 +44,6 @@ const install = function (Vue) {
     // 
     //观察者
     Vue.prototype.$im = EventHub
-
     /**
      *  挂件
      */
@@ -58,9 +57,6 @@ const install = function (Vue) {
     Vue.prototype.$applyGroup = ApplyBox.applyGroup;
     Vue.prototype.$confirmGroup = ApplyBox.confirmGroup;
     Vue.prototype.$confirmFriend = ApplyBox.confirmFriend;
-
-
-
 };
 
 

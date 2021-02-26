@@ -766,8 +766,6 @@ bindEvent 包含以下事件
 
 
 
-** 如有问题请先看上述使用文档和文章，若不能满足，欢迎 issue 或者 发邮件给我，根据star和watch的人数进行下一步更新
-
 ### MChat-right-box  
 
 ** 通过 `Scoped slot` 可以获取到 chat (内部的状态管理）的数据，用法参考 demo。
