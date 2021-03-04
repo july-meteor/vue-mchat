@@ -23,6 +23,7 @@
                     brief: false,
                     voice: false,
                     notice: false,
+                    fixed:true,
                 }),
             },
             mine: {
@@ -85,9 +86,12 @@
         methods: {
             // 初始化窗口的位置
             initChatPosition() {
+                if (this.config.fixed) return ;
                 let el = this.$refs.chat;
                 if (el) {
-                    layerPosition(el,"center")
+                    this.$nextTick(()=>{
+                        layerPosition(el, "center");
+                    });
                 }
             },
             loadHistory(data) {
@@ -199,6 +203,7 @@
                 this.$emit("sendMessage", message);
             },
             handPanesDrag(e) {
+                if (this.config.fixed) return ;;
                 let el = this.$refs.chat;
                 layerDrag(e,el);
             },
@@ -306,9 +311,10 @@
                 <div>
                 <div
         class={{
-                "im-layer  layer-anim im-box im-chat": true,
-                    "chat-show": chatDisplay,
-                    alone: alone,
+                "fixed":config.fixed,
+                "im-layer layer-anim im-box im-chat": true,
+                 "chat-show": chatDisplay,
+                 alone: alone,
             }}
             ref="chat"
             style={{

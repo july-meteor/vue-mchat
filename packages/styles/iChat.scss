@@ -309,7 +309,6 @@ body {
     width: 100%;
     text-align: left;
 
-
     &.offline img {
       -webkit-filter: grayscale(1); /* Webkit */
       filter: grayscale(1); /* W3C */
@@ -559,7 +558,6 @@ body {
     // 名称栏
     .chat-info {
 
-
       &.offline img, &.offline .im-chat-status {
         -webkit-filter: grayscale(1); /* Webkit */
         filter: gray; /* IE6-9 */
@@ -618,7 +616,6 @@ body {
     position: relative;
     background-color: #FDFDFD;
     // 取消掉偏移
-
 
     .talk-list {
       padding: 15px 20px 15px 15px;
@@ -1007,6 +1004,11 @@ body {
   padding: 0;
   background-color: #fff;
   -webkit-background-clip: content;
+  &.fixed {
+    position: absolute;
+    top: unset;
+    left: unset;
+  }
 }
 
 .downBtn {
@@ -1067,8 +1069,6 @@ body {
     color: #409eff;
   }
 }
-
-
 
 //用户列表
 .drawer-user-list {
@@ -1295,14 +1295,11 @@ body {
           color: #999;
         }
 
-
-
         .item_list {
           display: none;
           &.list-show {
             display: block !important;
           }
-
 
           li {
             position: relative;
@@ -1332,8 +1329,7 @@ body {
               height: 36px;
               border-radius: 100%;
 
-
-              &.offline{
+              &.offline {
                 -webkit-filter: grayscale(1); /* Webkit */
                 filter: grayscale(1); /* W3C */
               }

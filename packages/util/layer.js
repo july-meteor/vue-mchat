@@ -1,9 +1,6 @@
 /**
  *  图层拖拽工具类
  */
-
-
-
 export function layerDrag(e, el, moveOut = false) {
     let X = e.clientX - el.offsetLeft;
     let Y = e.clientY - el.offsetTop;

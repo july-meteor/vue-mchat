@@ -48,9 +48,12 @@ export default {
   methods: {
     // 初始化窗口的位置
     initChatPosition() {
-      let el = this.$refs.chat;
+        if (this.config.fixed) return ;
+        let el = this.$refs.chat;
       if (el) {
-        layerPosition(el, "center");
+          this.$nextTick(()=>{
+              layerPosition(el, "center");
+          });
       }
     },
     bindEvent(event, data) {
@@ -96,7 +99,9 @@ export default {
       return this.$refs.chatPage.getCurrent();
     },
     handPanesDrag(e) {
-      let el = this.$refs.chat;
+
+        if (this.config.fixed) return ;
+        let el = this.$refs.chat;
       layerDrag(e, el, true);
     },
   },
@@ -225,11 +230,13 @@ export default {
         <i class="m-icon-shrink"></i>
       </span>
     );
-
     // main
     const el_chat_main = (
       <div
-        class="main-layer layer-anim main-box"
+        class={{
+         "main-layer layer-anim main-box":true,
+          "fixed":config.fixed
+      }}
         ref="chat"
         style={{ "z-index": 1002, display: "inline" }}
       >

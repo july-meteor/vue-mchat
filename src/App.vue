@@ -1,37 +1,23 @@
 <template>
     <div id="app" class="wrapper">
-        <!--<i-chat-test></i-chat-test>-->
-        <m-chat-test></m-chat-test>
-
+        <readme></readme>
     </div>
 </template>
 <script>
-    import IChatTest  from  './test/IChatTest';
-    import MChatTest from  './test/MChatTest'
-
-
+    import readme from './readme'
 
     export default {
         name: "app",
-        components:{
-            IChatTest,
-            MChatTest
-        },
-        data() {
-            return {
-
-
-            };
-        },
-        methods: {
-
-        },
-        mounted() {
-
-        },
+        components: {
+            readme,
+        }
     };
 </script>
 
-<style lang="scss">
+<style>
+    #app {
+        width: 90%;
+        margin: 0 auto;
+    }
 
 </style>

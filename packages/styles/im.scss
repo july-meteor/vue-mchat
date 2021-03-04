@@ -30,6 +30,11 @@ pre {
 
 }
 
+.fixed.im-layer{
+  position: absolute;
+  top: unset;
+  left: unset;
+}
 body {
   .im-chat {
     border: 1px solid #D9D9D9;
@@ -870,6 +875,7 @@ body {
   }
 }
 
+
 .im-layer {
   position: fixed;
   _position: absolute;
@@ -885,7 +891,10 @@ body {
   padding: 0;
   background-color: #fff;
   -webkit-background-clip: content;
+
+
 }
+
 
 .downBtn {
   position: absolute;

@@ -5,6 +5,7 @@
             :friends="friends"
             :groups="groups"
             :chats="channel"
+            :config="config"
             @bindEvent="handleEvent"
     >
     </ChatMain>
