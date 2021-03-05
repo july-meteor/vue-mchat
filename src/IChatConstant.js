@@ -9,11 +9,21 @@ const group_list = [
         avatar: require("../public/avatar/group_xxtx.png"),
         userList: [
             {
+                id: 10001,
+                cid: 123403,
+                name: "七月",
+                online: true,
+                remark: '七月',
+                avatar: require("../public/avatar/avatar_meteor.png"),
+                sign: "与其感慨路难行,不如马上出发！",
+                email: ''
+            },
+            {
                 id: 1,
                 cid: 123401,
                 name: "怜",
                 remark: '剑圣',
-                online: false,
+                online: true,
                 avatar: require("../public/avatar/lian.png"),
                 sign: "继续下去的话优衣会生气的。"
             },
@@ -27,6 +37,8 @@ const group_list = [
                 sign: "对不起,优衣！",
                 email: ''
             },
+
+
         ],
         notify: '小小甜心',
         sign: "8月22日 17:44",

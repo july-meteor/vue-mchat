@@ -3,12 +3,8 @@
     <div class="demo-box">
       <div class="demo-header demo-title">操作示例</div>
       <div class="demo-body">
-        <button class="m-button m-button-primary">增加会话</button>
-        <button class="m-button m-button-primary">删除会话</button>
-        <button class="m-button m-button-primary">简约模式</button>
       </div>
     </div>
-
     <IChat ref="IChat" :config="config" :mine="mine" @bindEvent="handleEvent">
     </IChat>
   </div>
@@ -149,7 +145,7 @@ export default {
         //消息id，可不传。除非你要对消息进行一些操作（如撤回）
         cid: 0,
         //是否我发送的消息，如果为true，则会显示在右方
-        mine: false,
+        mine: true,
         //消息的发送者id（比如群组中的某个消息发送者），可用于自动解决浏览器多窗口时的一些问题
         fromid: mine.id,
         //服务端时间戳毫秒数。注意：如果你返回的是标准的 unix 时间戳，记得要 *1000

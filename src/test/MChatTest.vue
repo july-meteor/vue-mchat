@@ -175,7 +175,7 @@
                     fromid: -1,
                     timestamp: new Date(),
                 };
-                // this.$im.emit("getMessage", authReplay);
+                this.$im.emit("getMessage", authReplay);
             },
             //添加回话
             handleAddChat() {
