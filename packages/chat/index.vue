@@ -10,6 +10,8 @@
     import tools from "./tools";
     import {default_avatar } from '../util/constant'
 
+    function noop() { }
+
     // 空方法
     export default {
         name: "mchat-index",
@@ -47,6 +49,35 @@
             value: {
                 default: "",
             },
+            callLoadHistory:{
+                type:Function,
+                default:noop,
+            },
+            // 回车时间
+            emitMessage:{
+                type:Function,
+                default:noop,
+            },
+            // 会话关闭窗口
+            callChatClose:{
+                type:Function,
+                default:noop,
+            },
+            // 聊天记录点击事件
+            callTalkClick:{
+                type:Function,
+                default:noop,
+            },
+            // 聊天用户点击事件
+            callTalkUserClick:{
+                type:Function,
+                default:noop,
+            },
+            // 点击群组头像
+             callHeaderClick:{
+                type:Function,
+                default:noop,
+             },
         },
         data() {
             return {
@@ -68,12 +99,10 @@
         computed: {
             // 是否被激活
             active() {
-                const flag = this.rootChat.selected === this.index;
-                return flag;
+                return  this.rootChat.selected === this.index;
             },
         },
         watch: {
-
             value: {
                 handler() {
                     this.content = this.value;
@@ -104,18 +133,15 @@
                         });
                     },
                 };
-                this.$emit("loadHistory", data);
+                this.callLoadHistory(data);
             },
+
             // 发送消息
             bindEnter(message) {
-                this.$emit("enter", message);
+                this.emitMessage(message);
                 this.$nextTick(() => {
                     this.$refs.chatList.scrollBottom();
                 });
-            },
-            // 会话框的事件
-            bindChatEvent(event, data) {
-                this.$emit("chatEvent", event, data);
             },
             // 处理收到的消息
             getMessage(message) {
@@ -125,13 +151,12 @@
                 this.content += emoji;
             },
             bindUpload(data){
-                const { type, file} =data
+                const { type, file} =data;
                 this.$emit("uploadEvent",data,(url)=>{
                     if (type === 'img'){
                         this.content += `img[${url}]`;
                     }
                 })
-
             },
             handleUnread(count) {
                 if (this.active) {
@@ -145,14 +170,18 @@
             let {
                 rootChat,
                 chat,
+                callChatClose,
+                callHeaderClick,
+                callTalkClick,
+                callTalkUserClick,
                 config,
                 active,
                 taleList,
+
                 rightActive,
                 bindEmoji,
                 bindUpload,
                 bindEnter,
-                bindChatEvent,
                 handleUnread,
                 loadHistory,
                 handleRightActive,
@@ -179,19 +208,20 @@
                 "im-chat-info":true,
                     "offline": offline
             }} title="群组信息">
-                <img class="im-chat-avatar" src={avatar} on-click={() => { bindChatEvent("clickHeader")}} />
+                <img class="im-chat-avatar" src={avatar} on-click={() => { callHeaderClick(chat)}} />
             <span class="im-chat-username">{name}</span>
             {el_chat_title_status}
         </div>
             </div>
         );
-
             // chat list  的数据
             data_chat_list = {
                 props: {
                     current: active,
                     list: taleList,
                     config,
+                    callTalkClick,
+                    callTalkUserClick,
                 },
                 ref: "chatList",
                 on: {
@@ -201,15 +231,9 @@
                     loadHistory: function (last) {
                         loadHistory(last);
                     },
-                    talkEvent: function (event, data) {
-                        bindChatEvent(event, data)
-                    },
-                    chatEvent: function (event, data) {
-                        bindChatEvent(event, data)
-                    }
                 },
             };
-            var self = this;
+            let self = this;
             let data_tools_bar = {
                 props: {
                     config,
@@ -227,6 +251,7 @@
             let data_enter_box = {
                 props: {
                     value: self.content,
+                    callChatClose,
                 },
                 on: {
                     input: function (value) {
@@ -235,9 +260,6 @@
                     submit: function (data) {
                         bindEnter(data);
                     },
-                    chatEvent: function (event, data) {
-                        bindChatEvent(event, data)
-                    }
                 },
             };
 

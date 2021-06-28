@@ -1,6 +1,8 @@
 <script>
 import { on, off } from "../util/dom";
 
+function noop() { }
+
 export default {
   name: "enter-box",
   componentName: "EnterBox",
@@ -12,6 +14,10 @@ export default {
     value: {
       default: "",
     },
+    callChatClose:{
+      type:Function,
+      default:noop,
+    }
   },
   data() {
     return {
@@ -30,8 +36,7 @@ export default {
     },
     currentContent: {
       handler(newval) {
-        const msg = newval;
-        this.$emit("input", msg);
+        this.$emit("input", newval);
       },
       immediate: true,
     },
@@ -45,11 +50,8 @@ export default {
       this.enter = flag;
     },
       // 输入框对焦
-      handleInputFocus(){
-          this.$refs.input.focus();
-      },
-    bindChatEvent(event, data){
-        this.$emit("chatEvent", event, data);
+    handleInputFocus(){
+        this.$refs.input.focus();
     },
     handleDocumentClick(e) {
       let reference = this.$refs.reference;
@@ -80,7 +82,7 @@ export default {
   },
   render(h) {
     let {
-      bindChatEvent,
+      callChatClose,
       handleSend,
       enter,
       placeholder,
@@ -88,7 +90,7 @@ export default {
       setBoxDisplay,
       doToggle,
     } = this;
-    var self = this;
+    let self = this;
     const textareaVnode = h("textarea", {
       domProps: {
         value: self.currentContent,
@@ -127,7 +129,7 @@ export default {
           <div class="im-chat-btn-bar">
              <span  class="im-btn-close"
                   title="关闭对话框"
-                  on-click={() => bindChatEvent("chatClose") }>
+                  on-click={() => callChatClose() }>
                关闭(<font style="text-decoration: underline;">C</font>)
              </span>
             <span

@@ -17,8 +17,10 @@
                 :config="config"
                 :chats="chats"
                 :mine="mine"
-                @chatEvent="handleChatEvent"
-                @talkEvent="talkEvent"
+                @removeChat="handleChatRemove"
+                @talkUserClick="handleTalkUserClick"
+                @talkClick="handleTalkClick"
+                @chatInfo="handleChatInfo"
                 @sendMessage="sendMessage"
                 @loadHistory="handleHistory"
                 @uploadEvent="handleUpload"
@@ -92,33 +94,28 @@
                 return data.name.indexOf(value) !== -1;
             },
             fetchNotices() {
-                let list = CONST.notice_list;
-                return list;
+                return  CONST.notice_list;
             },
-            handleChatEvent(event, data) {
-                console.log("窗口事件",{event,data})
+            handleChatRemove({ id, name, type }){
+                console.log("事件名：removeChat。点击对话标签删除或择对话框关闭触发",item);
                 let channels = this.chats;
                 let len = channels.length;
                 if (len < 1) return;
                 let ary = [];
-                switch (event) {
-                    case "removeChat":
-                        for (let i = 0; i < len; i++) {
-                            let model = channels[i];
-                            if (model.id != data.id) {
-                                ary.push(model);
-                            }
-                        }
-                        this.chats = ary;
-                        break;
+                for (let i = 0; i < len; i++) {
+                    let model = channels[i];
+                    if (model.id !== id) {
+                        ary.push(model);
+                    }
                 }
+                this.chats = ary;
             },
             handleRightEvent(event) {
                 console.log("右边框事件", event);
             },
             handleHistory(data) {
                 const {chat ,last, callback} = data;
-                console.log("获取历史记录",data)
+                console.log("获取历史记录",data);
                 let history = [
                     {
                         username: "历史记录",
@@ -134,9 +131,7 @@
                 ];
                 callback(history);
             },
-            talkEvent(event, data) {
-                console.log("谈话内容", {event, data});
-            },
+
             sendMessage(data) {
                 console.log("发送内容", {data});
                 const {mine, to, content, timestamp} = data;
@@ -162,7 +157,6 @@
                 };
                 //
                 this.$refs.mchat.getMessage(message);
-
                 //自动回复
                 let authReplay = {
                     username: "july-meteor",
@@ -192,9 +186,17 @@
                 this.chats.pop();
             },
             handleUpload(data,fn){
-                console.log("文件上传",data)
-
-            }
+                console.log("文件上传",data);
+            },
+            handleTalkUserClick(item){
+                console.log("事件名：talkUserClick。对话用户头像点击事件",item);
+            },
+            handleTalkClick(item){
+                console.log("事件名：talkClick。对话内容点击事件",item);
+            },
+            handleChatInfo(item){
+                console.log("事件名：chatInfo。点击窗口对话头像触发",item);
+            },
         },
         mounted() {
 

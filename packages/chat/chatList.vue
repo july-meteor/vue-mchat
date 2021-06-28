@@ -5,6 +5,8 @@ import {
 } from "./convertContext";
 import Scroll from "../util/scroll";
 
+function noop() {}
+
 export default {
   name: "chat-list",
   componentName: "ChatList",
@@ -26,6 +28,16 @@ export default {
         downBtn: false,
       }),
     },
+      // 聊天记录点击事件
+      callTalkClick:{
+          type:Function,
+          default:noop,
+      },
+      // 聊天用户点击事件
+      callTalkUserClick:{
+          type:Function,
+          default:noop,
+      },
   },
   data() {
     return {
@@ -50,7 +62,7 @@ export default {
     current(newVal,oldVal){
         if (newVal){
             let reset = this.isBottom;
-            this.scrollRefresh()
+            this.scrollRefresh();
             if (reset){
                 this.scrollBottom();
             }
@@ -86,7 +98,6 @@ export default {
                         this.scroll.toBeforePosition()
                     }
                     if(this.current && this.isBottom){
-
                         this.scrollBottom();
                     }
                     //还有一种情况是自己发送的。。
@@ -131,9 +142,9 @@ export default {
   methods: {
     // 计算是否已经加载
     calcLoaded(){
-        let el =  this.$el
-        if(!el)  return
-       let width =  el.clientWidth
+        let el =  this.$el;
+        if(!el)  return;
+       let width =  el.clientWidth;
         //有宽度表示页面被显示了,并且只会触发一次。
         if (width >0 ){
             if (!this.loaded) {
@@ -144,18 +155,14 @@ export default {
             this.loaded = false;
         }
     },
-    bindTalkEvent( data) {
-     this.$emit("chatEvent", "talkEvent", data);
-    },
     bindClickUser(data){
         let userInfo = {
             id:data.id,
             username:data.username,
             mine:data.mine,
-        }
-        this.$emit("chatEvent", 'clickUser', userInfo);
+        };
+        this.callTalkUserClick(userInfo);
     },
-
     // 拉取历史记录
     handleHistory() {
         //锁住拉取
@@ -277,7 +284,7 @@ export default {
       historyBtnShow,
       scrollUp,
       scrollBottom,
-      bindTalkEvent,
+      callTalkClick,
       bindClickUser,
       handleHistory,
     } = this;
@@ -306,7 +313,7 @@ export default {
           </div>
           <div
             class="content-text"
-            on-click={() => bindTalkEvent(item)}
+            on-click={() => callTalkClick(item)}
           >
             {" "}
             {contentHtml}

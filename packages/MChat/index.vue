@@ -76,7 +76,7 @@
             panes(nv, ov) {
                 // 如果 窗口是从0变多
                 let o_len = ov.length;
-                if (0 == o_len) {
+                if (0 === o_len) {
                     this.$nextTick(() => {
                         this.initChatPosition();
                     });
@@ -94,7 +94,34 @@
                     });
                 }
             },
-            loadHistory(data) {
+            handleTabClick({ pane }) {
+                this.selected = pane.index;
+                this.handleEnterFocus(pane)
+            },
+            handleTabRemove({ pane,ev }) {
+                const { name, type, id } = pane.chat;
+                this.$emit("removeChat", { id, name, type });
+            },
+            // enterBox 关闭事件
+            handleChatRemove(){
+                const { name, type, id } =  this.getCurrent();
+                this.$emit("removeChat", { id, name, type });
+            },
+            handleRightBoxShow(){
+                this.chatDisplay = !this.chatDisplay;
+            },
+            // 对话内容点击
+            handleTalkClick(item){
+                this.$emit("talkClick", item);
+            },
+            // 讲话用户头像点击
+            handleTalkUserClick(item){
+                this.$emit("talkUserClick", item);
+            },
+            handleChatHeaderClick(pane){
+                this.$emit("chatInfo", pane);
+            },
+            handleLoadHistory(data){
                 this.$emit("loadHistory", data);
             },
             //  获得当前对话框
@@ -123,28 +150,15 @@
                 }
                 this.panes.forEach((item) => {
                     let { chat } = item;
-                    if (chat.id != message.id || chat.type != message.type) return;
+                    if (chat.id !== message.id || chat.type !== message.type) return;
+
                     item.getMessage(message);
                 });
                 })
             },
             handleEvent(event, data) {
                 switch (event) {
-                    case "minRight":
-                        this.chatDisplay = !this.chatDisplay;
-                        break;
-                    case "tabClick":
-                        this.handleTabClick(data);
-                        break;
-                    case "tabRemove":
-                        this.handleRemoveChat(data);
-                        break;
-                    case "chatClose":
-                        this.handleRemoveChat({ pane: this.getCurrent() });
-                        break;
-                    case "talkEvent":
-                        this.bindTalkEvent(event, data);
-                        break;
+
                     default:
                         this.bindChatEvent(event, data);
                         break;
@@ -153,28 +167,13 @@
             handleUploadEvent(data,fn){
                 this.$emit("uploadEvent",data,fn);
             },
-            // 会话内容的事件
-            bindTalkEvent(event, data) {
-                this.$emit("talkEvent", event, data);
-            },
-            // 会话框的事件
-            bindChatEvent(event, data) {
-                this.$emit("chatEvent", event, data);
-            },
-            handleTabClick({ pane }) {
-                this.selected = pane.index;
-                this.handleEnterFocus(pane)
-            },
             // 处理对话框Setting
             handleChatSet(event) {
                 const { name, type, id } = this.getCurrent().chat;
-                this.bindChatEvent(event, { id, name, type });
+                this.$emit(event, { id, name, type });
             },
-            handleRemoveChat({ pane }) {
-                const { name, type, id } = pane.chat;
-                this.bindChatEvent("removeChat", { id, name, type });
-            },
-            handleEnter(chat, content) {
+            handleEnter(content) {
+                let chat = this.getCurrent().chat;
                 const mine = this.mine;
                 let message = {
                     //自己的信息
@@ -199,11 +198,10 @@
                     timestamp: new Date(),
                 };
                 //是否写回去
-
                 this.$emit("sendMessage", message);
             },
             handPanesDrag(e) {
-                if (this.config.fixed) return ;;
+                if (this.config.fixed) return ;
                 let el = this.$refs.chat;
                 layerDrag(e,el);
             },
@@ -259,11 +257,17 @@
                 config,
                 chats,
                 panes,
-                handleEvent,
+                handleTabClick,
+                handleTabRemove,
+                handleRightBoxShow,
+                handleChatRemove,
+                handleTalkClick,
+                handleTalkUserClick,
+                handleChatHeaderClick,
+                handleLoadHistory,
                 handleUploadEvent,
                 handleEnter,
                 handleChatSet,
-                loadHistory,
                 chatDisplay,
                 alone,
             } = this;
@@ -274,18 +278,15 @@
                     props: {
                         chat,
                         config,
+                        callLoadHistory:handleLoadHistory,
+                        emitMessage: handleEnter,
+                        callChatClose: handleChatRemove,
+                        callTalkClick: handleTalkClick,
+                        callTalkUserClick:handleTalkUserClick ,
+                        callHeaderClick: handleChatHeaderClick,
                     },
                     ref: "MChatIndex",
                     on: {
-                        enter: function(content) {
-                            handleEnter(chat, content);
-                        },
-                        loadHistory: function(callBack) {
-                            loadHistory(callBack);
-                        },
-                        chatEvent: function(event, data) {
-                            handleEvent(event, data);
-                        },
                         uploadEvent:function (data,fn) {
                             handleUploadEvent(data,fn)
                         }
@@ -298,37 +299,34 @@
             const el_chat_tabs = {
                 props: {
                     panes,
+                    callTabRemove:handleTabRemove,
+                    callTabClick:handleTabClick,
+                    callRightBoxShow: handleRightBoxShow,
                 },
                 ref: "MChatTabs",
-                on: {
-                    chatEvent: function(event, data) {
-                        handleEvent(event, data);
-                    },
-
-                },
             };
             return (
                 <div>
                 <div
-        class={{
-                "fixed":config.fixed,
-                "im-layer layer-anim im-box im-chat": true,
-                 "chat-show": chatDisplay,
-                 alone: alone,
-            }}
+                class={{
+                        "fixed":config.fixed,
+                        "im-layer layer-anim im-box im-chat": true,
+                         "chat-show": chatDisplay,
+                         alone: alone,
+                    }}
             ref="chat"
-            style={{
-                "z-index": 1002,
-                    display: "inline",
-            }}
-        >
+                style={{
+                    "z-index": 1002,
+                        display: "inline",
+                }}
+                >
         <div
-        class="im-layer-title"
-            style="cursor: move;"
-            on-mousedown={(ev) => {
-                handPanesDrag(ev);
-            }}
-        ></div>
+            class="im-layer-title"
+                style="cursor: move;"
+                on-mousedown={(ev) => {
+                    handPanesDrag(ev);
+                }}
+            ></div>
             <div class="im-layer-tabs im-layer-content">
                 <m-chat-tabs {...el_chat_tabs}></m-chat-tabs>
             {el_chat_panes}

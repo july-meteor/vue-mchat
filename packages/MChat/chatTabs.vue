@@ -1,6 +1,10 @@
 <script>
     import {default_avatar } from '../util/constant'
 
+    function  noop() {
+
+    }
+
     export default {
         name: "MChatTabs",
         //注入父级属性
@@ -9,6 +13,18 @@
             panes: {
                 type: Array,
                 default: () => [],
+            },
+            callTabRemove:{
+                type:Function,
+                default:noop
+            },
+            callTabClick:{
+                type:Function,
+                default:noop
+            },
+            callRightBoxShow:{
+                type:Function,
+                default:noop
             },
         },
         data() {
@@ -26,14 +42,20 @@
             handleScroll(event) {
                 this.stickyTop = event.target.scrollTop;
             },
-            bindChatEvent(event, data) {
-                this.$emit("chatEvent", event, data);
-            },
+
             // 处理未读信息
             handleUnread() {},
         },
         render() {
-            let { rootChat, panes, stickyTop, handleScroll, bindChatEvent } = this;
+            let {
+                rootChat,
+                panes,
+                stickyTop,
+                handleScroll,
+                callTabRemove,
+                callTabClick,
+                callRightBoxShow,
+            } = this;
             // 如果只有一个chat的情况
             if (rootChat.alone) return;
             const { config, chatDisplay } = rootChat;
@@ -51,7 +73,7 @@
                 const el_unread_badge =
                     unread > 0 ? <span class="badge">{unread}</span> : "";
                 let offline = false;
-                if (chat.type == "friend"){
+                if (chat.type === "friend"){
                     offline = !online;
                 }
 
@@ -62,7 +84,7 @@
                              class="im-icon m-icon-error"
                              on-click={(ev) => {
                              ev.stopPropagation();
-                             bindChatEvent("tabRemove", { pane, ev });
+                              callTabRemove({ pane, ev });
                              }}
                         ></i>
                     )
@@ -77,15 +99,16 @@
                                  id={`tab-${tabName}`}
                                  key={`tab-${tabName}`}
                                  on-click={(ev) => {
-                                   bindChatEvent("tabClick", { pane, ev });
+                                    ev.stopPropagation();
+                                    callTabClick({ pane, ev });
                                  }}
                     >
                         {el_unread_badge}
                         <img
                             src={avatar}
                             on-click={(ev) => {
-                                // ev.stoppropagation();
-                                bindChatEvent("tabClick", { pane, ev });
+                                ev.stopPropagation();
+                                callTabClick({ pane, ev });
                             }}
                          />
                          {el_tab_lable}
@@ -109,21 +132,21 @@
                         "m-icon-arrow-left": chatDisplay,
                 }}
                 on-click={() => {
-                    bindChatEvent("minRight");
+                  callRightBoxShow();
                 }}
             ></i>
             );
 
                 el_tabs_bar = (
                     <li
-            class={{
-                    "im-chat-tab":true,
-                        "im-tabs-title": true,
-                        active: true,
-                }}
-                style={{
-                    top: stickyTop + "px",
-                }}
+                    class={{
+                            "im-chat-tab":true,
+                                "im-tabs-title": true,
+                                active: true,
+                        }}
+                    style={{
+                        top: stickyTop + "px",
+                    }}
             >
             <span class="im-label im-box-setwin " on-click={() => {}}>
             <a class="im-btn-min" href="javascript:;">
