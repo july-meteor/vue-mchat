@@ -198,7 +198,6 @@ body {
   .im-icon-close {
     background-position: 0 -40px;
     cursor: pointer;
-
     &:hover {
       opacity: 0.7;
     }
@@ -229,12 +228,16 @@ body {
   background-color: $tabsbox;
   overflow: hidden;
   font-size: 0;
-  // 宽 440+ 80
-  height: 520px;
 
   &:hover {
     overflow-y: auto;
   }
+  // 正常模式下才有固定宽
+  &.normal{
+    // 宽 440+ 80
+    height: 520px;
+  }
+
 
   // pane 页面收缩后tabx才会有阴影
   &.tabs-shadow {

@@ -31,6 +31,10 @@
             return {
                 stickyTop: 0,
                 zIndex: 1,
+                // 缩小模式
+                miniMode:false,
+                // 用于记录窗口是否被打开，写得有点烂
+                tempRecordDisplay:undefined,
             };
         },
         computed: {
@@ -42,25 +46,51 @@
             handleScroll(event) {
                 this.stickyTop = event.target.scrollTop;
             },
-
+            // 处理缩小模式
+            handleMiniMode(){
+                this.miniMode = !this.miniMode;
+                if (this.miniMode && this.rootChat.chatDisplay){
+                    this.tempRecordDisplay = this.rootChat.chatDisplay;
+                    this.callRightBoxShow();
+                }else {
+                    if (!this.miniMode && this.tempRecordDisplay !== this.rootChat.chatDisplay) {
+                        this.callRightBoxShow();
+                    }
+                }
+            },
+            // 处理 chat box是否要打开
+            handleBoxSwitch(){
+                this.callRightBoxShow();
+                this.tempRecordDisplay = this.rootChat.chatDisplay;
+                this.miniMode = false;
+            },
             // 处理未读信息
             handleUnread() {},
+
+
         },
         render() {
             let {
                 rootChat,
                 panes,
                 stickyTop,
+                miniMode,
                 handleScroll,
+                handleMiniMode,
+                handleBoxSwitch,
                 callTabRemove,
                 callTabClick,
-                callRightBoxShow,
+
             } = this;
             // 如果只有一个chat的情况
             if (rootChat.alone) return;
             const { config, chatDisplay } = rootChat;
             const el_chat_tabs = this._l(panes, (pane, index) => {
                 const { active, chat, unread } = pane;
+                // 判断下是否是缩小模式如果是只放过激活的
+                if (miniMode && !active){
+                     return
+                }
                 let { name, id, avatar,online } = chat;
                 let tabName = name + id + index;
                 pane.index = `${index}`;
@@ -132,7 +162,7 @@
                         "m-icon-arrow-left": chatDisplay,
                 }}
                 on-click={() => {
-                  callRightBoxShow();
+                    handleBoxSwitch();
                 }}
             ></i>
             );
@@ -148,7 +178,7 @@
                         top: stickyTop + "px",
                     }}
             >
-            <span class="im-label im-box-setwin " on-click={() => {}}>
+            <span class="im-label im-box-setwin " on-click={() => {handleMiniMode()}}>
             <a class="im-btn-min" href="javascript:;">
                     <cite></cite>
                     </a>
@@ -161,8 +191,9 @@
             return (
                 <ul
         class={{
-                " im-chat-tabs": true,
-                    "tabs-shadow": !chatDisplay,
+                "im-chat-tabs": true,
+                "normal": !miniMode,
+                "tabs-shadow": !chatDisplay,
             }}
             on-mousedown={(ev) => {
                 rootChat.handPanesDrag(ev);
