@@ -68,7 +68,7 @@ export default {
             }
         }
         if (!newVal && oldVal ){
-            this.scroll.read();
+            this.scrollRead();
         }
     },
     // 锁
@@ -238,6 +238,11 @@ export default {
     // 刷新滚动条长度
     scrollRefresh() {
             this.scroll.refresh();
+    },
+    scrollRead() {
+        this.$nextTick(()=>{
+            this.scroll.read();
+        })
     },
     /**** 滚动条结束 ********/
     /*** 标签标题  开始***/

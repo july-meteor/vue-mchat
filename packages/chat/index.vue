@@ -158,6 +158,12 @@
                     }
                 })
             },
+            // 手动清理未读消息
+            handleScrollRead(){
+                this.$nextTick(()=>{
+                    this.$refs.chatList.scrollRead();
+                });
+            },
             handleUnread(count) {
                 if (this.active) {
                     this.unread = 0;

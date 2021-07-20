@@ -156,6 +156,14 @@
                 });
                 })
             },
+            handleMsgRead({id,type}){
+                this.panes.forEach((item) => {
+                    let { chat } = item;
+                    if (chat.id !== id || chat.type !== type) return;
+                    // 对应的消息已读
+                    item.handleScrollRead();
+                });
+            },
             handleEvent(event, data) {
                 switch (event) {
 
