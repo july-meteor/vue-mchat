@@ -156,6 +156,7 @@
                 });
                 })
             },
+
             handleMsgRead({id,type}){
                 this.panes.forEach((item) => {
                     let { chat } = item;

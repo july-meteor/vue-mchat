@@ -17,7 +17,8 @@ const key_sys_msg = 'key_sys_msg'
 
 Watcher.prototype.mutations = {
 
-    setFriends(states, friends) {
+    setFriends(states, friends)
+    {
         states.friends = friends;
     },
     // 针对单人删除

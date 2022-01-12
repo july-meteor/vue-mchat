@@ -5,8 +5,8 @@ import {setCache, getCache, removeCache} from './cache'
 /**
  * cache key
  */
-const key_channels = 'key_channels'
-const key_sys_msg = 'key_sys_msg'
+const key_channels = 'key_channels';
+const key_sys_msg = 'key_sys_msg';
 
 /**
  *  默认带有 频道
@@ -20,7 +20,7 @@ let default_system_message =
         name: "系统消息",
         type: "sys_msg",
         messages: []
-    }
+    };
 
 /**
  *  一个store 模式来为ichat 做全局状态管理
@@ -43,26 +43,24 @@ export default Vue.extend({
                 systemMessage:  default_system_message,
 
                 // 系统消息
-
             }
         }
     },
     // 方法
     methods: {
-
         // 创建频道
         buildChannel(channel) {
             let channels = this.states.channel;
             let len = channels.length;
             if (len < 1) {
                 // 直接插入
-                this.commit('insertChannel', channel)
+                this.commit('insertChannel', channel);
                 return
             }
             let flag = true;
             const {id, type} = channel;
             for (let i = 0; i < len; i++) {
-                let model = channels[i]
+                let model = channels[i];
                 if (model.id === id && model.type === type) {
                     flag = false;
                 }
